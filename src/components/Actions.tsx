@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-namespace
-import * as Octicons from "@primer/octicons-react"
+// import * as Octicons from "@primer/octicons-react"
 import {
   ArrowUp,
   CircleStop,
@@ -20,6 +20,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+
+import * as Octicons from "../vendor/octicons_react/"
 
 // eslint-disable-next-line no-unused-vars
 const { ...iconsByName } = Octicons
