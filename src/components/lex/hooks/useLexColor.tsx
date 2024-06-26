@@ -13,7 +13,7 @@ export const useLexColor = () => {
     })
 
   const backgroundColor = (value: string, cb?: (sel: boolean) => void) =>
-    applyStyleText({ "background-color": addAlpha(value) }, cb)
+    applyStyleText({ "background-color": value }, cb)
 
   const highlight = (value: string) => {
     console.log("value", "value")

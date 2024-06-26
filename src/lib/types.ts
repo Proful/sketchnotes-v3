@@ -26,10 +26,22 @@ export type ActionType =
   | "SHAPE-FILL"
   | "LINE-WIDTH"
   | "LINE2-WIDTH"
+  | "LINE2-DIRECTION"
   | "SHAPE-ROTATE"
   | "FRAME-GRADIENT"
   | "SCREENSHOT"
   | "ENABLE-3DOTS"
+  | "ARROW-HEIGHT"
+  | "ARROW-WIDTH"
+  | "ARROW-HEAD-SIZE"
+  | "ARROW-BOW"
+  | "ARROW-STRETCH"
+  | "ARROW-MIN-STRETCH"
+  | "ARROW-MAX-STRETCH"
+  | "ARROW-PAD-START"
+  | "ARROW-PAD-END"
+  | "ARROW-FLIP"
+  | "ARROW-STRAIGHTS"
 
 export type Action = {
   name: ActionType
@@ -45,6 +57,8 @@ export type ShapeType =
   | "LINE-CIRCLE"
   | "LINE-LINE"
   | "LINE-LINE-V2"
+  | "ARROW"
+  | "ROUGH-RECT"
 export type ContainerStyle = {
   fontSize?: number
   fontFamily?: string
@@ -61,7 +75,19 @@ export type ContainerStyle = {
   lineWidth?: number
   shapeRotate?: number
   line2Width?: number
+  line2Direction?: "TOP-LEFT" | "TOP-RIGHT" | "BOTTOM-LEFT" | "BOTTOM-RIGHT"
   frameGradient?: NameValuePair
   enable3dots?: boolean
+  arrowHeight?: number
+  arrowWidth?: number
+  arrowBow?: number
+  arrowStretch?: number
+  arrowMinStretch?: number
+  arrowMaxStretch?: number
+  arrowPadStart?: number
+  arrowPadEnd?: number
+  arrowFlip?: boolean
+  arrowStraights?: boolean
+  arrowHeadSize?: number
 }
 export type NameValuePair = { name: string; value: string }

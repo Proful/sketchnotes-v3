@@ -1,11 +1,13 @@
 // eslint-disable-next-line import/no-namespace
 import * as Octicons from "@primer/octicons-react"
 import {
+  ArrowUp,
   CircleStop,
   FrameIcon,
   IceCreamConeIcon,
   LineChartIcon,
   PenLineIcon,
+  RectangleVerticalIcon,
   ScanLineIcon,
   SquareIcon,
   Trash,
@@ -97,6 +99,20 @@ export default function Actions({ onContainerCreate, onDelete }: ActionsProps) {
                   onClick={() => onContainerCreate("SHAPE", "LINE-LINE-V2")}
                 >
                   <ScanLineIcon />
+                </li>
+
+                <li
+                  className="w-1/5 p-2 border border-gray-900 text-center"
+                  onClick={() => onContainerCreate("SHAPE", "ARROW")}
+                >
+                  <ArrowUp />
+                </li>
+
+                <li
+                  className="w-1/5 p-2 border border-gray-900 text-center"
+                  onClick={() => onContainerCreate("SHAPE", "ROUGH-RECT")}
+                >
+                  <RectangleVerticalIcon />
                 </li>
               </ul>
             </PopoverContent>

@@ -1,5 +1,12 @@
 ** REDUCE COMPLEXITY **
 
+## wishlist
+
+- multi selection
+- grid
+- lex > select after create
+- add direction to two line
+
 ## drawing to sketch
 
 https://www.usetracy.com/

@@ -23,7 +23,19 @@ export const DEFAULT_SHAPE_FILL = "transparent"
 export const DEFAULT_SHAPE_ROTATE = 0
 export const DEFAULT_LINE_WIDTH = 75
 export const DEFAULT_LINE2_WIDTH = 20
+export const DEFAULT_LINE2_DIRECTION = "TOP-LEFT"
 export const DEFAULT_CODE_LANGUAGE = "Javascript"
+export const DEFAULT_ARROW_HEAD_SIZE = 6
+export const DEFAULT_ARROW_HEIGHT = 200
+export const DEFAULT_ARROW_WIDTH = 150
+export const DEFAULT_ARROW_BOW = 0
+export const DEFAULT_ARROW_STRETCH = 0.5
+export const DEFAULT_ARROW_MIN_STRETCH = 0
+export const DEFAULT_ARROW_MAX_STRETCH = 420
+export const DEFAULT_ARROW_PAD_START = 0
+export const DEFAULT_ARROW_PAD_END = 0
+export const DEFAULT_ARROW_FLIP = false
+export const DEFAULT_ARROW_STRAIGHTS = false
 
 export const ALLOWED_CODE_LANGUAGE = ["Javascript", "Typescript", "Rust"]
 export const ALLOWED_FONT_FAMILY = [
@@ -94,4 +106,10 @@ export const ALLOWED_TEXT_GRADIENT = [
     name: "gray-slate",
     value: "from-gray-900 to-slate-600",
   },
+]
+export const ALLOWED_LINE2_DIRECTION = [
+  "TOP-LEFT",
+  "TOP-RIGHT",
+  "BOTTOM-LEFT",
+  "BOTTOM-RIGHT",
 ]

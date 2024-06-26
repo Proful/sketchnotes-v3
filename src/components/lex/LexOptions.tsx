@@ -120,7 +120,6 @@ export default function LexOptions({ onAction }: LexOptionsProps) {
                 <Input
                   type="color"
                   className="w-12 inline"
-                  title="Border color"
                   onChange={(e) =>
                     handleAction({
                       name: "BORDER-COLOR",
