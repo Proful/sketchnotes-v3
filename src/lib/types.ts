@@ -20,6 +20,7 @@ export type ActionType =
   | "FONT-WEIGHT"
   | "FONT-FAMILY"
   | "LINE-HEIGHT"
+  | "BOX-SHADOW"
   | "BORDER-WIDTH"
   | "BORDER-RADIUS"
   | "BORDER-STYLE"
@@ -144,4 +145,5 @@ export type ContainerStyle = {
   arrowStraights?: boolean
   arrowHeadSize?: number
   roughOptions?: RoughOptions
+  boxShadow?: string
 }

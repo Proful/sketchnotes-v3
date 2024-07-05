@@ -8,6 +8,7 @@ export const DEFAULT_FONT_SIZE = "base"
 export const DEFAULT_FONT_WEIGHT = "normal"
 export const DEFAULT_FONT_FAMILY = "Monaco"
 export const DEFAULT_LINE_HEIGHT = "normal"
+export const DEFAULT_BOX_SHADOW = "shadow-none"
 export const DEFAULT_BORDER_WIDTH = 1
 export const DEFAULT_BORDER_RADIUS = "rounded-none"
 export const DEFAULT_BORDER_STYLE = "None"
@@ -45,7 +46,12 @@ export const DEFAULT_ARROW_PAD_END = 0
 export const DEFAULT_ARROW_FLIP = false
 export const DEFAULT_ARROW_STRAIGHTS = false
 
-export const ALLOWED_CODE_LANGUAGE = ["Javascript", "Typescript", "Rust"]
+export const ALLOWED_CODE_LANGUAGE = [
+  "Javascript",
+  "Typescript",
+  "Rust",
+  "Python",
+]
 export const ALLOWED_FONT_FAMILY = [
   "Academy Engraved LET",
   "American Typewriter",
@@ -185,6 +191,16 @@ export const ALLOWED_LINE_HEIGHT = [
   "loose",
 ]
 
+export const ALLOWED_BOX_SHADOW = [
+  "shadow-sm",
+  "shadow",
+  "shadow-md",
+  "shadow-lg",
+  "shadow-xl",
+  "shadow-2xl",
+  "shadow-inner",
+  "shadow-none",
+]
 export const ALLOWED_BORDER_RADIUS = [
   "rounded-none",
   "rounded-sm",

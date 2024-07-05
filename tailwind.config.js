@@ -23,6 +23,9 @@ module.exports = {
     {
       pattern: /leading-.+/,
     },
+    {
+      pattern: /shadow-.+/,
+    },
   ],
   theme: {
     container: {
@@ -91,4 +94,3 @@ module.exports = {
   },
   plugins: [require("tailwindcss-animate")],
 }
-

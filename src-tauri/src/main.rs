@@ -4,10 +4,15 @@
 use chrono::Local;
 use image::{ImageBuffer, Rgba};
 use scrap::{Capturer, Display};
+use std::fs::File;
 use std::io::ErrorKind::WouldBlock;
-use std::thread;
 use std::time::Duration;
+use std::{fs, thread};
+use tauri::api::path::data_dir;
 
+fn get_data_directory() -> Option<String> {
+    data_dir().map(|path| path.to_string_lossy().into_owned())
+}
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 #[tauri::command]
 fn greet(name: &str) -> String {
@@ -77,13 +82,27 @@ fn screenshot(x: usize, y: usize, width: usize, height: usize) {
     // Format the date and time as "yyyy-mm-dd-HH-MM-SS-sss"
     let formatted_now = now.format("%Y-%m-%d-%H-%M-%S-%3f");
 
-    let file_name = format!(
-        "/Users/sanvi/Pictures/sketchnotes-screenshot/{}.png",
-        formatted_now
-    );
+    let file_name = format!("{}.png", formatted_now);
     dbg!(&file_name);
+    match data_dir() {
+        Some(mut path) => {
+            path.push("sketchnotes"); // specify your desired subdirectory here
+            if let Err(e) = fs::create_dir_all(&path) {
+                dbg!(e);
+            }
+            path.push(file_name);
+            //let mut file = File::create(&path).map_err(|e| e.to_string()).unwrap();
+
+            img.save(&path).expect("Failed to save screenshot.");
+            println!("Screenshot saved to {}", &path.to_string_lossy());
+            //file.write_all(content.as_bytes())
+            //    .map_err(|e| e.to_string())?;
+            //Ok(path.to_string_lossy().into_owned())
+        }
+        None => {
+            dbg!("err");
+        }
+    }
     // Save the image as a PNG file
     //img.save("../screenshot.png")
-    img.save(file_name).expect("Failed to save screenshot.");
-    println!("Screenshot saved to screenshot.png");
 }

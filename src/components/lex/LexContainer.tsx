@@ -7,6 +7,7 @@ import {
   DEFAULT_BORDER_RADIUS,
   DEFAULT_BORDER_STYLE,
   DEFAULT_BORDER_WIDTH,
+  DEFAULT_BOX_SHADOW,
   DEFAULT_FONT_FAMILY,
   DEFAULT_FONT_SIZE,
   DEFAULT_FONT_WEIGHT,
@@ -43,6 +44,7 @@ function LexContainer({
     paddingLeft: DEFAULT_LEX_PADDING,
     paddingRight: DEFAULT_LEX_PADDING,
     padding: DEFAULT_LEX_PADDING,
+    boxShadow: DEFAULT_BOX_SHADOW,
   })
   const nodeRef = React.useRef(null)
   useEffect(() => {
@@ -97,6 +99,11 @@ function LexContainer({
       setContainerStyle({
         ...containerStyle,
         borderColor: action.value! as string,
+      })
+    } else if (action?.name === "BOX-SHADOW") {
+      setContainerStyle({
+        ...containerStyle,
+        boxShadow: action.value! as string,
       })
     } else if (action?.name === "LEX-PADDING-TOP") {
       setContainerStyle({
@@ -165,7 +172,7 @@ function LexContainer({
       <div
         style={style}
         ref={nodeRef}
-        className={`w-fit p-2 absolute top-0 text-${containerStyle.fontSize} font-${containerStyle.fontWeight} leading-${containerStyle.lineHeight} ${containerStyle.borderRadius}`}
+        className={`w-fit p-2 absolute top-0 text-${containerStyle.fontSize} font-${containerStyle.fontWeight} leading-${containerStyle.lineHeight} ${containerStyle.borderRadius} ${containerStyle.boxShadow}`}
         onClick={(e) => {
           onSelect(id, "LEX")
           e.stopPropagation()

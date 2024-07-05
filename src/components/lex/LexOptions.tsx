@@ -4,6 +4,7 @@ import {
   ALLOWED_BORDER_DIRECTION,
   ALLOWED_BORDER_RADIUS,
   ALLOWED_BORDER_STYLE,
+  ALLOWED_BOX_SHADOW,
   ALLOWED_CODE_LANGUAGE,
   ALLOWED_FONT_FAMILY,
   ALLOWED_FONT_SIZE,
@@ -510,6 +511,24 @@ export default function LexOptions({ onAction }: LexOptionsProps) {
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
+        </li>
+        <li className="p-2 hover:bg-blue-700">
+          <Select
+            onValueChange={(v) => {
+              handleAction({ name: "BOX-SHADOW", value: v })
+            }}
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Box Shadow" />
+            </SelectTrigger>
+            <SelectContent>
+              {ALLOWED_BOX_SHADOW.map((boxShadow) => (
+                <SelectItem value={boxShadow} key={boxShadow}>
+                  {boxShadow}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </li>
       </ul>
     </>
