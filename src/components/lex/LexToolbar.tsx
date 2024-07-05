@@ -1,12 +1,21 @@
 import { useEffect } from "react"
-import { $createCodeNode } from "@lexical/code"
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext"
 import { $setBlocksType } from "@lexical/selection"
-import { $getSelection, $isRangeSelection } from "lexical"
+import {
+  $getSelection,
+  $isRangeSelection,
+  LexicalEditor,
+  RangeSelection,
+} from "lexical"
 
 import { Action } from "@/lib/types"
+import {
+  $createCodeNode,
+  $isCodeHighlightNode,
+} from "@/components/lex/nodes/lexical-code"
 
 import { useLexBlockActions } from "./hooks/useLexBlockActions"
+import { useLexCode } from "./hooks/useLexCode"
 import { useLexColor } from "./hooks/useLexColor"
 import { useLexInlineActions } from "./hooks/useLexInlineActions"
 import { useLexKlass } from "./hooks/useLexKlass"
@@ -20,11 +29,11 @@ export default function LexToolbar({
   id: number
   selectedId: number | null
 }) {
-  const [editor] = useLexicalComposerContext()
   const { bold, italic, underline, strikethrough } = useLexInlineActions()
   const { h1, h2, h3, q } = useLexBlockActions()
   const { highlight, color, decorationColor, backgroundColor } = useLexColor()
   const { addKlass } = useLexKlass()
+  const { code, addCodeKlass } = useLexCode()
 
   useEffect(() => {
     if (!action) return
@@ -46,28 +55,8 @@ export default function LexToolbar({
     } else if (action.name === "QUOTE") {
       q()
     } else if (action.name === "CODE") {
-      editor.update(() => {
-        // selectAll(editor)
-        let selection = $getSelection()
-
-        if (!selection) {
-          return
-        }
-
-        const lang = action.value as string
-        if ($isRangeSelection(selection)) {
-          if (selection.isCollapsed()) {
-            $setBlocksType(selection, () => $createCodeNode(lang.toLowerCase()))
-          } else {
-            const textContent = selection.getTextContent()
-            const codeNode = $createCodeNode(lang.toLowerCase())
-            selection.insertNodes([codeNode])
-            selection = $getSelection()
-            if ($isRangeSelection(selection))
-              selection.insertRawText(textContent)
-          }
-        }
-      })
+      const lang = action.value as string
+      code(lang)
     } else if (action.name === "COLOR") {
       color(action.value! as string)
     } else if (action.name === "BACKGROUND-COLOR") {
@@ -77,8 +66,9 @@ export default function LexToolbar({
     } else if (action.name === "HIGHLIGHT") {
       highlight(action.value! as string)
     } else if (action.name === "TEXT-GRADIENT") {
-      console.log(action)
       addKlass(`${action.value} bg-gradient-to-r bg-clip-text text-transparent`)
+    } else if (action.name === "LEX-CODE-HIGHLIGHT") {
+      addCodeKlass("bg-slate-600")
     }
   }, [action?.seed])
   return <></>

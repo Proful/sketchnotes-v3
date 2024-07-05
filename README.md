@@ -3,9 +3,11 @@
 ## wishlist
 
 - multi selection
-- grid
 - lex > select after create
-- add direction to two line
+- line spacing
+- prismjs theme
+- code > font
+- rough rect, give some padding
 
 ## drawing to sketch
 

@@ -1,10 +1,17 @@
 export const DEFAULT_CONTAINER_TYPE = "NONE"
+export const DEFAULT_TEXT_UNDERLINE_OFFSET = "6px"
+export const DEFAULT_TEXT_DECORATION_STYLE = "solid"
+export const DEFAULT_LEX_PADDING = 0
+export const DEFAULT_SCALE = 1
 export const DEFAULT_SHAPE_TYPE = "RECT"
-export const DEFAULT_FONT_SIZE = 16
+export const DEFAULT_FONT_SIZE = "base"
+export const DEFAULT_FONT_WEIGHT = "normal"
 export const DEFAULT_FONT_FAMILY = "Monaco"
+export const DEFAULT_LINE_HEIGHT = "normal"
 export const DEFAULT_BORDER_WIDTH = 1
-export const DEFAULT_BORDER_RADIUS = 1
+export const DEFAULT_BORDER_RADIUS = "rounded-none"
 export const DEFAULT_BORDER_STYLE = "None"
+export const DEFAULT_BORDER_DIRECTION = "ALL"
 export const DEFAULT_BORDER_COLOR = "#ffffff"
 export const DEFAULT_ICON_SIZE = 60
 export const DEFAULT_ICON_COLOR = "#ffffff"
@@ -13,6 +20,7 @@ export const DEFAULT_FRAME_GRADIENT = {
   name: "indigo-purple-pink",
   value: "from-indigo-500 via-purple-500 to-pink-500",
 }
+export const DEFAULT_FRAME_RESOLUTION = { w: 800, h: 450 }
 export const DEFAULT_TEXT_GRADIENT = {
   name: "indigo-sky-emerald",
   value: "from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90%",
@@ -59,6 +67,13 @@ export const ALLOWED_FONT_FAMILY = [
   "Permanent Marker",
 ]
 export const ALLOWED_BORDER_STYLE = ["None", "Solid", "Dashed"]
+export const ALLOWED_BORDER_DIRECTION = [
+  "ALL",
+  "TOP",
+  "BOTTOM",
+  "LEFT",
+  "RIGHT",
+]
 export const ALLOWED_FRAME_GRADIENT = [
   {
     name: "indigo-purple-pink",
@@ -79,6 +94,10 @@ export const ALLOWED_FRAME_GRADIENT = [
   {
     name: "gray-slate",
     value: "from-gray-900 to-slate-800",
+  },
+  {
+    name: "none",
+    value: "none",
   },
 ]
 export const ALLOWED_TEXT_GRADIENT = [
@@ -113,3 +132,90 @@ export const ALLOWED_LINE2_DIRECTION = [
   "BOTTOM-LEFT",
   "BOTTOM-RIGHT",
 ]
+export const ALLOWED_ROUGH_FILL_STYLE = [
+  "hachure",
+  "solid",
+  "zigzag",
+  "cross-hatch",
+  "dots",
+  "dashed",
+  "zigzag-line",
+]
+
+export const ALLOWED_TEXT_DECORATION_STYLE = [
+  "solid",
+  "double",
+  "dotted",
+  "dashed",
+  "wavy",
+]
+
+export const ALLOWED_FRAME_RESOLUTION = ["800x450", "480x854", "480x760"]
+
+export const ALLOWED_FONT_WEIGHT = [
+  "thin",
+  "light",
+  "normal",
+  "semibold",
+  "bold",
+  "black",
+]
+export const ALLOWED_FONT_SIZE = [
+  "xs",
+  "sm",
+  "base",
+  "lg",
+  "xl",
+  "2xl",
+  "3xl",
+  "4xl",
+  "5xl",
+  "6xl",
+  "7xl",
+  "8xl",
+  "9xl",
+]
+
+export const ALLOWED_LINE_HEIGHT = [
+  "none",
+  "tight",
+  "snug",
+  "normal",
+  "relaxed",
+  "loose",
+]
+
+export const ALLOWED_BORDER_RADIUS = [
+  "rounded-none",
+  "rounded-sm",
+  "rounded",
+  "rounded-md",
+  "rounded-lg",
+  "rounded-xl",
+  "rounded-2xl",
+  "rounded-3xl",
+]
+
+export const DEFAULT_ROUGH_OPTIONS = {
+  maxRandomnessOffset: 2,
+  roughness: 1,
+  bowing: 1,
+  stroke: "#000",
+  strokeWidth: 1,
+  curveTightness: 0,
+  curveFitting: 0.95,
+  curveStepCount: 9,
+  fill: "#000",
+  fillStyle: "hachure",
+  fillWeight: -1,
+  hachureAngle: -41,
+  hachureGap: -1,
+  dashOffset: -1,
+  dashGap: -1,
+  zigzagOffset: -1,
+  seed: 0,
+  disableMultiStroke: false,
+  disableMultiStrokeFill: false,
+  preserveVertices: false,
+  fillShapeRoughnessGain: 0.8,
+}

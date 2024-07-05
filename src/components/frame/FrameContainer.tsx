@@ -2,7 +2,10 @@ import { useEffect, useRef, useState } from "react"
 import { invoke } from "@tauri-apps/api"
 import Draggable from "react-draggable"
 
-import { DEFAULT_FRAME_GRADIENT } from "@/lib/constants"
+import {
+  DEFAULT_FRAME_GRADIENT,
+  DEFAULT_FRAME_RESOLUTION,
+} from "@/lib/constants"
 import {
   Action,
   ContainerStyle,
@@ -21,6 +24,7 @@ export function FrameContainer({
   const nodeRef = useRef(null)
   const [containerStyle, setContainerStyle] = useState<ContainerStyle>({
     frameGradient: DEFAULT_FRAME_GRADIENT,
+    frameResolution: DEFAULT_FRAME_RESOLUTION,
     enable3dots: true,
   })
 
@@ -31,6 +35,12 @@ export function FrameContainer({
         ...containerStyle,
         frameGradient: action.value! as NameValuePair,
       })
+    } else if (action?.name === "FRAME-RESOLUTION") {
+      const [w, h]: number[] = (action.value! as string).split("x").map(Number)
+      setContainerStyle({
+        ...containerStyle,
+        frameResolution: { w, h },
+      })
     } else if (action?.name === "ENABLE-3DOTS") {
       setContainerStyle({
         ...containerStyle,
@@ -40,20 +50,24 @@ export function FrameContainer({
       if (nodeRef.current) {
         const box = nodeRef.current as HTMLDivElement
         const rect = box.getBoundingClientRect()
+        const { w, h } = containerStyle.frameResolution!
         invoke("screenshot", {
           x: rect.left,
           y: rect.top + 53,
-          width: 800,
-          height: 450,
+          width: w,
+          height: h,
         })
       }
     }
   }, [action?.seed])
+
+  const { w, h } = containerStyle.frameResolution!
+
   return (
     <>
       <Draggable nodeRef={nodeRef}>
         <div
-          className="w-[800px] h-[450px] absolute border-4"
+          className={`w-[${w}px] h-[${h}px] absolute border-4`}
           ref={nodeRef}
           onClick={(e) => {
             onSelect("FRAME")

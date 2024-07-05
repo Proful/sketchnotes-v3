@@ -38,6 +38,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 
+import RoughjsOptions from "./RoughjsOptions"
+
 type ShapeOptionsProps = {
   shapeType: ShapeType
   onAction: (action: Action) => void
@@ -48,7 +50,12 @@ export default function ShapeOptions({
 }: ShapeOptionsProps) {
   if (shapeType === "RECT") {
     return <RectOptions onAction={onAction} />
-  } else if (shapeType === "ROUGH-RECT") {
+  } else if (
+    shapeType === "ROUGH-RECT" ||
+    shapeType === "ROUGH-LINE" ||
+    shapeType === "ROUGH-CIRCLE" ||
+    shapeType === "ROUGH-ELLIPSE"
+  ) {
     return <RoughRectOptions onAction={onAction} />
   } else if (shapeType === "LINE") {
     return <LineOptions onAction={onAction} />
@@ -222,102 +229,12 @@ function RectOptions({ onAction }: RectOptionsProps) {
   )
 }
 function RoughRectOptions({ onAction }: RectOptionsProps) {
-  const [borderWidth, setBorderWidth] = useState(DEFAULT_BORDER_WIDTH)
-  const [borderRadius, setBorderRadius] = useState(DEFAULT_BORDER_RADIUS)
   const [rectWidth, setRectWidth] = useState(DEFAULT_RECT_WIDTH)
   const [rectHeight, setRectHeight] = useState(DEFAULT_RECT_HEIGHT)
   return (
     <>
       <ul>
-        <li className="p-1 hover:bg-blue-700 space-x-2">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <Input
-                  type="color"
-                  className="w-12 inline"
-                  onChange={(e) => {
-                    onAction({
-                      name: "BORDER-COLOR",
-                      seed: Math.random(),
-                      value: e.target.value,
-                    })
-                  }}
-                />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Border Color</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <Input
-                  type="color"
-                  className="w-12 inline"
-                  onChange={(e) => {
-                    onAction({
-                      name: "SHAPE-FILL",
-                      seed: Math.random(),
-                      value: e.target.value,
-                    })
-                  }}
-                />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Fill Color</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <Input
-                  type="number"
-                  className="w-16 inline"
-                  value={borderWidth}
-                  onChange={(e) => {
-                    setBorderWidth(+e.target.value)
-                    onAction({
-                      name: "BORDER-WIDTH",
-                      value: +e.target.value,
-                      seed: Math.random(),
-                    })
-                  }}
-                />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Border Width</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <Input
-                  type="number"
-                  className="w-16 inline"
-                  value={borderRadius}
-                  onChange={(e) => {
-                    setBorderRadius(+e.target.value)
-                    onAction({
-                      name: "BORDER-RADIUS",
-                      value: +e.target.value,
-                      seed: Math.random(),
-                    })
-                  }}
-                />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Border Radius</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        </li>
+        <RoughjsOptions onAction={onAction} />
 
         <li className="p-1 hover:bg-blue-700 space-x-2">
           <TooltipProvider>
@@ -980,7 +897,7 @@ function ArrowOptions({ onAction }: { onAction: (action: Action) => void }) {
               <TooltipTrigger>
                 <Input
                   type="number"
-                  min={0}
+                  min={-1}
                   max={1}
                   step={0.1}
                   className="w-16 inline"
@@ -1010,7 +927,7 @@ function ArrowOptions({ onAction }: { onAction: (action: Action) => void }) {
                   type="number"
                   className="w-16 inline"
                   value={arrowStretch}
-                  min={0}
+                  min={-1}
                   max={1}
                   step={0.1}
                   onChange={(e) => {

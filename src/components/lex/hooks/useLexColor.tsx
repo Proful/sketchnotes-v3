@@ -1,3 +1,5 @@
+import { DEFAULT_TEXT_UNDERLINE_OFFSET } from "@/lib/constants"
+
 import { useApplyStyleText } from "./useApplyStyleText"
 
 export const useLexColor = () => {
@@ -10,13 +12,13 @@ export const useLexColor = () => {
     applyStyleText({
       "text-decoration-color": value,
       "text-decoration": "underline",
+      "text-underline-offset": DEFAULT_TEXT_UNDERLINE_OFFSET,
     })
 
   const backgroundColor = (value: string, cb?: (sel: boolean) => void) =>
     applyStyleText({ "background-color": value }, cb)
 
   const highlight = (value: string) => {
-    console.log("value", "value")
     if (value === "reset") {
       applyStyleText({
         "background-color": "transparent",

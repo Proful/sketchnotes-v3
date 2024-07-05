@@ -1,15 +1,18 @@
 import { useState } from "react"
 
-import { DEFAULT_CONTAINER_TYPE, DEFAULT_SHAPE_TYPE } from "@/lib/constants"
+import {
+  DEFAULT_CONTAINER_TYPE,
+  DEFAULT_SCALE,
+  DEFAULT_SHAPE_TYPE,
+} from "@/lib/constants"
 import { Action, ContainerType, ShapeType } from "@/lib/types"
+import Actions from "@/components/Actions"
 import { FrameContainer } from "@/components/frame/FrameContainer"
 import { IconContainer } from "@/components/icon/IconContainer"
 import LexContainer from "@/components/lex/LexContainer"
 import { ShapeContainer } from "@/components/shape/ShapeContainer"
 import Sidebar from "@/components/Sidebar"
 import { ThemeProvider } from "@/components/theme-provider"
-
-import Actions from "./components/Actions"
 
 type Icon = {
   name: string
@@ -21,6 +24,7 @@ type Shape = {
 }
 // fixed allows to cover all visible area and attach click handler
 function App() {
+  const [scale, setScale] = useState(DEFAULT_SCALE)
   const [action, setAction] = useState<Action | null>(null)
   const [lexList, setLexList] = useState<number[]>([])
   const [iconList, setIconList] = useState<Icon[]>([])
@@ -65,56 +69,62 @@ function App() {
     setContainerType("NONE")
   }
 
+  const style = {
+    transform: `scale(${scale})`,
+  }
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <div className="mr-64 p-8 h-full w-full fixed" onClick={reset}>
         {screenshotFrame && (
           <FrameContainer action={action} onSelect={setContainerType} />
         )}
-        {shapeList.map((shape) => (
-          <ShapeContainer
-            name={shape.name}
-            key={shape.id}
-            id={shape.id}
-            selectedId={selectedId}
-            action={action}
-            onSelect={(id, containerType) => {
-              setSelectedId(id)
-              setContainerType(containerType)
-            }}
-          />
-        ))}
-        {iconList.map((icon) => (
-          <IconContainer
-            action={action}
-            key={icon.id}
-            name={icon.name}
-            id={icon.id}
-            selectedId={selectedId}
-            onSelect={(id, containerType) => {
-              setSelectedId(id)
-              setContainerType(containerType)
-            }}
-          />
-        ))}
-        {lexList.map((id) => (
-          <LexContainer
-            action={action}
-            key={id}
-            id={id}
-            selectedId={selectedId as number}
-            onSelect={(id, containerType) => {
-              setSelectedId(id)
-              setContainerType(containerType)
-            }}
-          />
-        ))}
+        <div style={style}>
+          {shapeList.map((shape) => (
+            <ShapeContainer
+              name={shape.name}
+              key={shape.id}
+              id={shape.id}
+              selectedId={selectedId}
+              action={action}
+              onSelect={(id, containerType) => {
+                setSelectedId(id)
+                setContainerType(containerType)
+              }}
+            />
+          ))}
+          {iconList.map((icon) => (
+            <IconContainer
+              action={action}
+              key={icon.id}
+              name={icon.name}
+              id={icon.id}
+              selectedId={selectedId}
+              onSelect={(id, containerType) => {
+                setSelectedId(id)
+                setContainerType(containerType)
+              }}
+            />
+          ))}
+          {lexList.map((id) => (
+            <LexContainer
+              action={action}
+              key={id}
+              id={id}
+              selectedId={selectedId as number}
+              onSelect={(id, containerType) => {
+                setSelectedId(id)
+                setContainerType(containerType)
+              }}
+            />
+          ))}
+        </div>
       </div>
-      <div className="fixed top-0 right-0 h-full w-64 bg-blue-800 text-white shadow-lg">
-        <nav className="mt-8">
+      <div className="fixed top-0 right-0 h-full w-64 text-white shadow-lg overflow-scroll">
+        <nav className="mt-0" style={{ transform: "scale(1)" }}>
           <Actions
             onContainerCreate={handleContainerCreate}
             onDelete={handleDelete}
+            onScale={setScale}
           />
 
           <Sidebar

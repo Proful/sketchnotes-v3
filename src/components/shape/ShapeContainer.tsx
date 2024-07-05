@@ -23,6 +23,7 @@ import {
   DEFAULT_LINE2_WIDTH,
   DEFAULT_RECT_HEIGHT,
   DEFAULT_RECT_WIDTH,
+  DEFAULT_ROUGH_OPTIONS,
   DEFAULT_SHAPE_FILL,
   DEFAULT_SHAPE_ROTATE,
 } from "@/lib/constants"
@@ -79,8 +80,15 @@ export function ShapeContainer({
   let shape = <></>
   if (name === "RECT") {
     shape = <Rect action={action} id={id} selectedId={selectedId} />
-  } else if (name === "ROUGH-RECT") {
-    shape = <RoughRect action={action} id={id} selectedId={selectedId} />
+  } else if (name.startsWith("ROUGH-")) {
+    shape = (
+      <RoughShape
+        action={action}
+        id={id}
+        selectedId={selectedId}
+        shapeType={name}
+      />
+    )
   } else if (name === "LINE") {
     shape = <Line action={action} id={id} selectedId={selectedId} />
   } else if (name === "LINE-CIRCLE") {
@@ -612,44 +620,28 @@ export function Arrow({
     </svg>
   )
 }
-export function RoughRect({
+export function RoughShape({
   id,
   selectedId,
+  shapeType,
   action,
 }: {
   id: number
   selectedId: number | null
+  shapeType: ShapeType
   action: Action | null
 }) {
   const svgRef = useRef(null)
   const [containerStyle, setContainerStyle] = useState<ContainerStyle>({
-    borderColor: DEFAULT_BORDER_COLOR,
-    borderWidth: DEFAULT_BORDER_WIDTH,
-    borderRadius: DEFAULT_BORDER_RADIUS,
     rectWidth: DEFAULT_RECT_WIDTH,
     rectHeight: DEFAULT_RECT_HEIGHT,
-    shapeFill: DEFAULT_SHAPE_FILL,
+    roughOptions: DEFAULT_ROUGH_OPTIONS,
   })
 
   useEffect(() => {
     if (!action) return
     if (id !== selectedId) return
-    if (action.name === "BORDER-COLOR") {
-      setContainerStyle({
-        ...containerStyle,
-        borderColor: action.value! as string,
-      })
-    } else if (action.name === "BORDER-WIDTH") {
-      setContainerStyle({
-        ...containerStyle,
-        borderWidth: action.value! as number,
-      })
-    } else if (action.name === "BORDER-RADIUS") {
-      setContainerStyle({
-        ...containerStyle,
-        borderRadius: action.value! as number,
-      })
-    } else if (action.name === "RECT-WIDTH") {
+    if (action.name === "RECT-WIDTH") {
       setContainerStyle({
         ...containerStyle,
         rectWidth: action.value! as number,
@@ -659,15 +651,179 @@ export function RoughRect({
         ...containerStyle,
         rectHeight: action.value! as number,
       })
-    } else if (action.name === "SHAPE-FILL") {
+    } else if (action.name === "ROUGH-MAX-RANDOMNESS-OFFSET") {
       setContainerStyle({
         ...containerStyle,
-        shapeFill: action.value! as string,
+        roughOptions: {
+          ...containerStyle.roughOptions,
+          maxRandomnessOffset: action.value! as number,
+        },
+      })
+    } else if (action.name === "ROUGH-ROUGHNESS") {
+      setContainerStyle({
+        ...containerStyle,
+        roughOptions: {
+          ...containerStyle.roughOptions,
+          roughness: action.value! as number,
+        },
+      })
+    } else if (action.name === "ROUGH-BOWING") {
+      setContainerStyle({
+        ...containerStyle,
+        roughOptions: {
+          ...containerStyle.roughOptions,
+          bowing: action.value! as number,
+        },
+      })
+    } else if (action.name === "ROUGH-STROKE") {
+      setContainerStyle({
+        ...containerStyle,
+        roughOptions: {
+          ...containerStyle.roughOptions,
+          stroke: action.value! as string,
+        },
+      })
+    } else if (action.name === "ROUGH-STROKE-WIDTH") {
+      setContainerStyle({
+        ...containerStyle,
+        roughOptions: {
+          ...containerStyle.roughOptions,
+          strokeWidth: action.value! as number,
+        },
+      })
+    } else if (action.name === "ROUGH-CURVE-TIGHTNESS") {
+      setContainerStyle({
+        ...containerStyle,
+        roughOptions: {
+          ...containerStyle.roughOptions,
+          curveTightness: action.value! as number,
+        },
+      })
+    } else if (action.name === "ROUGH-CURVE-FITTING") {
+      setContainerStyle({
+        ...containerStyle,
+        roughOptions: {
+          ...containerStyle.roughOptions,
+          curveFitting: action.value! as number,
+        },
+      })
+    } else if (action.name === "ROUGH-CURVE-STEP-COUNT") {
+      setContainerStyle({
+        ...containerStyle,
+        roughOptions: {
+          ...containerStyle.roughOptions,
+          curveStepCount: action.value! as number,
+        },
+      })
+    } else if (action.name === "ROUGH-FILL") {
+      setContainerStyle({
+        ...containerStyle,
+        roughOptions: {
+          ...containerStyle.roughOptions,
+          fill: action.value! as string,
+        },
+      })
+    } else if (action.name === "ROUGH-FILL-STYLE") {
+      setContainerStyle({
+        ...containerStyle,
+        roughOptions: {
+          ...containerStyle.roughOptions,
+          fillStyle: action.value! as string,
+        },
+      })
+    } else if (action.name === "ROUGH-FILL-WEIGHT") {
+      setContainerStyle({
+        ...containerStyle,
+        roughOptions: {
+          ...containerStyle.roughOptions,
+          fillWeight: action.value! as number,
+        },
+      })
+    } else if (action.name === "ROUGH-HACHURE-ANGLE") {
+      setContainerStyle({
+        ...containerStyle,
+        roughOptions: {
+          ...containerStyle.roughOptions,
+          hachureAngle: action.value! as number,
+        },
+      })
+    } else if (action.name === "ROUGH-HACHURE-GAP") {
+      setContainerStyle({
+        ...containerStyle,
+        roughOptions: {
+          ...containerStyle.roughOptions,
+          hachureGap: action.value! as number,
+        },
+      })
+    } else if (action.name === "ROUGH-DASH-OFFSET") {
+      setContainerStyle({
+        ...containerStyle,
+        roughOptions: {
+          ...containerStyle.roughOptions,
+          dashOffset: action.value! as number,
+        },
+      })
+    } else if (action.name === "ROUGH-DASH-GAP") {
+      setContainerStyle({
+        ...containerStyle,
+        roughOptions: {
+          ...containerStyle.roughOptions,
+          dashGap: action.value! as number,
+        },
+      })
+    } else if (action.name === "ROUGH-ZIGZAG-OFFSET") {
+      setContainerStyle({
+        ...containerStyle,
+        roughOptions: {
+          ...containerStyle.roughOptions,
+          zigzagOffset: action.value! as number,
+        },
+      })
+    } else if (action.name === "ROUGH-SEED") {
+      setContainerStyle({
+        ...containerStyle,
+        roughOptions: {
+          ...containerStyle.roughOptions,
+          seed: action.value! as number,
+        },
+      })
+    } else if (action.name === "ROUGH-DISABLE-MULTI-STROKE") {
+      setContainerStyle({
+        ...containerStyle,
+        roughOptions: {
+          ...containerStyle.roughOptions,
+          disableMultiStroke: action.value! as boolean,
+        },
+      })
+    } else if (action.name === "ROUGH-DISABLE-MULTI-STROKE-FILL") {
+      setContainerStyle({
+        ...containerStyle,
+        roughOptions: {
+          ...containerStyle.roughOptions,
+          disableMultiStrokeFill: action.value! as boolean,
+        },
+      })
+    } else if (action.name === "ROUGH-PRESERVE-VERTICES") {
+      setContainerStyle({
+        ...containerStyle,
+        roughOptions: {
+          ...containerStyle.roughOptions,
+          preserveVertices: action.value! as boolean,
+        },
+      })
+    } else if (action.name === "ROUGH-FILL-SHAPE-ROUGHNESS-GAIN") {
+      setContainerStyle({
+        ...containerStyle,
+        roughOptions: {
+          ...containerStyle.roughOptions,
+          fillShapeRoughnessGain: action.value! as number,
+        },
       })
     }
   }, [action?.seed])
 
   useEffect(() => {
+    console.log("containerStyle changed")
     doit()
   }, [containerStyle])
 
@@ -679,16 +835,26 @@ export function RoughRect({
         svg.removeChild(svg.firstChild)
       }
       const rc = rough.svg(svg)
-      let node = rc.rectangle(
-        0,
-        0,
-        containerStyle.rectWidth!,
-        containerStyle.rectHeight!,
-        {
-          fill: containerStyle.shapeFill,
-        }
-      ) // x, y, width, height
-      svg.appendChild(node)
+      let node
+      const { rectWidth: w, rectHeight: h } = containerStyle
+      if (!w || !h) return
+      if (shapeType === "ROUGH-RECT") {
+        node = rc.rectangle(0, 0, w!, h!, containerStyle.roughOptions) // x, y, width, height
+      } else if (shapeType === "ROUGH-CIRCLE") {
+        const cx = w! / 2,
+          cy = h! / 2,
+          d = w! / 2
+        node = rc.circle(cx, cy, d, containerStyle.roughOptions)
+      } else if (shapeType === "ROUGH-ELLIPSE") {
+        const cx = w! / 2,
+          cy = h! / 2
+        node = rc.ellipse(cx, cy, w, h, containerStyle.roughOptions)
+      } else if (shapeType === "ROUGH-LINE") {
+        node = rc.line(0, h / 2, w, h / 2, containerStyle.roughOptions)
+      }
+      if (node) {
+        svg.appendChild(node)
+      }
     }
   }
   useEffect(() => {

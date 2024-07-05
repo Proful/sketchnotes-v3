@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-namespace
 import React, { useEffect, useState } from "react"
+import * as Octicons from "@/vendor/octicons_react"
 import Draggable from "react-draggable"
 
 import {
@@ -8,8 +9,6 @@ import {
   DEFAULT_ICON_SIZE,
 } from "@/lib/constants"
 import { Action, ContainerStyle, ContainerType } from "@/lib/types"
-
-import * as Octicons from "../../vendor/octicons_react"
 
 // eslint-disable-next-line no-unused-vars
 const { ...iconsByName } = Octicons

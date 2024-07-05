@@ -1,4 +1,4 @@
-import { CodeHighlightNode, CodeNode } from "@lexical/code"
+import DevToolsPlugin from "@lexical-devtools/react"
 import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin"
 import { LexicalComposer } from "@lexical/react/LexicalComposer"
 import { ContentEditable } from "@lexical/react/LexicalContentEditable"
@@ -8,11 +8,16 @@ import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin"
 import { HeadingNode, QuoteNode } from "@lexical/rich-text"
 
 import { Action } from "@/lib/types"
+import {
+  CodeHighlightNode,
+  CodeNode,
+} from "@/components/lex/nodes/lexical-code"
 
 import LexEditorTheme from "./LexEditorTheme"
 import LexToolbar from "./LexToolbar"
 import { KlassNode } from "./nodes/lexical-klass"
 import CodeHighlightPlugin from "./plugins/CodeHighlightPlugin"
+import PastePlugin from "./plugins/PastePlugin"
 
 // Catch any errors that occur during Lexical updates and log them
 // or throw them as needed. If you don't throw them, Lexical will
@@ -47,7 +52,9 @@ export default function LexTextarea({
       <HistoryPlugin />
       <AutoFocusPlugin />
       <CodeHighlightPlugin />
+      <DevToolsPlugin />
 
+      {/* <PastePlugin /> */}
       <LexToolbar action={action} id={id} selectedId={selectedId} />
     </LexicalComposer>
   )

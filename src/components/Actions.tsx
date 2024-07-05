@@ -1,9 +1,15 @@
 // eslint-disable-next-line import/no-namespace
 // import * as Octicons from "@primer/octicons-react"
+import { useState } from "react"
+import * as Octicons from "@/vendor/octicons_react/"
 import {
   ArrowUp,
+  CircleIcon,
   CircleStop,
+  EllipsisIcon,
+  FileLineChartIcon,
   FrameIcon,
+  GridIcon,
   IceCreamConeIcon,
   LineChartIcon,
   PenLineIcon,
@@ -13,7 +19,9 @@ import {
   Trash,
 } from "lucide-react"
 
+import { DEFAULT_SCALE } from "@/lib/constants"
 import { ContainerType } from "@/lib/types"
+import { useGridOverlay } from "@/hooks/GridOverlayContext"
 import { Button } from "@/components/ui/button"
 import {
   Popover,
@@ -21,7 +29,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
-import * as Octicons from "../vendor/octicons_react/"
+import { Input } from "./ui/input"
 
 // eslint-disable-next-line no-unused-vars
 const { ...iconsByName } = Octicons
@@ -29,12 +37,22 @@ const { ...iconsByName } = Octicons
 type ActionsProps = {
   onContainerCreate: (containerType: ContainerType, subType?: string) => void
   onDelete: () => void
+  onScale: (scale: number) => void
 }
-export default function Actions({ onContainerCreate, onDelete }: ActionsProps) {
+export default function Actions({
+  onContainerCreate,
+  onDelete,
+  onScale,
+}: ActionsProps) {
+  const [scale, setScale] = useState(DEFAULT_SCALE)
+  const { toggleGrid } = useGridOverlay()
   return (
     <>
       <ul>
         <li className="p-2 hover:bg-blue-700 flex space-x-2">
+          <Button onClick={toggleGrid}>
+            <GridIcon />
+          </Button>
           <Button onClick={() => onContainerCreate("LEX")}>Lex</Button>
           <Popover>
             <PopoverTrigger>
@@ -116,17 +134,51 @@ export default function Actions({ onContainerCreate, onDelete }: ActionsProps) {
                 >
                   <RectangleVerticalIcon />
                 </li>
+
+                <li
+                  className="w-1/5 p-2 border border-gray-900 text-center"
+                  onClick={() => onContainerCreate("SHAPE", "ROUGH-CIRCLE")}
+                >
+                  <CircleIcon />
+                </li>
+
+                <li
+                  className="w-1/5 p-2 border border-gray-900 text-center"
+                  onClick={() => onContainerCreate("SHAPE", "ROUGH-ELLIPSE")}
+                >
+                  <EllipsisIcon />
+                </li>
+
+                <li
+                  className="w-1/5 p-2 border border-gray-900 text-center"
+                  onClick={() => onContainerCreate("SHAPE", "ROUGH-LINE")}
+                >
+                  <FileLineChartIcon />
+                </li>
               </ul>
             </PopoverContent>
           </Popover>
-          <Button onClick={onDelete}>
-            <Trash />
-          </Button>
         </li>
         <li className="p-2 hover:bg-blue-700 flex space-x-2">
           <Button onClick={() => onContainerCreate("FRAME")}>
             <FrameIcon />
           </Button>
+          <Button onClick={onDelete}>
+            <Trash />
+          </Button>
+
+          <Input
+            type="number"
+            className="w-16 inline"
+            value={scale}
+            min={-1}
+            max={4}
+            step={0.1}
+            onChange={(e) => {
+              setScale(+e.target.value)
+              onScale(+e.target.value)
+            }}
+          />
         </li>
       </ul>
     </>

@@ -1,7 +1,10 @@
 import { useState } from "react"
 import { CameraIcon } from "lucide-react"
 
-import { ALLOWED_FRAME_GRADIENT } from "@/lib/constants"
+import {
+  ALLOWED_FRAME_GRADIENT,
+  ALLOWED_FRAME_RESOLUTION,
+} from "@/lib/constants"
 import { Action } from "@/lib/types"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -74,6 +77,28 @@ export default function FrameOptions({ onAction }: FrameOptionsProps) {
           >
             3 dots
           </label>
+        </li>
+        <li className="p-2 hover:bg-blue-700 flex space-x-2">
+          <Select
+            onValueChange={(v) => {
+              onAction({
+                name: "FRAME-RESOLUTION",
+                value: v,
+                seed: Math.random(),
+              })
+            }}
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Frame Resolution" />
+            </SelectTrigger>
+            <SelectContent>
+              {ALLOWED_FRAME_RESOLUTION.map((fr) => (
+                <SelectItem value={fr} key={fr}>
+                  {fr}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </li>
       </ul>
     </>

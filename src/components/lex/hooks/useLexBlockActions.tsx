@@ -10,12 +10,16 @@ import {
 import { $setBlocksType } from "@lexical/selection"
 import {
   $createParagraphNode,
+  $getNodeByKey,
   $getSelection,
   $isRangeSelection,
+  LexicalNode,
   RangeSelection,
 } from "lexical"
 
 import { getSelectedBlockNode } from "@/components/lex/lex-utils"
+
+import { CodeHighlightNode, CodeNode } from "../nodes/lexical-code"
 
 const HEADING_TAGS = ["h1", "h2", "h3"]
 
@@ -69,7 +73,40 @@ export const useLexBlockActions = () => {
   const h1 = () => formatBlockCommand("h1")
   const h2 = () => formatBlockCommand("h2")
   const h3 = () => formatBlockCommand("h3")
-  const q = () => formatBlockCommand("quote")
+  // const q = () => formatBlockCommand("quote")
+  const q = () => {
+    editor.update(() => {
+      const selection = $getSelection()
+      if ($isRangeSelection(selection)) {
+        const { anchor, focus } = selection
+
+        const nodesToWrap = new Set<LexicalNode>()
+
+        const visitNode = (node: LexicalNode) => {
+          if (node instanceof CodeNode || node instanceof CodeHighlightNode) {
+            nodesToWrap.add(node)
+          }
+
+          if ("getChildren" in node && typeof node.getChildren === "function") {
+            const children = (node as any).getChildren() as LexicalNode[]
+            children.forEach(visitNode)
+          }
+        }
+
+        visitNode(anchor.getNode())
+        visitNode(focus.getNode())
+
+        nodesToWrap.forEach((node) => {
+          const parent = node.getParent()
+          if (parent && parent.getType() !== "paragraph") {
+            const paragraphNode = $createParagraphNode()
+            node.replace(paragraphNode)
+            paragraphNode.append(node)
+          }
+        })
+      }
+    })
+  }
   const c = () => formatBlockCommand("code")
 
   return { p, h1, h2, h3, q, c }

@@ -1,13 +1,19 @@
 import { useState } from "react"
 
 import {
+  ALLOWED_BORDER_DIRECTION,
+  ALLOWED_BORDER_RADIUS,
   ALLOWED_BORDER_STYLE,
   ALLOWED_CODE_LANGUAGE,
   ALLOWED_FONT_FAMILY,
+  ALLOWED_FONT_SIZE,
+  ALLOWED_FONT_WEIGHT,
+  ALLOWED_LINE_HEIGHT,
   ALLOWED_TEXT_GRADIENT,
   DEFAULT_BORDER_RADIUS,
   DEFAULT_BORDER_WIDTH,
   DEFAULT_FONT_SIZE,
+  DEFAULT_LEX_PADDING,
 } from "@/lib/constants"
 import { Action, ActionType } from "@/lib/types"
 import { Button } from "@/components/ui/button"
@@ -31,6 +37,11 @@ type LexOptionsProps = {
 }
 export default function LexOptions({ onAction }: LexOptionsProps) {
   const [fontSize, setFontSize] = useState(DEFAULT_FONT_SIZE)
+  const [padding, setPadding] = useState(DEFAULT_LEX_PADDING)
+  const [paddingTop, setPaddingTop] = useState(DEFAULT_LEX_PADDING)
+  const [paddingBottom, setPaddingBottom] = useState(DEFAULT_LEX_PADDING)
+  const [paddingLeft, setPaddingLeft] = useState(DEFAULT_LEX_PADDING)
+  const [paddingRight, setPaddingRight] = useState(DEFAULT_LEX_PADDING)
   const [borderWidth, setBorderWidth] = useState(DEFAULT_BORDER_WIDTH)
   const [borderRadius, setBorderRadius] = useState(DEFAULT_BORDER_RADIUS)
   const handleAction = ({
@@ -69,28 +80,93 @@ export default function LexOptions({ onAction }: LexOptionsProps) {
               ))}
             </SelectContent>
           </Select>
+        </li>
+        <li className="p-2 hover:bg-blue-700 flex space-x-2">
+          <Select
+            onValueChange={(v) => {
+              handleAction({
+                name: "FONT-SIZE",
+                value: v,
+              })
+            }}
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Font Size" />
+            </SelectTrigger>
+            <SelectContent>
+              {ALLOWED_FONT_SIZE.map((font) => (
+                <SelectItem value={font} key={font}>
+                  {font}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </li>
 
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <Input
-                  type="number"
-                  className="w-16 inline"
-                  value={fontSize}
-                  onChange={(e) => {
-                    setFontSize(+e.target.value)
-                    handleAction({
-                      name: "FONT-SIZE",
-                      value: +e.target.value,
-                    })
-                  }}
-                />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Font Size</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+        <li className="p-2 hover:bg-blue-700 flex space-x-2">
+          <Select
+            onValueChange={(v) => {
+              handleAction({
+                name: "FONT-WEIGHT",
+                value: v,
+              })
+            }}
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Font Weight" />
+            </SelectTrigger>
+            <SelectContent>
+              {ALLOWED_FONT_WEIGHT.map((font) => (
+                <SelectItem value={font} key={font}>
+                  {font}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </li>
+
+        <li className="p-2 hover:bg-blue-700 flex space-x-2">
+          <Select
+            onValueChange={(v) => {
+              handleAction({
+                name: "LINE-HEIGHT",
+                value: v,
+              })
+            }}
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Line Height" />
+            </SelectTrigger>
+            <SelectContent>
+              {ALLOWED_LINE_HEIGHT.map((lw) => (
+                <SelectItem value={lw} key={lw}>
+                  {lw}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </li>
+
+        <li className="p-2 hover:bg-blue-700 flex space-x-2">
+          <Select
+            onValueChange={(v) => {
+              handleAction({
+                name: "BORDER-DIRECTION",
+                value: v,
+              })
+            }}
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Border Direction" />
+            </SelectTrigger>
+            <SelectContent>
+              {ALLOWED_BORDER_DIRECTION.map((dir) => (
+                <SelectItem value={dir} key={dir}>
+                  {dir}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </li>
 
         <li className="p-2 hover:bg-blue-700 flex space-x-2">
@@ -135,7 +211,7 @@ export default function LexOptions({ onAction }: LexOptionsProps) {
           </TooltipProvider>
         </li>
 
-        <li className="p-1 hover:bg-blue-700 space-x-2">
+        <li className="p-2 hover:bg-blue-700 space-x-2">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
@@ -157,30 +233,51 @@ export default function LexOptions({ onAction }: LexOptionsProps) {
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
+        </li>
 
+        <li className="p-2 hover:bg-blue-700 flex space-x-2">
+          <Select
+            onValueChange={(v) => {
+              handleAction({
+                name: "BORDER-RADIUS",
+                value: v,
+              })
+            }}
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Border Radius" />
+            </SelectTrigger>
+            <SelectContent>
+              {ALLOWED_BORDER_RADIUS.map((br) => (
+                <SelectItem value={br} key={br}>
+                  {br}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </li>
+
+        <li className="p-2 hover:bg-blue-700">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
                 <Input
-                  type="number"
-                  className="w-16 inline"
-                  value={borderRadius}
-                  onChange={(e) => {
-                    setBorderRadius(+e.target.value)
+                  type="color"
+                  className="w-12 inline"
+                  onChange={(e) =>
                     handleAction({
-                      name: "BORDER-RADIUS",
-                      value: +e.target.value,
+                      name: "LEX-BACKGROUND-COLOR",
+                      value: e.target.value,
                     })
-                  }}
+                  }
                 />
               </TooltipTrigger>
               <TooltipContent>
-                <p>Border Radius</p>
+                <p>Background Color</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
         </li>
-
         <li className="p-2 hover:bg-blue-700">
           <Select
             onValueChange={(v) => {
@@ -198,12 +295,6 @@ export default function LexOptions({ onAction }: LexOptionsProps) {
               ))}
             </SelectContent>
           </Select>
-        </li>
-        <li className="p-2 hover:bg-blue-700 space-x-2">
-          <Button onClick={() => handleAction({ name: "H1" })}>H1</Button>
-          <Button onClick={() => handleAction({ name: "H2" })}>H2</Button>
-          <Button onClick={() => handleAction({ name: "H3" })}>H3</Button>
-          <Button onClick={() => handleAction({ name: "QUOTE" })}>Q</Button>
         </li>
         <li className="p-2 hover:bg-blue-700 space-x-2">
           <Button onClick={() => handleAction({ name: "BOLD" })}>B</Button>
@@ -313,6 +404,116 @@ export default function LexOptions({ onAction }: LexOptionsProps) {
               ))}
             </SelectContent>
           </Select>
+        </li>
+        <li className="p-2 hover:bg-blue-700 flex space-x-2">
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <Input
+                  type="number"
+                  className="w-16 inline"
+                  value={paddingTop}
+                  onChange={(e) => {
+                    setPaddingTop(+e.target.value)
+                    handleAction({
+                      name: "LEX-PADDING-TOP",
+                      value: +e.target.value,
+                    })
+                  }}
+                />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Padding Top</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <Input
+                  type="number"
+                  className="w-16 inline"
+                  value={paddingBottom}
+                  onChange={(e) => {
+                    setPaddingBottom(+e.target.value)
+                    handleAction({
+                      name: "LEX-PADDING-BOTTOM",
+                      value: +e.target.value,
+                    })
+                  }}
+                />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Padding Bottom</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </li>
+        <li className="p-2 hover:bg-blue-700 flex space-x-2">
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <Input
+                  type="number"
+                  className="w-16 inline"
+                  value={paddingLeft}
+                  onChange={(e) => {
+                    setPaddingLeft(+e.target.value)
+                    handleAction({
+                      name: "LEX-PADDING-LEFT",
+                      value: +e.target.value,
+                    })
+                  }}
+                />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Padding Left</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <Input
+                  type="number"
+                  className="w-16 inline"
+                  value={paddingRight}
+                  onChange={(e) => {
+                    setPaddingRight(+e.target.value)
+                    handleAction({
+                      name: "LEX-PADDING-RIGHT",
+                      value: +e.target.value,
+                    })
+                  }}
+                />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Padding Right</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <Input
+                  type="number"
+                  className="w-16 inline"
+                  value={padding}
+                  onChange={(e) => {
+                    setPadding(+e.target.value)
+                    handleAction({
+                      name: "LEX-PADDING",
+                      value: +e.target.value,
+                    })
+                  }}
+                />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Padding</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </li>
       </ul>
     </>
