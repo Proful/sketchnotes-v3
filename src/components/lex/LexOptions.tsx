@@ -10,9 +10,7 @@ import {
   ALLOWED_FONT_WEIGHT,
   ALLOWED_LINE_HEIGHT,
   ALLOWED_TEXT_GRADIENT,
-  DEFAULT_BORDER_RADIUS,
   DEFAULT_BORDER_WIDTH,
-  DEFAULT_FONT_SIZE,
   DEFAULT_LEX_PADDING,
 } from "@/lib/constants"
 import { Action, ActionType } from "@/lib/types"
@@ -36,14 +34,12 @@ type LexOptionsProps = {
   onAction: (action: Action) => void
 }
 export default function LexOptions({ onAction }: LexOptionsProps) {
-  const [fontSize, setFontSize] = useState(DEFAULT_FONT_SIZE)
   const [padding, setPadding] = useState(DEFAULT_LEX_PADDING)
   const [paddingTop, setPaddingTop] = useState(DEFAULT_LEX_PADDING)
   const [paddingBottom, setPaddingBottom] = useState(DEFAULT_LEX_PADDING)
   const [paddingLeft, setPaddingLeft] = useState(DEFAULT_LEX_PADDING)
   const [paddingRight, setPaddingRight] = useState(DEFAULT_LEX_PADDING)
   const [borderWidth, setBorderWidth] = useState(DEFAULT_BORDER_WIDTH)
-  const [borderRadius, setBorderRadius] = useState(DEFAULT_BORDER_RADIUS)
   const handleAction = ({
     name,
     value,

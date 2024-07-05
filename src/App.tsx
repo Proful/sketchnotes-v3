@@ -119,7 +119,7 @@ function App() {
           ))}
         </div>
       </div>
-      <div className="fixed top-0 right-0 h-full w-64 text-white shadow-lg overflow-scroll">
+      <div className="fixed top-0 right-0 h-full w-64 text-white shadow-lg overflow-scroll bg-slate-800">
         <nav className="mt-0" style={{ transform: "scale(1)" }}>
           <Actions
             onContainerCreate={handleContainerCreate}

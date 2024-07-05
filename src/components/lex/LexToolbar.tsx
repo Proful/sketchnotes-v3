@@ -1,18 +1,6 @@
 import { useEffect } from "react"
-import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext"
-import { $setBlocksType } from "@lexical/selection"
-import {
-  $getSelection,
-  $isRangeSelection,
-  LexicalEditor,
-  RangeSelection,
-} from "lexical"
 
 import { Action } from "@/lib/types"
-import {
-  $createCodeNode,
-  $isCodeHighlightNode,
-} from "@/components/lex/nodes/lexical-code"
 
 import { useLexBlockActions } from "./hooks/useLexBlockActions"
 import { useLexCode } from "./hooks/useLexCode"

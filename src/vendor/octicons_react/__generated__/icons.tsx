@@ -1,6 +1,4 @@
 /* THIS FILE IS GENERATED. DO NOT EDIT IT. */
-import React from "react"
-
 import { createIconComponent } from "../createIconComponent"
 
 const Arrow11150Icon = /*#__PURE__*/ createIconComponent(
@@ -1449,4 +1447,3 @@ export {
   CrossIcon,
   TickIcon,
 }
-

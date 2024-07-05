@@ -441,7 +441,7 @@ export function Rect({
     } else if (action.name === "BORDER-RADIUS") {
       setContainerStyle({
         ...containerStyle,
-        borderRadius: action.value! as number,
+        borderRadius: action.value! as string,
       })
     } else if (action.name === "RECT-WIDTH") {
       setContainerStyle({
@@ -601,7 +601,7 @@ export function Arrow({
     straights: containerStyle.arrowStraights,
   })
 
-  const [sx, sy, cx, cy, ex, ey, ae, as, sc] = arrow
+  const [sx, sy, cx, cy, ex, ey, ae] = arrow
   const endAngleAsDegrees = ae * (180 / Math.PI)
   const aw = containerStyle.arrowHeadSize
   return (

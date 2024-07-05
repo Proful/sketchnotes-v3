@@ -5,7 +5,6 @@ import {
   DEFAULT_ROUGH_OPTIONS,
 } from "@/lib/constants"
 import { Action } from "@/lib/types"
-import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
 import {
   Select,

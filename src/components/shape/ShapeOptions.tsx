@@ -81,7 +81,7 @@ type RectOptionsProps = {
 }
 function RectOptions({ onAction }: RectOptionsProps) {
   const [borderWidth, setBorderWidth] = useState(DEFAULT_BORDER_WIDTH)
-  const [borderRadius, setBorderRadius] = useState(DEFAULT_BORDER_RADIUS)
+  const [borderRadius] = useState(DEFAULT_BORDER_RADIUS)
   const [rectWidth, setRectWidth] = useState(DEFAULT_RECT_WIDTH)
   const [rectHeight, setRectHeight] = useState(DEFAULT_RECT_HEIGHT)
   return (
@@ -161,7 +161,7 @@ function RectOptions({ onAction }: RectOptionsProps) {
                   className="w-16 inline"
                   value={borderRadius}
                   onChange={(e) => {
-                    setBorderRadius(+e.target.value)
+                    // setBorderRadius(+e.target.value)
                     onAction({
                       name: "BORDER-RADIUS",
                       value: +e.target.value,

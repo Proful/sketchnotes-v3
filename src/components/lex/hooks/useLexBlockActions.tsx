@@ -10,7 +10,6 @@ import {
 import { $setBlocksType } from "@lexical/selection"
 import {
   $createParagraphNode,
-  $getNodeByKey,
   $getSelection,
   $isRangeSelection,
   LexicalNode,

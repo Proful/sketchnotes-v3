@@ -1,12 +1,7 @@
 import * as React from "react"
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext"
 import { $setBlocksType } from "@lexical/selection"
-import {
-  $getSelection,
-  $insertNodes,
-  $isRangeSelection,
-  RangeSelection,
-} from "lexical"
+import { $getSelection, $isRangeSelection, RangeSelection } from "lexical"
 
 import {
   $createCodeNode,

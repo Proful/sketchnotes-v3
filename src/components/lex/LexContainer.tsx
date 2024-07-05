@@ -12,7 +12,6 @@ import {
   DEFAULT_FONT_WEIGHT,
   DEFAULT_LEX_PADDING,
   DEFAULT_LINE_HEIGHT,
-  DEFAULT_LINE_WIDTH,
 } from "@/lib/constants"
 import { Action, ContainerStyle, ContainerType } from "@/lib/types"
 
