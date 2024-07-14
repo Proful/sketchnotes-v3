@@ -31,7 +31,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
     setSelectedColor(color)
     if (color) {
       setShowShades(true)
-      onColorSelect(`${color}/${opacity}`)
+      // onColorSelect(`${color}/${opacity}`)
     } else {
       setShowShades(false)
       onColorSelect(color)
@@ -60,7 +60,10 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
                     ? "ring-2 ring-offset-2 ring-indigo-500"
                     : ""
                 }`}
-                onClick={() => handleColorClick(color)}
+                onClick={(e) => {
+                  handleColorClick(color)
+                  e.stopPropagation()
+                }}
               />
             ))}
             <div
@@ -82,7 +85,11 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
                           ? "ring-2 ring-offset-2 ring-indigo-500"
                           : ""
                       }`}
-                      onClick={() => handleShadeClick(shade)}
+                      onClick={(e) => {
+                        handleShadeClick(shade)
+
+                        e.stopPropagation()
+                      }}
                     />
                   )
                 })}

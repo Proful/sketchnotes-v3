@@ -15,6 +15,7 @@ import Sidebar from "@/components/Sidebar"
 import { ThemeProvider } from "@/components/theme-provider"
 
 import HikeContainer from "./components/hike/HikeContainer"
+import PasteImageComponent from "./components/PasteImageComponent"
 
 type Icon = {
   name: string
@@ -82,6 +83,7 @@ function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <div className="mr-64 p-8 h-full w-full fixed" onClick={reset}>
+        <PasteImageComponent />
         {screenshotFrame && (
           <FrameContainer action={action} onSelect={setContainerType} />
         )}
