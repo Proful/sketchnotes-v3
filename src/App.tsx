@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 import {
   DEFAULT_CONTAINER_TYPE,
   DEFAULT_SCALE,
   DEFAULT_SHAPE_TYPE,
-  TAILWIND_COLORS,
 } from "@/lib/constants"
 import { Action, ContainerType, ShapeType } from "@/lib/types"
 import Actions from "@/components/Actions"
@@ -15,7 +14,6 @@ import { ShapeContainer } from "@/components/shape/ShapeContainer"
 import Sidebar from "@/components/Sidebar"
 import { ThemeProvider } from "@/components/theme-provider"
 
-import ColorPicker from "./components/ColorPicker"
 import HikeContainer from "./components/hike/HikeContainer"
 
 type Icon = {

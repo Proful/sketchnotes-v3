@@ -13,8 +13,6 @@ import {
   NameValuePair,
 } from "@/lib/types"
 
-import { BACKGROUND_OPTIONS } from "./background"
-
 export function FrameContainer({
   action,
   onSelect,

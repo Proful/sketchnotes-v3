@@ -21,7 +21,6 @@ import "./CodeHighlighterPrism"
 import { mergeRegister } from "@lexical/utils"
 import {
   $createLineBreakNode,
-  $createParagraphNode,
   $createTabNode,
   $createTextNode,
   $getNodeByKey,
@@ -40,7 +39,6 @@ import {
   MOVE_TO_END,
   MOVE_TO_START,
   OUTDENT_CONTENT_COMMAND,
-  ParagraphNode,
   TabNode,
   TextNode,
 } from "lexical"

@@ -164,6 +164,7 @@ const borderHandler: AnnotationHandler = {
 }
 const bgHandler: AnnotationHandler = {
   name: "bg",
+  //@ts-ignore
   Inline: ({ annotation, children }) => {
     //@ts-ignore
     const val =
@@ -181,8 +182,8 @@ const bgHandler: AnnotationHandler = {
 }
 const neonHandler: AnnotationHandler = {
   name: "neon",
+  //@ts-ignore
   Inline: ({ annotation, children }) => {
-    const background = annotation.query || "#2d26"
     const padding = ".125rem 0.1875rem"
     return (
       <span

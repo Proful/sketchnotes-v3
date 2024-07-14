@@ -4,7 +4,6 @@ import { Action } from "@/lib/types"
 
 import { useLexBlockActions } from "./hooks/useLexBlockActions"
 import { useLexCode } from "./hooks/useLexCode"
-import { useLexColor } from "./hooks/useLexColor"
 import { useLexInlineActions } from "./hooks/useLexInlineActions"
 import { useLexKlass } from "./hooks/useLexKlass"
 

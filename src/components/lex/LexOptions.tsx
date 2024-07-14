@@ -16,7 +16,6 @@ import {
   TAILWIND_COLORS,
 } from "@/lib/constants"
 import { Action, ActionType } from "@/lib/types"
-import { hslToHex } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -34,7 +33,6 @@ import {
 } from "@/components/ui/tooltip"
 
 import ColorPicker from "../ColorPicker"
-import { Slider } from "../ui/slider"
 
 type LexOptionsProps = {
   onAction: (action: Action) => void
