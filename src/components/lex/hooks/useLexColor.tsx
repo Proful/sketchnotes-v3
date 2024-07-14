@@ -10,6 +10,7 @@ export const useLexColor = () => {
 
   const decorationColor = (value: string) =>
     applyStyleText({
+      "text-decoration-thickness": "2px",
       "text-decoration-color": value,
       "text-decoration": "underline",
       "text-underline-offset": DEFAULT_TEXT_UNDERLINE_OFFSET,

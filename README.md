@@ -3,11 +3,16 @@
 ## wishlist
 
 - multi selection
-- lex > select after create
-- line spacing
 - prismjs theme
 - code > font
 - rough rect, give some padding
+- img
+- save
+- design
+- option > preserve selected value
+- after zoom text is going away from screen
+- in zoom mode not able to create new element
+- code-hike download grammars from net
 
 ## drawing to sketch
 

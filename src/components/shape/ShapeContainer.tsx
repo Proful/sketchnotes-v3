@@ -159,10 +159,10 @@ export function Line({
       width={containerStyle.lineWidth}
       height={containerStyle.borderWidth! + 2}
       xmlns="http://www.w3.org/2000/svg"
+      className={containerStyle.borderColor}
     >
       <line
         strokeWidth={containerStyle.borderWidth}
-        stroke={containerStyle.borderColor}
         x1={0}
         y1={1}
         x2={containerStyle.lineWidth}
@@ -215,22 +215,17 @@ export function LineCircle({
       width={containerStyle.lineWidth! + 4 * r}
       height={containerStyle.borderWidth! + 40}
       xmlns="http://www.w3.org/2000/svg"
+      className={`${containerStyle.borderColor} ${containerStyle.borderColor?.replace("stroke", "fill")}`}
     >
-      <circle cx={5} cy={6} r={r} fill={containerStyle.borderColor} />
+      <circle cx={5} cy={6} r={r} />
       <line
         strokeWidth={containerStyle.borderWidth}
-        stroke={containerStyle.borderColor}
         x1={2 * r}
         y1={6}
         x2={containerStyle.lineWidth}
         y2={6}
       />
-      <circle
-        cx={r + containerStyle.lineWidth!}
-        cy={6}
-        r={r}
-        fill={containerStyle.borderColor}
-      />
+      <circle cx={r + containerStyle.lineWidth!} cy={6} r={r} />
     </svg>
   )
 }
@@ -282,10 +277,10 @@ export function LineLine({
       width={containerStyle.line2Width! + 4}
       height={containerStyle.lineWidth! + 4}
       xmlns="http://www.w3.org/2000/svg"
+      className={`${containerStyle.borderColor}`}
     >
       <line
         strokeWidth={containerStyle.borderWidth}
-        stroke={containerStyle.borderColor}
         x1={0}
         y1={1}
         x2={containerStyle.line2Width}
@@ -293,7 +288,6 @@ export function LineLine({
       />
       <line
         strokeWidth={containerStyle.borderWidth}
-        stroke={containerStyle.borderColor}
         x1={containerStyle.line2Width! / 2}
         y1={1}
         x2={containerStyle.line2Width! / 2}
@@ -386,10 +380,10 @@ export function LineLineV2({
       width={containerStyle.lineWidth! + 4}
       height={containerStyle.line2Width! + 4}
       xmlns="http://www.w3.org/2000/svg"
+      className={`${containerStyle.borderColor}`}
     >
       <line
         strokeWidth={containerStyle.borderWidth}
-        stroke={containerStyle.borderColor}
         x1={points[DIRECTION][0][0]}
         y1={points[DIRECTION][0][1]}
         x2={points[DIRECTION][0][2]}
@@ -397,7 +391,6 @@ export function LineLineV2({
       />
       <line
         strokeWidth={containerStyle.borderWidth}
-        stroke={containerStyle.borderColor}
         x1={points[DIRECTION][1][0]}
         y1={points[DIRECTION][1][1]}
         x2={points[DIRECTION][1][2]}
@@ -466,18 +459,13 @@ export function Rect({
       width={containerStyle.rectWidth}
       height={containerStyle.rectHeight}
       xmlns="http://www.w3.org/2000/svg"
+      className={`${containerStyle.borderColor} ${containerStyle.shapeFill}`}
     >
       <rect
         x="0"
         y="0"
         width={containerStyle.rectWidth}
         height={containerStyle.rectHeight}
-        fill={
-          containerStyle.shapeFill === "#000000"
-            ? "transparent"
-            : containerStyle.shapeFill
-        }
-        stroke={containerStyle?.borderColor}
         stroke-width={containerStyle.borderWidth}
         rx={containerStyle.borderRadius}
         ry={containerStyle.borderRadius}
@@ -608,8 +596,7 @@ export function Arrow({
     <svg
       viewBox={`0 0 ${w} ${h}`}
       style={{ width: w, height: h }}
-      stroke={containerStyle.borderColor}
-      fill={containerStyle.shapeFill}
+      className={`${containerStyle.borderColor} ${containerStyle.shapeFill}`}
       strokeWidth={containerStyle.borderWidth}
     >
       <path d={`M${sx},${sy} Q${cx},${cy} ${ex},${ey}`} fill="none" />

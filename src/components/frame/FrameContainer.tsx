@@ -13,6 +13,8 @@ import {
   NameValuePair,
 } from "@/lib/types"
 
+import { BACKGROUND_OPTIONS } from "./background"
+
 export function FrameContainer({
   action,
   onSelect,
@@ -67,17 +69,18 @@ export function FrameContainer({
     <>
       <Draggable nodeRef={nodeRef}>
         <div
-          className={`w-[${w}px] h-[${h}px] absolute border-4`}
+          className={`w-[${w}px] h-[${h}px] absolute border-4 -z-10`}
           ref={nodeRef}
           onClick={(e) => {
             onSelect("FRAME")
             e.stopPropagation()
           }}
         >
+          {/* {BACKGROUND_OPTIONS[0].component} */}
           <div
-            className={`bg-gradient-to-r ${containerStyle.frameGradient!.value} p-4 w-full h-full`}
+            className={`bg-gradient-to-r ${containerStyle.frameGradient!.value} p-2 w-full h-full`}
           >
-            <div className="w-full h-full p-4 bg-background rounded-lg">
+            <div className="w-full h-full p-4  rounded-lg">
               {containerStyle.enable3dots && (
                 <div className="flex space-x-2 rounded-lg">
                   <div className="w-3 h-3 bg-red-500 rounded-full"></div>

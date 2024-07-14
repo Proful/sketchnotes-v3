@@ -13,8 +13,10 @@ import {
   ALLOWED_TEXT_GRADIENT,
   DEFAULT_BORDER_WIDTH,
   DEFAULT_LEX_PADDING,
+  TAILWIND_COLORS,
 } from "@/lib/constants"
 import { Action, ActionType } from "@/lib/types"
+import { hslToHex } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -30,6 +32,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+
+import ColorPicker from "../ColorPicker"
+import { Slider } from "../ui/slider"
 
 type LexOptionsProps = {
   onAction: (action: Action) => void
@@ -57,6 +62,24 @@ export default function LexOptions({ onAction }: LexOptionsProps) {
   return (
     <>
       <ul>
+        <li className="p-2 hover:bg-blue-700">
+          <Select
+            onValueChange={(v) => {
+              handleAction({ name: "CODE", value: v })
+            }}
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Language" />
+            </SelectTrigger>
+            <SelectContent>
+              {ALLOWED_CODE_LANGUAGE.map((lang) => (
+                <SelectItem value={lang} key={lang}>
+                  {lang}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </li>
         <li className="p-2 hover:bg-blue-700 flex space-x-2">
           <Select
             onValueChange={(v) => {
@@ -144,6 +167,62 @@ export default function LexOptions({ onAction }: LexOptionsProps) {
           </Select>
         </li>
 
+        <li className="p-2 hover:bg-blue-700 space-x-2">
+          <ColorPicker
+            label="color"
+            colors={TAILWIND_COLORS}
+            onColorSelect={(c) =>
+              handleAction({
+                name: "COLOR",
+                value: c.replace("bg", "text"),
+              })
+            }
+          />
+          <ColorPicker
+            label="bg"
+            colors={TAILWIND_COLORS}
+            onColorSelect={(c) =>
+              handleAction({
+                name: "BACKGROUND-COLOR",
+                value: c,
+              })
+            }
+          />
+
+          <ColorPicker
+            label="decoration"
+            colors={TAILWIND_COLORS}
+            onColorSelect={(c) =>
+              handleAction({
+                name: "DECORATION-COLOR",
+                value: c.replace("bg", "decoration"),
+              })
+            }
+          />
+        </li>
+
+        <li className="p-2 hover:bg-blue-700 flex space-x-2">
+          <ColorPicker
+            label="box bg"
+            colors={TAILWIND_COLORS}
+            onColorSelect={(c) =>
+              handleAction({
+                name: "LEX-BACKGROUND-COLOR",
+                value: c,
+              })
+            }
+          />
+          <ColorPicker
+            label="highlight"
+            colors={TAILWIND_COLORS}
+            onColorSelect={(c) =>
+              handleAction({
+                name: "HIGHLIGHT",
+                value: c,
+              })
+            }
+          />
+        </li>
         <li className="p-2 hover:bg-blue-700 flex space-x-2">
           <Select
             onValueChange={(v) => {
@@ -191,28 +270,6 @@ export default function LexOptions({ onAction }: LexOptionsProps) {
             <Tooltip>
               <TooltipTrigger>
                 <Input
-                  type="color"
-                  className="w-12 inline"
-                  onChange={(e) =>
-                    handleAction({
-                      name: "BORDER-COLOR",
-                      value: e.target.value,
-                    })
-                  }
-                />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Border Color</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        </li>
-
-        <li className="p-2 hover:bg-blue-700 space-x-2">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <Input
                   type="number"
                   className="w-16 inline"
                   value={borderWidth}
@@ -230,6 +287,19 @@ export default function LexOptions({ onAction }: LexOptionsProps) {
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
+        </li>
+
+        <li className="p-2 hover:bg-blue-700 space-x-2">
+          <ColorPicker
+            label="Border"
+            colors={TAILWIND_COLORS}
+            onColorSelect={(c) =>
+              handleAction({
+                name: "BORDER-COLOR",
+                value: c.replace("bg", "border"),
+              })
+            }
+          />
         </li>
 
         <li className="p-2 hover:bg-blue-700 flex space-x-2">
@@ -254,45 +324,6 @@ export default function LexOptions({ onAction }: LexOptionsProps) {
           </Select>
         </li>
 
-        <li className="p-2 hover:bg-blue-700">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <Input
-                  type="color"
-                  className="w-12 inline"
-                  onChange={(e) =>
-                    handleAction({
-                      name: "LEX-BACKGROUND-COLOR",
-                      value: e.target.value,
-                    })
-                  }
-                />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Background Color</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        </li>
-        <li className="p-2 hover:bg-blue-700">
-          <Select
-            onValueChange={(v) => {
-              handleAction({ name: "CODE", value: v })
-            }}
-          >
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Language" />
-            </SelectTrigger>
-            <SelectContent>
-              {ALLOWED_CODE_LANGUAGE.map((lang) => (
-                <SelectItem value={lang} key={lang}>
-                  {lang}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </li>
         <li className="p-2 hover:bg-blue-700 space-x-2">
           <Button onClick={() => handleAction({ name: "BOLD" })}>B</Button>
           <Button onClick={() => handleAction({ name: "ITALIC" })}>I</Button>
@@ -300,88 +331,6 @@ export default function LexOptions({ onAction }: LexOptionsProps) {
           <Button onClick={() => handleAction({ name: "STRIKETHROUGH" })}>
             S
           </Button>
-        </li>
-        <li className="p-2 hover:bg-blue-700 space-x-2">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <Input
-                  type="color"
-                  className="w-12 inline"
-                  title="Color"
-                  onChange={(e) =>
-                    handleAction({ name: "COLOR", value: e.target.value })
-                  }
-                />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Color</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <Input
-                  type="color"
-                  className="w-12 inline"
-                  title="Background color"
-                  onChange={(e) =>
-                    handleAction({
-                      name: "BACKGROUND-COLOR",
-                      value: e.target.value,
-                    })
-                  }
-                />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Background Color</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <Input
-                  type="color"
-                  className="w-12 inline"
-                  title="Decoration color"
-                  onChange={(e) =>
-                    handleAction({
-                      name: "DECORATION-COLOR",
-                      value: e.target.value,
-                    })
-                  }
-                />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Decoration Color</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <Input
-                  type="color"
-                  className="w-12 inline"
-                  title="Highlight"
-                  onChange={(e) =>
-                    handleAction({
-                      name: "HIGHLIGHT",
-                      value: e.target.value,
-                    })
-                  }
-                />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Highlight</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
         </li>
 
         <li className="p-2 hover:bg-blue-700 flex space-x-2">

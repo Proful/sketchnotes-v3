@@ -14,6 +14,13 @@ module.exports = {
     "h-[450px]",
     "h-[854px]",
     "h-[760px]",
+    "border-blue-500",
+    "border-green-500",
+    "border-red-500",
+    {
+      pattern:
+        /(bg|text|border|decoration|fill|stroke)-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(100|200|300|400|500|600|700|800|900)/,
+    },
     {
       pattern: /text-.+/,
     },
@@ -25,6 +32,9 @@ module.exports = {
     },
     {
       pattern: /shadow-.+/,
+    },
+    {
+      pattern: /border-blue-500/,
     },
   ],
   theme: {
@@ -69,6 +79,9 @@ module.exports = {
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
+        },
+        hike: {
+          DEFAULT: "hsl(var(--hike))",
         },
       },
       borderRadius: {

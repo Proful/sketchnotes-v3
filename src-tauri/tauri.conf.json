@@ -9,6 +9,11 @@
     "productName": "sketchnotes-v3",
     "version": "0.0.1"
   },
+  "plugins": {
+    "clipboard": {
+      "enabled": true
+    }
+  },
   "tauri": {
     "allowlist": {
       "all": false,

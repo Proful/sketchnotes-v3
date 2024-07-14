@@ -13,7 +13,10 @@ export const useLexInlineActions = () => {
 
   const underline = () => formatTextCommand("underline")
 
-  const strikethrough = () => formatTextCommand("strikethrough")
+  const strikethrough = () => {
+    // formatTextCommand("strikethrough")
+    console.log("strikethrough")
+  }
 
   const highlight = () => formatTextCommand("highlight")
 

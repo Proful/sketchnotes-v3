@@ -1,9 +1,10 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import {
   DEFAULT_CONTAINER_TYPE,
   DEFAULT_SCALE,
   DEFAULT_SHAPE_TYPE,
+  TAILWIND_COLORS,
 } from "@/lib/constants"
 import { Action, ContainerType, ShapeType } from "@/lib/types"
 import Actions from "@/components/Actions"
@@ -13,6 +14,9 @@ import LexContainer from "@/components/lex/LexContainer"
 import { ShapeContainer } from "@/components/shape/ShapeContainer"
 import Sidebar from "@/components/Sidebar"
 import { ThemeProvider } from "@/components/theme-provider"
+
+import ColorPicker from "./components/ColorPicker"
+import HikeContainer from "./components/hike/HikeContainer"
 
 type Icon = {
   name: string
@@ -26,6 +30,7 @@ type Shape = {
 function App() {
   const [scale, setScale] = useState(DEFAULT_SCALE)
   const [action, setAction] = useState<Action | null>(null)
+  const [hikeList, setHikeList] = useState<number[]>([])
   const [lexList, setLexList] = useState<number[]>([])
   const [iconList, setIconList] = useState<Icon[]>([])
   const [shapeList, setShapeList] = useState<Shape[]>([])
@@ -41,7 +46,9 @@ function App() {
     subType?: string | undefined
   ): void {
     const uuid = Math.random()
-    if (containerType === "LEX") {
+    if (containerType === "HIKE") {
+      setHikeList([...hikeList, uuid])
+    } else if (containerType === "LEX") {
       setLexList([...lexList, uuid])
     } else if (containerType === "ICON") {
       setIconList([...iconList, { name: subType!, id: uuid }])
@@ -56,6 +63,8 @@ function App() {
   }
 
   function handleDelete(): void {
+    const hikeListUpd = hikeList.filter((hike) => hike !== selectedId)
+    setHikeList(hikeListUpd)
     const lexListUpd = lexList.filter((lex) => lex !== selectedId)
     setLexList(lexListUpd)
     const iconListUpd = iconList.filter((icon) => icon.id !== selectedId)
@@ -117,6 +126,18 @@ function App() {
               }}
             />
           ))}
+          {hikeList.map((id) => (
+            <HikeContainer
+              action={action}
+              key={id}
+              id={id}
+              selectedId={selectedId as number}
+              onSelect={(id, containerType) => {
+                setSelectedId(id)
+                setContainerType(containerType)
+              }}
+            />
+          ))}
         </div>
       </div>
       <div className="fixed top-0 right-0 h-full w-64 text-white shadow-lg overflow-scroll bg-slate-800">
@@ -137,5 +158,4 @@ function App() {
     </ThemeProvider>
   )
 }
-
 export default App

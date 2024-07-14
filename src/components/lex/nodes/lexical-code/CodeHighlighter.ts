@@ -21,6 +21,7 @@ import "./CodeHighlighterPrism"
 import { mergeRegister } from "@lexical/utils"
 import {
   $createLineBreakNode,
+  $createParagraphNode,
   $createTabNode,
   $createTextNode,
   $getNodeByKey,
@@ -39,6 +40,7 @@ import {
   MOVE_TO_END,
   MOVE_TO_START,
   OUTDENT_CONTENT_COMMAND,
+  ParagraphNode,
   TabNode,
   TextNode,
 } from "lexical"
@@ -209,7 +211,7 @@ function $textNodeTransform(
 ): void {
   // Since CodeNode has flat children structure we only need to check
   // if node's parent is a code node and run highlighting if so
-  const parentNode = node.getParent()
+  let parentNode = node.getParent()
   if ($isCodeNode(parentNode)) {
     codeNodeTransform(parentNode, editor, tokenizer)
   } else if ($isCodeHighlightNode(node)) {
@@ -289,8 +291,22 @@ function codeNodeTransform(
           currentNode.getLanguage() || tokenizer.defaultLanguage
         )
         const highlightNodes = $getHighlightNodes(tokens)
+        // const listP = []
+        // let p = $createParagraphNode()
+        // console.log(highlightNodes, p)
+        // for (const n of highlightNodes) {
+        //   if ($isLineBreakNode(n)) {
+        //     listP.push(ParagraphNode.clone(p))
+        //     p = $createParagraphNode()
+        //   } else {
+        //     p.append(n)
+        //   }
+        // }
+        // listP.push(p)
+        // console.log(p)
         const diffRange = getDiffRange(
           currentNode.getChildren(),
+          // listP
           highlightNodes
         )
         const { from, to, nodesForReplacement } = diffRange

@@ -7,6 +7,8 @@
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
 
+    --hike: 200 20% 48%;
+
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
 
@@ -43,6 +45,7 @@
     --background: 200 20% 18%;
     --foreground: 210 40% 98%;
 
+    --hike: 200 20% 12%;
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
 

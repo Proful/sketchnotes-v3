@@ -12,6 +12,7 @@ export type ActionType =
   | "DECORATION-COLOR"
   | "BACKGROUND-COLOR" // single char
   | "LEX-BACKGROUND-COLOR" // entire box
+  | "HIKE-PREVIEW"
   | "H1"
   | "H2"
   | "H3"
@@ -90,7 +91,7 @@ export type Action = {
   value?: string | number | boolean | NameValuePair
 }
 export type NameValuePair = { name: string; value: string }
-export type ContainerType = "LEX" | "ICON" | "SHAPE" | "FRAME" | "NONE"
+export type ContainerType = "HIKE" | "LEX" | "ICON" | "SHAPE" | "FRAME" | "NONE"
 export type ShapeType =
   | "RECT"
   | "ELLIPSE"

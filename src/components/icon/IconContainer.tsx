@@ -86,7 +86,7 @@ export function IconContainer({
       >
         <Icon
           size={containerStyle.iconSize}
-          fill={containerStyle.iconColor}
+          className={containerStyle.iconColor}
           verticalAlign="middle"
           transform={`rotate(${containerStyle.iconRotate}deg)`}
         />

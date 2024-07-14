@@ -6,6 +6,7 @@ import {
   ArrowUp,
   CircleIcon,
   CircleStop,
+  CodeIcon,
   EllipsisIcon,
   FileLineChartIcon,
   FrameIcon,
@@ -50,8 +51,8 @@ export default function Actions({
     <>
       <ul>
         <li className="p-2 hover:bg-blue-700 flex space-x-2">
-          <Button onClick={toggleGrid}>
-            <GridIcon />
+          <Button onClick={() => onContainerCreate("HIKE")}>
+            <CodeIcon />
           </Button>
           <Button onClick={() => onContainerCreate("LEX")}>Lex</Button>
           <Popover>
@@ -179,6 +180,9 @@ export default function Actions({
               onScale(+e.target.value)
             }}
           />
+          <Button onClick={toggleGrid}>
+            <GridIcon />
+          </Button>
         </li>
       </ul>
     </>

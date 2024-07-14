@@ -20,6 +20,7 @@ import {
   DEFAULT_RECT_HEIGHT,
   DEFAULT_RECT_WIDTH,
   DEFAULT_SHAPE_ROTATE,
+  TAILWIND_COLORS,
 } from "@/lib/constants"
 import { Action, ShapeType } from "@/lib/types"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -38,6 +39,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 
+import ColorPicker from "../ColorPicker"
 import RoughjsOptions from "./RoughjsOptions"
 
 type ShapeOptionsProps = {
@@ -88,48 +90,29 @@ function RectOptions({ onAction }: RectOptionsProps) {
     <>
       <ul>
         <li className="p-1 hover:bg-blue-700 space-x-2">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <Input
-                  type="color"
-                  className="w-12 inline"
-                  onChange={(e) => {
-                    onAction({
-                      name: "BORDER-COLOR",
-                      seed: Math.random(),
-                      value: e.target.value,
-                    })
-                  }}
-                />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Border Color</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <ColorPicker
+            label="color"
+            colors={TAILWIND_COLORS}
+            onColorSelect={(c) =>
+              onAction({
+                name: "BORDER-COLOR",
+                seed: Math.random(),
+                value: c.replace("bg", "stroke"),
+              })
+            }
+          />
 
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <Input
-                  type="color"
-                  className="w-12 inline"
-                  onChange={(e) => {
-                    onAction({
-                      name: "SHAPE-FILL",
-                      seed: Math.random(),
-                      value: e.target.value,
-                    })
-                  }}
-                />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Fill Color</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-
+          <ColorPicker
+            label="color"
+            colors={TAILWIND_COLORS}
+            onColorSelect={(c) =>
+              onAction({
+                name: "SHAPE-FILL",
+                seed: Math.random(),
+                value: c.replace("bg", "fill"),
+              })
+            }
+          />
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
@@ -294,26 +277,17 @@ function LineOptions({ onAction }: { onAction: (action: Action) => void }) {
     <>
       <ul>
         <li className="p-1 hover:bg-blue-700 space-x-2">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <Input
-                  type="color"
-                  className="w-12 inline"
-                  onChange={(e) => {
-                    onAction({
-                      name: "BORDER-COLOR",
-                      seed: Math.random(),
-                      value: e.target.value,
-                    })
-                  }}
-                />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Border Color</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <ColorPicker
+            label="color"
+            colors={TAILWIND_COLORS}
+            onColorSelect={(c) =>
+              onAction({
+                name: "BORDER-COLOR",
+                seed: Math.random(),
+                value: c.replace("bg", "stroke"),
+              })
+            }
+          />
 
           <TooltipProvider>
             <Tooltip>
@@ -379,26 +353,17 @@ function LineCircleOptions({
     <>
       <ul>
         <li className="p-1 hover:bg-blue-700 space-x-2">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <Input
-                  type="color"
-                  className="w-12 inline"
-                  onChange={(e) => {
-                    onAction({
-                      name: "BORDER-COLOR",
-                      seed: Math.random(),
-                      value: e.target.value,
-                    })
-                  }}
-                />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Border Color</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <ColorPicker
+            label="color"
+            colors={TAILWIND_COLORS}
+            onColorSelect={(c) =>
+              onAction({
+                name: "BORDER-COLOR",
+                seed: Math.random(),
+                value: c.replace("bg", "stroke"),
+              })
+            }
+          />
         </li>
 
         <li className="p-1 hover:bg-blue-700 space-x-2">
@@ -483,26 +448,17 @@ function LineLineOptions({ onAction }: { onAction: (action: Action) => void }) {
     <>
       <ul>
         <li className="p-1 hover:bg-blue-700 space-x-2">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <Input
-                  type="color"
-                  className="w-12 inline"
-                  onChange={(e) => {
-                    onAction({
-                      name: "BORDER-COLOR",
-                      seed: Math.random(),
-                      value: e.target.value,
-                    })
-                  }}
-                />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Border Color</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <ColorPicker
+            label="color"
+            colors={TAILWIND_COLORS}
+            onColorSelect={(c) =>
+              onAction({
+                name: "BORDER-COLOR",
+                seed: Math.random(),
+                value: c.replace("bg", "stroke"),
+              })
+            }
+          />
         </li>
 
         <li className="p-1 hover:bg-blue-700 space-x-2">
@@ -638,26 +594,17 @@ function LineLineV2Options({
           </Select>
         </li>
         <li className="p-1 hover:bg-blue-700 space-x-2">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <Input
-                  type="color"
-                  className="w-12 inline"
-                  onChange={(e) => {
-                    onAction({
-                      name: "BORDER-COLOR",
-                      seed: Math.random(),
-                      value: e.target.value,
-                    })
-                  }}
-                />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Border Color</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <ColorPicker
+            label="color"
+            colors={TAILWIND_COLORS}
+            onColorSelect={(c) =>
+              onAction({
+                name: "BORDER-COLOR",
+                seed: Math.random(),
+                value: c.replace("bg", "stroke"),
+              })
+            }
+          />
         </li>
 
         <li className="p-1 hover:bg-blue-700 space-x-2">
@@ -849,47 +796,29 @@ function ArrowOptions({ onAction }: { onAction: (action: Action) => void }) {
           </TooltipProvider>
         </li>
         <li className="p-1 hover:bg-blue-700 space-x-2">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <Input
-                  type="color"
-                  className="w-12 inline"
-                  onChange={(e) =>
-                    onAction({
-                      name: "BORDER-COLOR",
-                      value: e.target.value,
-                      seed: Math.random(),
-                    })
-                  }
-                />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Border Color</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <ColorPicker
+            label="border color"
+            colors={TAILWIND_COLORS}
+            onColorSelect={(c) =>
+              onAction({
+                name: "BORDER-COLOR",
+                seed: Math.random(),
+                value: c.replace("bg", "stroke"),
+              })
+            }
+          />
 
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <Input
-                  type="color"
-                  className="w-12 inline"
-                  onChange={(e) =>
-                    onAction({
-                      name: "SHAPE-FILL",
-                      value: e.target.value,
-                      seed: Math.random(),
-                    })
-                  }
-                />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Color</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <ColorPicker
+            label="color"
+            colors={TAILWIND_COLORS}
+            onColorSelect={(c) =>
+              onAction({
+                name: "SHAPE-FILL",
+                seed: Math.random(),
+                value: c.replace("bg", "fill"),
+              })
+            }
+          />
         </li>
         <li className="p-1 hover:bg-blue-700 space-x-2">
           <TooltipProvider>

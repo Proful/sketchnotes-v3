@@ -9,6 +9,8 @@ use std::io::ErrorKind::WouldBlock;
 use std::time::Duration;
 use std::{fs, thread};
 use tauri::api::path::data_dir;
+use tauri::Manager;
+use tauri_plugin_clipboard::ClipboardManager;
 
 fn get_data_directory() -> Option<String> {
     data_dir().map(|path| path.to_string_lossy().into_owned())
@@ -21,6 +23,7 @@ fn greet(name: &str) -> String {
 
 fn main() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_clipboard::init())
         .invoke_handler(tauri::generate_handler![greet, screenshot])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
@@ -28,7 +31,7 @@ fn main() {
 
 #[tauri::command]
 //fn screenshot() {
-fn screenshot(x: usize, y: usize, width: usize, height: usize) {
+fn screenshot(x: usize, y: usize, width: usize, height: usize, window: tauri::Window) {
     // Set the section of the screen to capture (x, y, width, height)
     //let x = 100;
     //let y = 100;
@@ -95,9 +98,13 @@ fn screenshot(x: usize, y: usize, width: usize, height: usize) {
 
             img.save(&path).expect("Failed to save screenshot.");
             println!("Screenshot saved to {}", &path.to_string_lossy());
-            //file.write_all(content.as_bytes())
-            //    .map_err(|e| e.to_string())?;
-            //Ok(path.to_string_lossy().into_owned())
+            // Read the image file as bytes
+            let image_data = std::fs::read(&path).map_err(|e| e.to_string()).unwrap();
+
+            let app = window.app_handle();
+            let clipboard = app.state::<tauri_plugin_clipboard::ClipboardManager>();
+
+            clipboard.write_image_binary(image_data);
         }
         None => {
             dbg!("err");

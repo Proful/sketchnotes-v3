@@ -3,6 +3,7 @@ import IconOptions from "@/components/icon/IconOptions"
 import LexOptions from "@/components/lex/LexOptions"
 
 import FrameOptions from "./frame/FrameOptions"
+import HikeOptions from "./hike/HikeOptions"
 import ShapeOptions from "./shape/ShapeOptions"
 
 type SidebarProps = {
@@ -17,6 +18,8 @@ export default function Sidebar({
 }: SidebarProps) {
   if (containerType === "LEX") {
     return <LexOptions onAction={onAction} />
+  } else if (containerType === "HIKE") {
+    return <HikeOptions onAction={onAction} />
   } else if (containerType === "ICON") {
     return <IconOptions onAction={onAction} />
   } else if (containerType === "SHAPE") {

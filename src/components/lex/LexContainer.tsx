@@ -13,6 +13,7 @@ import {
   DEFAULT_FONT_WEIGHT,
   DEFAULT_LEX_PADDING,
   DEFAULT_LINE_HEIGHT,
+  DEFAULT_TAILWIND_COLOR,
 } from "@/lib/constants"
 import { Action, ContainerStyle, ContainerType } from "@/lib/types"
 
@@ -45,6 +46,7 @@ function LexContainer({
     paddingRight: DEFAULT_LEX_PADDING,
     padding: DEFAULT_LEX_PADDING,
     boxShadow: DEFAULT_BOX_SHADOW,
+    lexBackgroundColor: DEFAULT_TAILWIND_COLOR,
   })
   const nodeRef = React.useRef(null)
   useEffect(() => {
@@ -96,6 +98,7 @@ function LexContainer({
           | "RIGHT",
       })
     } else if (action?.name === "BORDER-COLOR") {
+      console.log(action)
       setContainerStyle({
         ...containerStyle,
         borderColor: action.value! as string,
@@ -138,6 +141,10 @@ function LexContainer({
     }
   }, [action?.seed])
 
+  useEffect(() => {
+    onSelect(id, "LEX")
+  }, [])
+
   let borderKey = "border"
   const dir = containerStyle.borderDirection
   if (dir === "ALL") {
@@ -153,7 +160,8 @@ function LexContainer({
   }
 
   let borderCSS = {
-    [borderKey]: `${containerStyle.borderWidth}px ${containerStyle.borderStyle} ${containerStyle.borderColor}`,
+    [`${borderKey}Width`]: `${containerStyle.borderWidth}px`,
+    [`${borderKey}Style`]: `${containerStyle.borderStyle}`,
   }
 
   const style = {
@@ -163,7 +171,7 @@ function LexContainer({
     paddingLeft: containerStyle.paddingLeft,
     paddingRight: containerStyle.paddingRight,
     padding: containerStyle.padding,
-    backgroundColor: containerStyle.lexBackgroundColor,
+    // backgroundColor: containerStyle.lexBackgroundColor,
     ...borderCSS,
   }
 
@@ -172,16 +180,13 @@ function LexContainer({
       <div
         style={style}
         ref={nodeRef}
-        className={`w-fit p-2 absolute top-0 text-${containerStyle.fontSize} font-${containerStyle.fontWeight} leading-${containerStyle.lineHeight} ${containerStyle.borderRadius} ${containerStyle.boxShadow}`}
+        className={`w-fit z-20 p-2 absolute top-0 text-${containerStyle.fontSize} font-${containerStyle.fontWeight} leading-${containerStyle.lineHeight} ${containerStyle.borderRadius} ${containerStyle.boxShadow} ${containerStyle.lexBackgroundColor} ${containerStyle.borderColor}`}
         onClick={(e) => {
           onSelect(id, "LEX")
           e.stopPropagation()
         }}
       >
-        {/* <div className="absolute left-1/2 transform -translate-x-1/2 -top-2 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-blue-500"></div> */}
-        {/* <div className="p-4 rounded-lg shadow-lg border border-blue-500"> */}
         <LexTextarea action={action} id={id} selectedId={selectedId} />
-        {/*   </div> */}
       </div>
     </Draggable>
   )
