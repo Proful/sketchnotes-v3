@@ -2,7 +2,6 @@ import * as React from "react"
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext"
 import {
   $createRangeSelection,
-  $getNodeByKey,
   $getSelection,
   $insertNodes,
   $isRangeSelection,
