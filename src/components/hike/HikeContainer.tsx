@@ -23,8 +23,9 @@ import { Action, ContainerType } from "@/lib/types"
 import LexEditorTheme from "@/components/lex/LexEditorTheme"
 
 import ErrorBoundary from "../ErrorBoundary"
-import { CopyButton } from "./CopyButton"
-import HikeContainerTheme from "./HikeContainerTheme"
+
+// import { CopyButton } from "./CopyButton"
+// import HikeContainerTheme from "./HikeContainerTheme"
 
 // Catch any errors that occur during Lexical updates and log them
 // or throw them as needed. If you don't throw them, Lexical will
@@ -166,6 +167,7 @@ export function Code({ codeblock }: { codeblock: RawCode }) {
   )
 }
 
+//!border[1:7]
 const borderHandler: AnnotationHandler = {
   name: "border",
   Inline: ({ annotation, children }) => {
@@ -173,6 +175,8 @@ const borderHandler: AnnotationHandler = {
     return <span style={{ border: "1px solid", borderColor }}>{children}</span>
   },
 }
+
+//!bg[1:4]
 const bgHandler: AnnotationHandler = {
   name: "bg",
   //@ts-ignore
@@ -191,6 +195,7 @@ const bgHandler: AnnotationHandler = {
     )
   },
 }
+//!neon[1:4]
 const neonHandler: AnnotationHandler = {
   name: "neon",
   //@ts-ignore

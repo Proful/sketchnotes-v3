@@ -6,7 +6,7 @@ export function CopyButton({ text }: { text: string }) {
 
   return (
     <button
-      className="hover:bg-gray-400/20 p-1 rounded absolute top-6 right-6 text-zinc-200"
+      className="hover:bg-gray-400/20 p-1 rounded absolute top-2 right-2 text-zinc-200"
       aria-label="Copy to clipboard"
       onClick={() => {
         navigator.clipboard.writeText(text)
