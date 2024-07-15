@@ -1,23 +1,19 @@
-// eslint-disable-next-line import/no-namespace
-// import * as Octicons from "@primer/octicons-react"
 import { useState } from "react"
 import * as Octicons from "@/vendor/octicons_react/"
 import {
   ArrowUp,
+  CircleEllipsisIcon,
   CircleIcon,
-  CircleStop,
   CodeIcon,
-  EllipsisIcon,
-  FileLineChartIcon,
   FrameIcon,
   GridIcon,
-  IceCreamConeIcon,
-  LineChartIcon,
-  PenLineIcon,
+  MinusIcon,
   RectangleVerticalIcon,
-  ScanLineIcon,
+  RedoIcon,
+  SlashIcon,
   SquareIcon,
   Trash,
+  TypeIcon,
 } from "lucide-react"
 
 import { DEFAULT_SCALE } from "@/lib/constants"
@@ -54,11 +50,13 @@ export default function Actions({
           <Button onClick={() => onContainerCreate("HIKE")}>
             <CodeIcon />
           </Button>
-          <Button onClick={() => onContainerCreate("LEX")}>Lex</Button>
+          <Button onClick={() => onContainerCreate("LEX")}>
+            <TypeIcon />
+          </Button>
           <Popover>
             <PopoverTrigger>
               <span className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
-                <IceCreamConeIcon />
+                <RedoIcon />
               </span>
             </PopoverTrigger>
             <PopoverContent>
@@ -98,28 +96,65 @@ export default function Actions({
                   className="w-1/5 p-2 border border-gray-900 text-center"
                   onClick={() => onContainerCreate("SHAPE", "LINE")}
                 >
-                  <LineChartIcon />
+                  <MinusIcon />
                 </li>
 
                 <li
                   className="w-1/5 p-2 border border-gray-900 text-center"
                   onClick={() => onContainerCreate("SHAPE", "LINE-CIRCLE")}
                 >
-                  <CircleStop />
+                  <svg
+                    width="24"
+                    height="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="stroke-white fill-white"
+                  >
+                    <circle cx="5" cy="6" r="3"></circle>
+                    <line stroke-width="1" x1="6" y1="6" x2="75" y2="6"></line>
+                    <circle cx="78" cy="6" r="3"></circle>
+                  </svg>
                 </li>
 
                 <li
                   className="w-1/5 p-2 border border-gray-900 text-center"
                   onClick={() => onContainerCreate("SHAPE", "LINE-LINE")}
                 >
-                  <PenLineIcon />
+                  <svg
+                    width="24"
+                    height="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="stroke-white"
+                  >
+                    <line stroke-width="1" x1="0" y1="1" x2="20" y2="1"></line>
+                    <line
+                      stroke-width="1"
+                      x1="10"
+                      y1="1"
+                      x2="10"
+                      y2="75"
+                    ></line>
+                  </svg>
                 </li>
 
                 <li
                   className="w-1/5 p-2 border border-gray-900 text-center"
                   onClick={() => onContainerCreate("SHAPE", "LINE-LINE-V2")}
                 >
-                  <ScanLineIcon />
+                  <svg
+                    width="24"
+                    height="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="stroke-white"
+                  >
+                    <line stroke-width="1" x1="1" y1="1" x2="1" y2="20"></line>
+                    <line
+                      stroke-width="1"
+                      x1="1"
+                      y1="20"
+                      x2="75"
+                      y2="20"
+                    ></line>
+                  </svg>
                 </li>
 
                 <li
@@ -147,14 +182,14 @@ export default function Actions({
                   className="w-1/5 p-2 border border-gray-900 text-center"
                   onClick={() => onContainerCreate("SHAPE", "ROUGH-ELLIPSE")}
                 >
-                  <EllipsisIcon />
+                  <CircleEllipsisIcon />
                 </li>
 
                 <li
                   className="w-1/5 p-2 border border-gray-900 text-center"
                   onClick={() => onContainerCreate("SHAPE", "ROUGH-LINE")}
                 >
-                  <FileLineChartIcon />
+                  <SlashIcon />
                 </li>
               </ul>
             </PopoverContent>
