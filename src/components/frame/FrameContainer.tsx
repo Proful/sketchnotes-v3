@@ -55,10 +55,12 @@ export function FrameContainer({
         // const { w, h } = containerStyle.frameResolution!
         //@ts-ignore
         html2canvas(document.body, {
-          windowWidth: document.documentElement.clientWidth * dpr,
-          windowHeight: document.documentElement.clientHeight * dpr,
-          x: window.scrollX * dpr,
-          y: window.scrollY * dpr,
+          width: document.documentElement.clientWidth * dpr,
+          height: document.documentElement.clientHeight * dpr,
+          x: 0,
+          y: 0,
+          scrollX: -window.scrollX,
+          scrollY: -window.scrollY,
           scale: dpr,
         }).then((canvas: any) => {
           // Create a temporary canvas to crop the captured area

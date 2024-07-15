@@ -23,6 +23,7 @@ import { Action, ContainerType } from "@/lib/types"
 import LexEditorTheme from "@/components/lex/LexEditorTheme"
 
 import ErrorBoundary from "../ErrorBoundary"
+import { CopyButton } from "./CopyButton"
 import HikeContainerTheme from "./HikeContainerTheme"
 
 // Catch any errors that occur during Lexical updates and log them
@@ -109,6 +110,13 @@ export default function HikeContainer({
           </LexicalComposer>
         </div>
         <div className="w-fit absolute top-0 " style={{ display: hikeDisplay }}>
+          <div className="w-full h-full p-4 rounded-lg absolute z-10 left-10 hidden">
+            <div className="flex space-x-2 rounded-lg">
+              <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+              <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+              <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+            </div>
+          </div>
           {codeContent && (
             <Code
               codeblock={{
@@ -124,7 +132,7 @@ export default function HikeContainer({
   )
 }
 
-function Code({ codeblock }: { codeblock: RawCode }) {
+export function Code({ codeblock }: { codeblock: RawCode }) {
   const [highlighted, setHighlighted] = useState<HighlightedCode | null>(null)
 
   useEffect(() => {
@@ -147,13 +155,13 @@ function Code({ codeblock }: { codeblock: RawCode }) {
 
   return (
     <ErrorBoundary fallback={<h1>Oops! There was an error.</h1>}>
-      <HikeContainerTheme>
-        <Pre
-          className="m-0 py-8 leading-loose rounded-lg bg-hike"
-          code={highlighted!}
-          handlers={[borderHandler, neonHandler, bgHandler, mark, callout]}
-        />
-      </HikeContainerTheme>
+      {/* <HikeContainerTheme> */}
+      <Pre
+        className="m-0 py-4 leading-loose rounded-lg bg-hike"
+        code={highlighted!}
+        handlers={[borderHandler, neonHandler, bgHandler, mark, callout]}
+      />
+      {/* </HikeContainerTheme> */}
     </ErrorBoundary>
   )
 }
