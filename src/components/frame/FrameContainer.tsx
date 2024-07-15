@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import { invoke } from "@tauri-apps/api"
+// import { invoke } from "@tauri-apps/api"
 import Draggable from "react-draggable"
 
 import {
@@ -48,15 +48,56 @@ export function FrameContainer({
       })
     } else if (action?.name === "SCREENSHOT") {
       if (nodeRef.current) {
+        // Get the device pixel ratio
+        const dpr = window.devicePixelRatio || 1
         const box = nodeRef.current as HTMLDivElement
         const rect = box.getBoundingClientRect()
-        const { w, h } = containerStyle.frameResolution!
-        invoke("screenshot", {
-          x: rect.left,
-          y: rect.top + 53,
-          width: w,
-          height: h,
+        // const { w, h } = containerStyle.frameResolution!
+        //@ts-ignore
+        html2canvas(document.body, {
+          windowWidth: document.documentElement.clientWidth * dpr,
+          windowHeight: document.documentElement.clientHeight * dpr,
+          x: window.scrollX * dpr,
+          y: window.scrollY * dpr,
+          scale: dpr,
+        }).then((canvas: any) => {
+          // Create a temporary canvas to crop the captured area
+          const croppedCanvas = document.createElement("canvas")
+          croppedCanvas.width = rect.width * dpr
+          croppedCanvas.height = rect.height * dpr
+          const ctx = croppedCanvas.getContext("2d")
+          if (ctx) {
+            ctx.drawImage(
+              canvas,
+              rect.left * dpr, // Source x
+              rect.top * dpr, // Source y
+              rect.width * dpr, // Source width
+              rect.height * dpr, // Source height
+              0, // Destination x
+              0, // Destination y
+              rect.width * dpr, // Destination width
+              rect.height * dpr // Destination height
+            )
+          }
+          croppedCanvas.toBlob(async (blob) => {
+            if (blob) {
+              try {
+                await navigator.clipboard.write([
+                  new ClipboardItem({ "image/png": blob }),
+                ])
+                alert("Screenshot copied to clipboard!")
+              } catch (err) {
+                console.error("Failed to copy: ", err)
+              }
+            }
+          }, "image/png")
         })
+        // invoke("screenshot", {
+        //   x: rect.left,
+        //   y: rect.top + 53,
+        //   width: w,
+        //   height: h,
+        // })
       }
     }
   }, [action?.seed])
@@ -65,9 +106,10 @@ export function FrameContainer({
 
   return (
     <>
+      <img id="screenshot" style={{ display: "none" }} />
       <Draggable nodeRef={nodeRef}>
         <div
-          className={`w-[${w}px] h-[${h}px] absolute border-4 -z-10`}
+          className={`w-[${w}px] h-[${h}px] absolute border-4 z-90`}
           ref={nodeRef}
           onClick={(e) => {
             onSelect("FRAME")

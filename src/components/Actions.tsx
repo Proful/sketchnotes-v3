@@ -1,4 +1,3 @@
-import { useState } from "react"
 import * as Octicons from "@/vendor/octicons_react/"
 import {
   ArrowUp,
@@ -16,7 +15,6 @@ import {
   TypeIcon,
 } from "lucide-react"
 
-import { DEFAULT_SCALE } from "@/lib/constants"
 import { ContainerType } from "@/lib/types"
 import { useGridOverlay } from "@/hooks/GridOverlayContext"
 import { Button } from "@/components/ui/button"
@@ -26,8 +24,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
-import { Input } from "./ui/input"
-
 // eslint-disable-next-line no-unused-vars
 const { ...iconsByName } = Octicons
 
@@ -36,12 +32,7 @@ type ActionsProps = {
   onDelete: () => void
   onScale: (scale: number) => void
 }
-export default function Actions({
-  onContainerCreate,
-  onDelete,
-  onScale,
-}: ActionsProps) {
-  const [scale, setScale] = useState(DEFAULT_SCALE)
+export default function Actions({ onContainerCreate, onDelete }: ActionsProps) {
   const { toggleGrid } = useGridOverlay()
   return (
     <>
@@ -202,19 +193,6 @@ export default function Actions({
           <Button onClick={onDelete}>
             <Trash />
           </Button>
-
-          <Input
-            type="number"
-            className="w-16 inline"
-            value={scale}
-            min={-1}
-            max={4}
-            step={0.1}
-            onChange={(e) => {
-              setScale(+e.target.value)
-              onScale(+e.target.value)
-            }}
-          />
           <Button onClick={toggleGrid}>
             <GridIcon />
           </Button>

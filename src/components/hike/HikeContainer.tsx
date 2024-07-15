@@ -18,6 +18,7 @@ import {
 import { $getRoot, EditorState } from "lexical"
 import Draggable from "react-draggable"
 
+import { DEFAULT_CODE_LANGUAGE } from "@/lib/constants"
 import { Action, ContainerType } from "@/lib/types"
 import LexEditorTheme from "@/components/lex/LexEditorTheme"
 
@@ -46,6 +47,7 @@ export default function HikeContainer({
   const [editorState, setEditorState] = useState<EditorState | null>(null)
   const [codeContent, setCodeContent] = useState<string | null>(null)
   const [togglePreview, setTogglePreview] = useState(false)
+  const [lang, setLang] = useState(DEFAULT_CODE_LANGUAGE)
 
   useEffect(() => {
     if (!action) return
@@ -53,6 +55,7 @@ export default function HikeContainer({
       return
     }
     if (action?.name === "HIKE-PREVIEW") {
+      setLang(action.value as string)
       editorState!.read(() => {
         const root = $getRoot()
         const content = root.getTextContent()
@@ -110,7 +113,7 @@ export default function HikeContainer({
             <Code
               codeblock={{
                 value: codeContent!,
-                lang: "typescript",
+                lang: lang.toLowerCase(),
                 meta: "",
               }}
             />

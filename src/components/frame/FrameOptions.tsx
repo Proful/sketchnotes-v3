@@ -4,6 +4,7 @@ import { CameraIcon } from "lucide-react"
 import {
   ALLOWED_FRAME_GRADIENT,
   ALLOWED_FRAME_RESOLUTION,
+  DEFAULT_SCALE,
 } from "@/lib/constants"
 import { Action } from "@/lib/types"
 import { Button } from "@/components/ui/button"
@@ -16,10 +17,13 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
+import { Input } from "../ui/input"
+
 type FrameOptionsProps = {
   onAction: (action: Action) => void
 }
 export default function FrameOptions({ onAction }: FrameOptionsProps) {
+  const [scale, setScale] = useState(DEFAULT_SCALE)
   const [enable3dots, setEnable3dots] = useState(true)
   return (
     <>
@@ -99,6 +103,24 @@ export default function FrameOptions({ onAction }: FrameOptionsProps) {
               ))}
             </SelectContent>
           </Select>
+        </li>
+        <li className="p-2 hover:bg-blue-700 flex space-x-2">
+          <Input
+            type="number"
+            className="w-16 inline"
+            value={scale}
+            min={-1}
+            max={4}
+            step={0.1}
+            onChange={(e) => {
+              setScale(+e.target.value)
+              onAction({
+                name: "SCALE",
+                value: +e.target.value,
+                seed: Math.random(),
+              })
+            }}
+          />
         </li>
       </ul>
     </>

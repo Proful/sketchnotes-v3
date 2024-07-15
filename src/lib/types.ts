@@ -44,6 +44,7 @@ export type ActionType =
   | "SHAPE-ROTATE"
   | "FRAME-GRADIENT"
   | "FRAME-RESOLUTION"
+  | "SCALE"
   | "SCREENSHOT"
   | "ENABLE-3DOTS"
   | "ARROW-HEIGHT"
