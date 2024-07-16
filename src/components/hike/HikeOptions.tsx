@@ -27,6 +27,7 @@ const markCode = `!mark(1:2)`
 const neonCode = `!neon[1:5]`
 const bgCode = `!bg[1:3]`
 const borderCode = `!border[1:7]`
+const underlineCode = `!underline[1:16]`
 export default function HikeOptions({ onAction }: HikeOptionsProps) {
   const [lang, setLang] = useState(DEFAULT_CODE_LANGUAGE)
   return (
@@ -70,65 +71,32 @@ export default function HikeOptions({ onAction }: HikeOptionsProps) {
               <Button variant="outline">Annotations</Button>
             </PopoverTrigger>
             <PopoverContent className="w-[600px]">
-              <div className="mb-2 relative">
-                <CopyButton text={`//${calloutCode}`} />
-                <Code
-                  codeblock={{
-                    value: `//${calloutCode}
-${calloutCode}`,
-                    lang: "javascript",
-                    meta: "",
-                  }}
-                />
-              </div>
-              <div className="relative mb-2">
-                <CopyButton text={`//${markCode}`} />
-                <Code
-                  codeblock={{
-                    value: `//${markCode}
-${markCode}`,
-                    lang: "javascript",
-                    meta: "",
-                  }}
-                />
-              </div>
-              <div className="relative mb-2">
-                <CopyButton text={`//${neonCode}`} />
-                <Code
-                  codeblock={{
-                    value: `//${neonCode}
-${neonCode}`,
-                    lang: "javascript",
-                    meta: "",
-                  }}
-                />
-              </div>
-              <div className="relative mb-2">
-                <CopyButton text={`//${bgCode}`} />
-                <Code
-                  codeblock={{
-                    value: `//${bgCode}
-${bgCode}`,
-                    lang: "javascript",
-                    meta: "",
-                  }}
-                />
-              </div>
-              <div className="relative mb-2">
-                <CopyButton text={`//${borderCode}`} />
-                <Code
-                  codeblock={{
-                    value: `//${borderCode}
-${borderCode}`,
-                    lang: "javascript",
-                    meta: "",
-                  }}
-                />
-              </div>
+              <CodeAnnotationPreview text={calloutCode} />
+              <CodeAnnotationPreview text={markCode} />
+              <CodeAnnotationPreview text={neonCode} />
+              <CodeAnnotationPreview text={bgCode} />
+              <CodeAnnotationPreview text={borderCode} />
+              <CodeAnnotationPreview text={underlineCode} />
             </PopoverContent>
           </Popover>
         </li>
       </ul>
     </>
+  )
+}
+
+function CodeAnnotationPreview({ text }: { text: string }) {
+  return (
+    <div className="relative mb-2">
+      <CopyButton text={`//${text}`} />
+      <Code
+        codeblock={{
+          value: `//${text}
+${text}`,
+          lang: "javascript",
+          meta: "",
+        }}
+      />
+    </div>
   )
 }

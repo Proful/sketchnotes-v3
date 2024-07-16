@@ -160,7 +160,14 @@ export function Code({ codeblock }: { codeblock: RawCode }) {
       <Pre
         className="m-0 py-4 leading-loose rounded-lg bg-hike"
         code={highlighted!}
-        handlers={[borderHandler, neonHandler, bgHandler, mark, callout]}
+        handlers={[
+          borderHandler,
+          neonHandler,
+          bgHandler,
+          underline,
+          mark,
+          callout,
+        ]}
       />
       {/* </HikeContainerTheme> */}
     </ErrorBoundary>
@@ -195,6 +202,20 @@ const bgHandler: AnnotationHandler = {
     )
   },
 }
+
+//!decoration[1:4]
+const underline: AnnotationHandler = {
+  name: "underline",
+  //@ts-ignore
+  Inline: ({ annotation, children }) => {
+    return (
+      <span className="underline decoration-2 underline-offset-4 decoration-solid decoration-sky-500">
+        {children}
+      </span>
+    )
+  },
+}
+
 //!neon[1:4]
 const neonHandler: AnnotationHandler = {
   name: "neon",

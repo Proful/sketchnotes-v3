@@ -31,7 +31,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
     setSelectedColor(color)
     if (color) {
       setShowShades(true)
-      // onColorSelect(`${color}/${opacity}`)
+      onColorSelect(`${color}/${opacity}`)
     } else {
       setShowShades(false)
       onColorSelect(color)

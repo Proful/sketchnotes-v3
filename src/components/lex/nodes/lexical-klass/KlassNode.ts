@@ -1,6 +1,5 @@
 import { addClassNamesToElement } from "@lexical/utils"
 import {
-  $applyNodeReplacement,
   EditorConfig,
   LexicalNode,
   NodeKey,
@@ -81,10 +80,17 @@ export class KlassNode extends TextNode {
   override isTextEntity(): true {
     return true
   }
+
+  setKlass(klass: string): void {
+    const self = this.getWritable()
+    const classes = new Set(self.__klass.split(" ").filter(Boolean))
+    classes.add(klass)
+    self.__klass = Array.from(classes).join(" ")
+  }
 }
 
-export function $createKlassNode(text: string, klass: string): KlassNode {
-  return $applyNodeReplacement(new KlassNode(text, klass))
+export const $createKlassNode = (text: string, klass: string): KlassNode => {
+  return new KlassNode(text, klass)
 }
 
 export function $isKlassNode(
