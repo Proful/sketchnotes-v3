@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- For the robots -->
+    <meta charset="UTF-8" />
+    <meta name="description" content="tmux notes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://css.winterveil.net" />
+
+    <title>tmux notes</title>
+
+    <!-- For the humans -->
+    <link rel="stylesheet" href="https://unpkg.com/normalize.css" />
+    <link rel="stylesheet" href="https://unpkg.com/magick.css" />
+
+    <!-- This site contains some specific styles for the content, which are not part of magick.css -->
+    <style>
+      /*
+      body,h1,h2,h3,h4 {
+        background: #1a1a1a;
+        color: #6e6d6d !important;
+      }
+      */
+
+      header {
+        margin-bottom: 2em;
+      }
+
+      .float-right {
+        float: right;
+      }
+
+      .typography-columns {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px; /* Adjust the space between columns as needed */
+      }
+
+      .typography-columns > div {
+        flex: 1; /* Allows each child div to grow equally */
+        min-width: 250px; /* Prevents the columns from getting too narrow before stacking */
+      }
+
+      @media (max-width: 600px) {
+        .typography-columns {
+        flex-direction: column;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>tmux notes</h1>
+      </header>
+
+      <section>
+        <h2>quick notes</h2>
+      </section>
+
+      <footer>
+        <hr />
+        <p>Made by <a href="https://x.com/profulsadangi">Proful</a></p>
+      </footer>
+    </main>
+  </body>
+</html>

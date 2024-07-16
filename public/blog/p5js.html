@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- For the robots -->
+    <meta charset="UTF-8" />
+    <meta name="description" content="Journey to Patanjali" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://css.winterveil.net" />
+
+    <title>p5js learning</title>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>p5js learning</h1>
+      </header>
+
+      <section id="begining">
+        <h2>Introduction</h2>
+        <h3>canvas</h3>
+        <pre><code class="language-javascript">createCanvas(720, 400)</code></pre>
+        <ul>
+          <li>Change width & height of canvas</li>
+        </ul>
+        <h3>background color</h3>
+        <div>
+          <pre><code class="language-javascript">background(255,255,255)</code></pre>
+          <img
+            src="https://www.computerhope.com/jargon/r/rgb.png"
+            alt="rgb"
+            width="200"
+            height="200"
+            class="float-right"
+          />
+          <ul>
+            <li>you can enter from 0 to 255</li>
+            <li>R G B</li>
+            <li>Change background to Red</li>
+            <li>Change background to Green</li>
+            <li>Change background to Blue</li>
+            <li>Change background to Yellow</li>
+            <li>Change background to Cyan</li>
+            <li>Change background to Magenta</li>
+            <li>Change background to White then Black</li>
+            <li>Change background to your favorite color</li>
+          </ul>
+        </div>
+        <div>
+          <h3>square</h3>
+          <pre><code class="language-javascript"> square(20, 20, 100)</code></pre>
+          <ul>
+            <li>create a bigger square</li>
+            <li>create a smaller square</li>
+            <li>create two square</li>
+            <li>create four square and place in each corner</li>
+          </ul>
+        </div>
+        <div>
+          <h3>rectangle</h3>
+          <pre><code class="language-javascript">// x, y, width, height
+rect(100, 40, 200, 100)</code></pre>
+          <ul>
+            <li>change width to as wide as possible</li>
+            <li>change height</li>
+            <li>create a rectangle in front of square</li>
+            <li>create a square using rect</li>
+            <li>create 5 rect, bigger to small all with same center</li>
+          </ul>
+        </div>
+        <div>
+          <h3>circle</h3>
+          <pre><code class="language-javascript">// x, y, diameter
+circle(560, 100, 100)</code></pre>
+          <ul>
+            <li>create a bigger circle</li>
+            <li>create a smaller circle</li>
+            <li>create two circle with same center</li>
+          </ul>
+        </div>
+      </section>
+
+      <footer>
+        <hr />
+        <p>Made by <a href="https://x.com/profulsadangi">Proful</a></p>
+      </footer>
+    </main>
+
+    <style>
+      /*
+      body,h1,h2,h3,h4,h5,p,a {
+        background: white;
+        color: black !important;
+      }
+      */
+
+      header {
+        margin-bottom: 2em;
+      }
+
+      .float-right {
+        float: right;
+      }
+
+      .typography-columns {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px; /* Adjust the space between columns as needed */
+      }
+
+      .typography-columns > div {
+        flex: 1; /* Allows each child div to grow equally */
+        min-width: 250px; /* Prevents the columns from getting too narrow before stacking */
+      }
+
+      @media (max-width: 600px) {
+        .typography-columns {
+        flex-direction: column;
+      }
+    </style>
+
+    <!-- For the humans -->
+    <link rel="stylesheet" href="https://unpkg.com/normalize.css" />
+    <link rel="stylesheet" href="https://unpkg.com/magick.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/styles/atom-one-dark.min.css"
+    />
+    <script src="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/highlight.min.js"></script>
+
+    <!-- and it's easy to individually load additional languages -->
+    <script src="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/languages/javascript.min.js"></script>
+
+    <script>
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

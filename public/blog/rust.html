@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- For the robots -->
+    <meta charset="UTF-8" />
+    <meta name="description" content="Rust" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://css.winterveil.net" />
+    <meta http-equiv="refresh" content="30" />
+
+    <title>Rust</title>
+
+    <!-- For the humans -->
+    <link rel="stylesheet" href="https://unpkg.com/normalize.css" />
+    <link rel="stylesheet" href="https://unpkg.com/magick.css" />
+
+    <!-- This site contains some specific styles for the content, which are not part of magick.css -->
+    <style>
+      body,h1,h2,h3,h4, a {
+        background: #1a1a1a;
+        color: #6e6d6d !important;
+      }
+
+       header {
+         margin-bottom: 2em;
+       }
+
+       .typography-columns {
+         display: flex;
+         flex-wrap: wrap;
+         gap: 20px; /* Adjust the space between columns as needed */
+       }
+
+       .typography-columns > div {
+         flex: 1; /* Allows each child div to grow equally */
+         min-width: 250px; /* Prevents the columns from getting too narrow before stacking */
+       }
+
+       @media (max-width: 600px) {
+         .typography-columns {
+         flex-direction: column;
+       }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Rust</h1>
+        <p
+          style="
+            text-align: center;
+            margin-top: -2.3rem;
+            margin-bottom: -0.2rem;
+            margin-left: -15rem;
+            font-size: 1.4rem;
+          "
+        >
+          by
+          <a href="https://www.x.com/profulsadangi/" target="_blank">Proful</a>
+        </p>
+      </header>
+
+      <section id="begining">
+        <h2>Begining</h2>
+        <p></p>
+      </section>
+
+      <footer>
+        <hr />
+        <p>Made by <a href="https://x.com/profulsadangi">Proful</a></p>
+      </footer>
+    </main>
+  </body>
+</html>
