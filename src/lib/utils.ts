@@ -55,3 +55,25 @@ export function hslToHex(h: number, s: number, l: number): string {
 
   return `#${toHex(r)}${toHex(g)}${toHex(b)}`
 }
+
+export function getTailwindRgbValue(tailwindClass: string): string {
+  // Create a temporary element
+  const tempElement = document.createElement("div")
+
+  // Apply the Tailwind CSS class
+  tempElement.className = tailwindClass
+
+  // Append the element to the body (required to apply styles)
+  document.body.appendChild(tempElement)
+
+  // Get the computed styles of the element
+  const computedStyle = getComputedStyle(tempElement)
+
+  // Extract the background color value
+  const backgroundColor = computedStyle.backgroundColor
+
+  // Remove the temporary element from the document
+  document.body.removeChild(tempElement)
+
+  return backgroundColor
+}

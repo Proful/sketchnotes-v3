@@ -21,8 +21,10 @@ import Draggable from "react-draggable"
 import { DEFAULT_CODE_LANGUAGE } from "@/lib/constants"
 import { Action, ContainerType } from "@/lib/types"
 import LexEditorTheme from "@/components/lex/LexEditorTheme"
+import { AnnotationPlugin } from "@/components/lex/plugins/AnnotationPlugin"
 
 import ErrorBoundary from "../ErrorBoundary"
+import { AnnotationNode } from "../lex/nodes/lexical-annotation"
 
 // import { CopyButton } from "./CopyButton"
 // import HikeContainerTheme from "./HikeContainerTheme"
@@ -78,7 +80,7 @@ export default function HikeContainer({
   const initialConfig = {
     namespace: "LexEditorTheme",
     theme: LexEditorTheme,
-    nodes: [],
+    nodes: [AnnotationNode],
     onError,
   }
 
@@ -107,6 +109,7 @@ export default function HikeContainer({
             />
             <HistoryPlugin />
             <AutoFocusPlugin />
+            <AnnotationPlugin id={id} selectedId={selectedId} />
             <OnChangePlugin onChange={setEditorState} />
           </LexicalComposer>
         </div>
@@ -158,7 +161,7 @@ export function Code({ codeblock }: { codeblock: RawCode }) {
     <ErrorBoundary fallback={<h1>Oops! There was an error.</h1>}>
       {/* <HikeContainerTheme> */}
       <Pre
-        className="m-0 py-4 leading-loose rounded-lg bg-hike"
+        className="leading-loose bg-hike rounded py-4"
         code={highlighted!}
         handlers={[
           borderHandler,
@@ -272,11 +275,11 @@ const callout: AnnotationHandler = {
       <>
         {children}
         <div
-          style={{ minWidth: `${column + 4}ch` }}
+          style={{ minWidth: `${column}ch` }}
           className="w-fit border border-blue-600 bg-hike border-current rounded px-2 relative -ml-[1ch] mt-1 whitespace-break-spaces"
         >
           <div
-            style={{ left: `${column + 1}ch` }}
+            style={{ left: `${column + 4}ch` }}
             className="absolute border-l border-t border-current border-blue-600 w-2 h-2 rotate-45 -translate-y-1/2 -top-[1px] bg-hike"
           />
           {annotation.query}

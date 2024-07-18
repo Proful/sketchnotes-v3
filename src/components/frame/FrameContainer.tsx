@@ -47,60 +47,66 @@ export function FrameContainer({
         enable3dots: action.value! as boolean,
       })
     } else if (action?.name === "SCREENSHOT") {
-      if (nodeRef.current) {
-        // Get the device pixel ratio
-        const dpr = window.devicePixelRatio || 1
-        const box = nodeRef.current as HTMLDivElement
-        const rect = box.getBoundingClientRect()
-        // const { w, h } = containerStyle.frameResolution!
-        //@ts-ignore
-        html2canvas(document.body, {
-          width: document.documentElement.clientWidth * dpr,
-          height: document.documentElement.clientHeight * dpr,
-          x: 0,
-          y: 0,
-          scrollX: -window.scrollX,
-          scrollY: -window.scrollY,
-          scale: dpr,
-        }).then((canvas: any) => {
-          // Create a temporary canvas to crop the captured area
-          const croppedCanvas = document.createElement("canvas")
-          croppedCanvas.width = rect.width * dpr
-          croppedCanvas.height = rect.height * dpr
-          const ctx = croppedCanvas.getContext("2d")
-          if (ctx) {
-            ctx.drawImage(
-              canvas,
-              rect.left * dpr, // Source x
-              rect.top * dpr, // Source y
-              rect.width * dpr, // Source width
-              rect.height * dpr, // Source height
-              0, // Destination x
-              0, // Destination y
-              rect.width * dpr, // Destination width
-              rect.height * dpr // Destination height
-            )
-          }
-          croppedCanvas.toBlob(async (blob) => {
-            if (blob) {
-              try {
-                await navigator.clipboard.write([
-                  new ClipboardItem({ "image/png": blob }),
-                ])
-                alert("Screenshot copied to clipboard!")
-              } catch (err) {
-                console.error("Failed to copy: ", err)
-              }
-            }
-          }, "image/png")
-        })
-        // invoke("screenshot", {
-        //   x: rect.left,
-        //   y: rect.top + 53,
-        //   width: w,
-        //   height: h,
-        // })
-      }
+      console.log("screenshot")
+      // takeScreenshot()
+      // if (nodeRef.current) {
+      //   // Get the device pixel ratio
+      //   const dpr = window.devicePixelRatio || 1
+      //   const box = nodeRef.current as HTMLDivElement
+      //   const rect = box.getBoundingClientRect()
+      //   // const { w, h } = containerStyle.frameResolution!
+      //   //@ts-ignore
+      //   // html2canvas(document.body, {
+      //   //   width: document.documentElement.clientWidth * dpr,
+      //   //   height: document.documentElement.clientHeight * dpr,
+      //   //   x: 0,
+      //   //   y: 0,
+      //   //   scrollX: -window.scrollX,
+      //   //   scrollY: -window.scrollY,
+      //   //   scale: dpr,
+      //   // }).then((canvas: any) => {
+      //   // htmlToImage
+      //   //   .toCanvas(document.body)
+      //   //   .then((canvas: any) => {
+      //   //     // Create a temporary canvas to crop the captured area
+      //   //     const croppedCanvas = document.createElement("canvas")
+      //   //     croppedCanvas.width = rect.width * dpr
+      //   //     croppedCanvas.height = rect.height * dpr
+      //   //     const ctx = croppedCanvas.getContext("2d")
+      //   //     if (ctx) {
+      //   //       ctx.drawImage(
+      //   //         canvas,
+      //   //         rect.left * dpr, // Source x
+      //   //         rect.top * dpr, // Source y
+      //   //         rect.width * dpr, // Source width
+      //   //         rect.height * dpr, // Source height
+      //   //         0, // Destination x
+      //   //         0, // Destination y
+      //   //         rect.width * dpr, // Destination width
+      //   //         rect.height * dpr // Destination height
+      //   //       )
+      //   //     }
+      //   //     croppedCanvas.toBlob(async (blob) => {
+      //   //       if (blob) {
+      //   //         try {
+      //   //           await navigator.clipboard.write([
+      //   //             new ClipboardItem({ "image/png": blob }),
+      //   //           ])
+      //   //           alert("Screenshot copied to clipboard!")
+      //   //         } catch (err) {
+      //   //           console.error("Failed to copy: ", err)
+      //   //         }
+      //   //       }
+      //   //     }, "image/png")
+      //   //   })
+      //   //   .catch(console.log)
+      //   // invoke("screenshot", {
+      //   //   x: rect.left,
+      //   //   y: rect.top + 53,
+      //   //   width: w,
+      //   //   height: h,
+      //   // })
+      // }
     }
   }, [action?.seed])
 
@@ -137,3 +143,17 @@ export function FrameContainer({
     </>
   )
 }
+// const takeScreenshot = () => {
+//   var node = document.getElementById("root")
+//
+//   htmlToImage
+//     .toPng(node!)
+//     .then(function (dataUrl) {
+//       var img = new Image()
+//       img.src = dataUrl
+//       document.body.appendChild(img)
+//     })
+//     .catch(function (error) {
+//       console.error("oops, something went wrong!", error)
+//     })
+// }

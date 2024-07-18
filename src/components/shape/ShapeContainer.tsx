@@ -80,6 +80,7 @@ export function ShapeContainer({
   let shape = <></>
   if (name === "RECT") {
     shape = <Rect action={action} id={id} selectedId={selectedId} />
+    // shape = <ResizableRectangle />
   } else if (name.startsWith("ROUGH-")) {
     shape = (
       <RoughShape
@@ -855,5 +856,131 @@ export function RoughShape({
       xmlns="http://www.w3.org/2000/svg"
       ref={svgRef}
     ></svg>
+  )
+}
+
+export const ResizableRectangle: React.FC = () => {
+  const [rectSize, setRectSize] = useState({
+    x: 0,
+    y: 0,
+    width: 100,
+    height: 30,
+  })
+  const svgRef = useRef<SVGSVGElement | null>(null)
+  const resizingCorner = useRef<string | null>(null)
+
+  const onMouseMove = (event: MouseEvent) => {
+    if (svgRef.current && resizingCorner.current) {
+      const rect = svgRef.current.getBoundingClientRect()
+      const offsetX = event.clientX - rect.left
+      const offsetY = event.clientY - rect.top
+
+      switch (resizingCorner.current) {
+        case "topLeft":
+          setRectSize((prev) => ({
+            width: prev.width + prev.x - offsetX,
+            height: prev.height + prev.y - offsetY,
+            x: offsetX,
+            y: offsetY,
+          }))
+          break
+        case "topRight":
+          setRectSize((prev) => ({
+            width: offsetX - prev.x,
+            height: prev.height + prev.y - offsetY,
+            x: prev.x,
+            y: offsetY,
+          }))
+          break
+        case "bottomLeft":
+          setRectSize((prev) => ({
+            width: prev.width + prev.x - offsetX,
+            height: offsetY - prev.y,
+            x: offsetX,
+            y: prev.y,
+          }))
+          break
+        case "bottomRight":
+          setRectSize((prev) => ({
+            width: offsetX - prev.x,
+            height: offsetY - prev.y,
+            x: prev.x,
+            y: prev.y,
+          }))
+          break
+      }
+    }
+  }
+
+  const onMouseUp = () => {
+    window.removeEventListener("mousemove", onMouseMove)
+    window.removeEventListener("mouseup", onMouseUp)
+    resizingCorner.current = null
+  }
+
+  const onMouseDown = (corner: string) => (event: React.MouseEvent) => {
+    event.preventDefault()
+    resizingCorner.current = corner
+    window.addEventListener("mousemove", onMouseMove)
+    window.addEventListener("mouseup", onMouseUp)
+  }
+
+  useEffect(() => {
+    return () => {
+      window.removeEventListener("mousemove", onMouseMove)
+      window.removeEventListener("mouseup", onMouseUp)
+    }
+  }, [])
+
+  return (
+    <svg
+      ref={svgRef}
+      width={rectSize.width + 20}
+      height={rectSize.height + 20}
+      xmlns="http://www.w3.org/2000/svg"
+      className="stroke-white transparent"
+    >
+      <rect
+        x={rectSize.x}
+        y={rectSize.y}
+        width={rectSize.width}
+        height={rectSize.height}
+        strokeWidth="1"
+        stroke="black"
+        fill="transparent"
+      />
+      <rect
+        x={rectSize.x - 5}
+        y={rectSize.y - 5}
+        width="10"
+        height="10"
+        fill="blue"
+        onMouseDown={onMouseDown("topLeft")}
+      />
+      <rect
+        x={rectSize.x + rectSize.width - 5}
+        y={rectSize.y - 5}
+        width="10"
+        height="10"
+        fill="blue"
+        onMouseDown={onMouseDown("topRight")}
+      />
+      <rect
+        x={rectSize.x - 5}
+        y={rectSize.y + rectSize.height - 5}
+        width="10"
+        height="10"
+        fill="blue"
+        onMouseDown={onMouseDown("bottomLeft")}
+      />
+      <rect
+        x={rectSize.x + rectSize.width - 5}
+        y={rectSize.y + rectSize.height - 5}
+        width="10"
+        height="10"
+        fill="blue"
+        onMouseDown={onMouseDown("bottomRight")}
+      />
+    </svg>
   )
 }

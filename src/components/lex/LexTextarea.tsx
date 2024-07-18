@@ -15,6 +15,7 @@ import {
 
 import LexEditorTheme from "./LexEditorTheme"
 import LexToolbar from "./LexToolbar"
+import { AnnotationNode } from "./nodes/lexical-annotation"
 import { KlassNode } from "./nodes/lexical-klass"
 import CodeHighlightPlugin from "./plugins/CodeHighlightPlugin"
 
@@ -37,14 +38,21 @@ export default function LexTextarea({
   const initialConfig = {
     namespace: "LexEditorTheme",
     theme: LexEditorTheme,
-    nodes: [CodeNode, CodeHighlightNode, KlassNode, HeadingNode, QuoteNode],
+    nodes: [
+      CodeNode,
+      CodeHighlightNode,
+      KlassNode,
+      HeadingNode,
+      QuoteNode,
+      AnnotationNode,
+    ],
     onError,
   }
 
   return (
     <LexicalComposer initialConfig={initialConfig}>
       <RichTextPlugin
-        contentEditable={<ContentEditable />}
+        contentEditable={<ContentEditable spellCheck={false} />}
         placeholder={<div>Enter some text...</div>}
         ErrorBoundary={LexicalErrorBoundary}
       />

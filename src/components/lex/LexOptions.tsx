@@ -169,20 +169,20 @@ export default function LexOptions({ onAction }: LexOptionsProps) {
           <ColorPicker
             label="color"
             colors={TAILWIND_COLORS}
-            onColorSelect={(c) =>
+            onColorSelect={(_c, rgba) =>
               handleAction({
                 name: "COLOR",
-                value: c.replace("bg", "text"),
+                value: rgba,
               })
             }
           />
           <ColorPicker
             label="bg"
             colors={TAILWIND_COLORS}
-            onColorSelect={(c) =>
+            onColorSelect={(_c, rgba) =>
               handleAction({
                 name: "BACKGROUND-COLOR",
-                value: c,
+                value: rgba,
               })
             }
           />
@@ -190,10 +190,10 @@ export default function LexOptions({ onAction }: LexOptionsProps) {
           <ColorPicker
             label="decoration"
             colors={TAILWIND_COLORS}
-            onColorSelect={(c) =>
+            onColorSelect={(_c, rgba) =>
               handleAction({
                 name: "DECORATION-COLOR",
-                value: c.replace("bg", "decoration"),
+                value: rgba,
               })
             }
           />
@@ -213,10 +213,10 @@ export default function LexOptions({ onAction }: LexOptionsProps) {
           <ColorPicker
             label="highlight"
             colors={TAILWIND_COLORS}
-            onColorSelect={(c) =>
+            onColorSelect={(_c, rgba) =>
               handleAction({
                 name: "HIGHLIGHT",
-                value: c,
+                value: rgba,
               })
             }
           />

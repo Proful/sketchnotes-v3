@@ -4,6 +4,7 @@ import { Action } from "@/lib/types"
 
 import { useLexBlockActions } from "./hooks/useLexBlockActions"
 import { useLexCode } from "./hooks/useLexCode"
+import { useLexColor } from "./hooks/useLexColor"
 import { useLexInlineActions } from "./hooks/useLexInlineActions"
 import { useLexKlass } from "./hooks/useLexKlass"
 
@@ -18,7 +19,7 @@ export default function LexToolbar({
 }) {
   const { bold, italic, underline, strikethrough } = useLexInlineActions()
   const { h1, h2, h3, q } = useLexBlockActions()
-  // const { highlight, color, decorationColor, backgroundColor } = useLexColor()
+  const { highlight, color, decorationColor, backgroundColor } = useLexColor()
   const { addKlass } = useLexKlass()
   const { code, addCodeKlass } = useLexCode()
 
@@ -45,22 +46,13 @@ export default function LexToolbar({
       const lang = action.value as string
       code(lang)
     } else if (action.name === "COLOR") {
-      addKlass(action.value! as string)
-      // color(action.value! as string)
+      color(action.value! as string)
     } else if (action.name === "BACKGROUND-COLOR") {
-      addKlass(action.value! as string)
-      // backgroundColor(action.value! as string)
+      backgroundColor(action.value! as string)
     } else if (action.name === "DECORATION-COLOR") {
-      const decoration = `decoration-2 ${action.value} underline underline-offset-4`
-      addKlass(decoration)
-      // decorationColor(action.value! as string)
+      decorationColor(action.value! as string)
     } else if (action.name === "HIGHLIGHT") {
-      let highlight = `bg-transparent text-white p-0 rounded-none`
-      if (action.value) {
-        highlight = `${action.value} text-black p-2 rounded`
-      }
-      addKlass(highlight)
-      // highlight(action.value! as string)
+      highlight(action.value! as string)
     } else if (action.name === "TEXT-GRADIENT") {
       addKlass(`${action.value} bg-gradient-to-r bg-clip-text text-transparent`)
     } else if (action.name === "LEX-CODE-HIGHLIGHT") {

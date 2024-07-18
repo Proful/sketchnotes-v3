@@ -8,13 +8,13 @@ export const useLexColor = () => {
   const color = (value: string, cb?: (sel: boolean) => void) =>
     applyStyleText({ color: value }, cb)
 
-  const decorationColor = (value: string) =>
+  const decorationColor = (value: string) => {
+    console.log(value)
     applyStyleText({
-      "text-decoration-thickness": "2px",
-      "text-decoration-color": value,
-      "text-decoration": "underline",
+      "text-decoration": `solid underline ${value} 2px`,
       "text-underline-offset": DEFAULT_TEXT_UNDERLINE_OFFSET,
     })
+  }
 
   const backgroundColor = (value: string, cb?: (sel: boolean) => void) =>
     applyStyleText({ "background-color": value }, cb)

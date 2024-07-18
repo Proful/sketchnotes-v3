@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 
+import { getTailwindRgbValue } from "@/lib/utils.js"
 import { Button } from "@/components/ui/button"
 import {
   Popover,
@@ -13,7 +14,7 @@ import { Slider } from "./ui/slider"
 type ColorPickerProps = {
   label?: string
   colors: string[]
-  onColorSelect: (color: string) => void
+  onColorSelect: (color: string, rgba?: string) => void
 }
 
 const ColorPicker: React.FC<ColorPickerProps> = ({
@@ -31,7 +32,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
     setSelectedColor(color)
     if (color) {
       setShowShades(true)
-      onColorSelect(`${color}/${opacity}`)
+      // onColorSelect(`${color}/${opacity}`)
     } else {
       setShowShades(false)
       onColorSelect(color)
@@ -40,8 +41,9 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
 
   const handleShadeClick = (shade: string) => {
     const shadeColor = `${selectedColor.split("-")[0]}-${selectedColor.split("-")[1]}-${shade}`
+    const rgb = getTailwindRgbValue(shadeColor + "/" + opacity)
     setSelectedColor(shadeColor)
-    onColorSelect(shadeColor + "/" + opacity)
+    onColorSelect(shadeColor + "/" + opacity, rgb)
   }
 
   return (
@@ -106,7 +108,10 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
               onValueChange={(v) => {
                 setOpacity(v[0])
 
-                onColorSelect(`${selectedColor}/${v[0]}`)
+                onColorSelect(
+                  `${selectedColor}/${v[0]}`,
+                  getTailwindRgbValue(`${selectedColor}/${v[0]}`)
+                )
               }}
             />
           </div>
