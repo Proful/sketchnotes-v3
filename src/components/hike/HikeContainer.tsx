@@ -15,7 +15,12 @@ import {
   Pre,
   RawCode,
 } from "codehike/code"
-import { $getRoot, EditorState } from "lexical"
+import {
+  $getRoot,
+  $getSelection,
+  $isRangeSelection,
+  EditorState,
+} from "lexical"
 import Draggable from "react-draggable"
 
 import { DEFAULT_CODE_LANGUAGE } from "@/lib/constants"
@@ -53,6 +58,10 @@ export default function HikeContainer({
   const [togglePreview, setTogglePreview] = useState(false)
   const [lang, setLang] = useState(DEFAULT_CODE_LANGUAGE)
 
+  const [selectionPosition, setSelectionPosition] = useState<{
+    start: number
+    end: number
+  } | null>(null)
   useEffect(() => {
     if (!action) return
     if (id !== selectedId) {
@@ -86,7 +95,23 @@ export default function HikeContainer({
 
   const lexDisplay = togglePreview ? "none" : "block"
   const hikeDisplay = togglePreview ? "block" : "none"
+  const handleChange = (editorState: EditorState) => {
+    setEditorState(editorState)
+    editorState.read(() => {
+      const selection = $getSelection()
+      if ($isRangeSelection(selection)) {
+        const anchorOffset = selection.anchor.offset
+        const focusOffset = selection.focus.offset
 
+        const start = Math.min(anchorOffset, focusOffset) + 1
+        const end = Math.max(anchorOffset, focusOffset)
+
+        setSelectionPosition({ start, end })
+      } else {
+        setSelectionPosition(null)
+      }
+    })
+  }
   return (
     <Draggable nodeRef={nodeRef}>
       <div
@@ -101,6 +126,11 @@ export default function HikeContainer({
           className="w-fit p-2 absolute top-0 "
           style={{ display: lexDisplay }}
         >
+          {selectionPosition && (
+            <div>
+              {selectionPosition.start}:{selectionPosition.end}
+            </div>
+          )}
           <LexicalComposer initialConfig={initialConfig}>
             <RichTextPlugin
               contentEditable={<ContentEditable />}
@@ -110,7 +140,7 @@ export default function HikeContainer({
             <HistoryPlugin />
             <AutoFocusPlugin />
             <AnnotationPlugin id={id} selectedId={selectedId} />
-            <OnChangePlugin onChange={setEditorState} />
+            <OnChangePlugin onChange={handleChange} />
           </LexicalComposer>
         </div>
         <div className="w-fit absolute top-0 " style={{ display: hikeDisplay }}>
