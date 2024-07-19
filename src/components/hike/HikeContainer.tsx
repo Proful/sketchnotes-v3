@@ -18,6 +18,7 @@ import {
 import {
   $getRoot,
   $getSelection,
+  $isParagraphNode,
   $isRangeSelection,
   EditorState,
 } from "lexical"
@@ -71,12 +72,18 @@ export default function HikeContainer({
       setLang(action.value as string)
       editorState!.read(() => {
         const root = $getRoot()
-        const content = root.getTextContent()
-        const upd = content
-          .split("\n")
-          .filter((l) => l.length !== 0)
-          .join("\n")
-        setCodeContent(upd)
+
+        //!important
+        //This took me lots of time to debug.
+        //ParagraphNode inconsistently adding new line if used getTextContent
+        const nodes = root.getChildren()
+        let data = []
+        for (const node of nodes) {
+          if ($isParagraphNode(node)) {
+            data.push(node.getTextContent())
+          }
+        }
+        setCodeContent(data.join("\n"))
         setTogglePreview(!togglePreview)
       })
     }
@@ -112,6 +119,7 @@ export default function HikeContainer({
       }
     })
   }
+
   return (
     <Draggable nodeRef={nodeRef}>
       <div
@@ -191,7 +199,7 @@ export function Code({ codeblock }: { codeblock: RawCode }) {
     <ErrorBoundary fallback={<h1>Oops! There was an error.</h1>}>
       {/* <HikeContainerTheme> */}
       <Pre
-        className="leading-loose bg-hike rounded py-4"
+        className=" bg-hike rounded "
         code={highlighted!}
         handlers={[
           borderHandler,
