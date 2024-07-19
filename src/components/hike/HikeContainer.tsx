@@ -199,7 +199,6 @@ export function Code({ codeblock }: { codeblock: RawCode }) {
     <ErrorBoundary fallback={<h1>Oops! There was an error.</h1>}>
       {/* <HikeContainerTheme> */}
       <Pre
-        className=" bg-hike rounded "
         code={highlighted!}
         handlers={[
           borderHandler,
