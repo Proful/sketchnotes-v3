@@ -37,7 +37,7 @@ export default function Actions({ onContainerCreate, onDelete }: ActionsProps) {
   return (
     <>
       <ul>
-        <li className="p-2 hover:bg-blue-700 flex space-x-2">
+        <li className="p-2 flex space-x-2">
           <Button onClick={() => onContainerCreate("HIKE")}>
             <CodeIcon />
           </Button>
@@ -101,7 +101,7 @@ export default function Actions({ onContainerCreate, onDelete }: ActionsProps) {
                     className="stroke-white fill-white"
                   >
                     <circle cx="5" cy="6" r="3"></circle>
-                    <line stroke-width="1" x1="6" y1="6" x2="75" y2="6"></line>
+                    <line strokeWidth="1" x1="6" y1="6" x2="75" y2="6"></line>
                     <circle cx="78" cy="6" r="3"></circle>
                   </svg>
                 </li>
@@ -116,14 +116,8 @@ export default function Actions({ onContainerCreate, onDelete }: ActionsProps) {
                     xmlns="http://www.w3.org/2000/svg"
                     className="stroke-white"
                   >
-                    <line stroke-width="1" x1="0" y1="1" x2="20" y2="1"></line>
-                    <line
-                      stroke-width="1"
-                      x1="10"
-                      y1="1"
-                      x2="10"
-                      y2="75"
-                    ></line>
+                    <line strokeWidth="1" x1="0" y1="1" x2="20" y2="1"></line>
+                    <line strokeWidth="1" x1="10" y1="1" x2="10" y2="75"></line>
                   </svg>
                 </li>
 
@@ -137,14 +131,8 @@ export default function Actions({ onContainerCreate, onDelete }: ActionsProps) {
                     xmlns="http://www.w3.org/2000/svg"
                     className="stroke-white"
                   >
-                    <line stroke-width="1" x1="1" y1="1" x2="1" y2="20"></line>
-                    <line
-                      stroke-width="1"
-                      x1="1"
-                      y1="20"
-                      x2="75"
-                      y2="20"
-                    ></line>
+                    <line strokeWidth="1" x1="1" y1="1" x2="1" y2="20"></line>
+                    <line strokeWidth="1" x1="1" y1="20" x2="75" y2="20"></line>
                   </svg>
                 </li>
 
@@ -186,7 +174,7 @@ export default function Actions({ onContainerCreate, onDelete }: ActionsProps) {
             </PopoverContent>
           </Popover>
         </li>
-        <li className="p-2 hover:bg-blue-700 flex space-x-2">
+        <li className="p-2 flex space-x-2">
           <Button onClick={() => onContainerCreate("FRAME")}>
             <FrameIcon />
           </Button>

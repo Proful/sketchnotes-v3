@@ -122,9 +122,6 @@ export type ContainerStyle = {
   paddingBottom?: number
   paddingLeft?: number
   paddingRight?: number
-  iconSize?: number
-  iconColor?: string
-  iconRotate?: number
   rectWidth?: number
   rectHeight?: number
   shapeFill?: string

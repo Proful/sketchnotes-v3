@@ -1,10 +1,6 @@
 import { useState } from "react"
 
-import {
-  DEFAULT_CONTAINER_TYPE,
-  DEFAULT_SCALE,
-  DEFAULT_SHAPE_TYPE,
-} from "@/lib/constants"
+import { DEFAULT_CONTAINER_TYPE, DEFAULT_SCALE } from "@/lib/constants"
 import { Action, ContainerType, ShapeType } from "@/lib/types"
 import Actions from "@/components/Actions"
 import { FrameContainer } from "@/components/frame/FrameContainer"
@@ -15,31 +11,27 @@ import Sidebar from "@/components/Sidebar"
 import { ThemeProvider } from "@/components/theme-provider"
 
 import HikeContainer from "./components/hike/HikeContainer"
+import useStore from "./components/Store"
 
-// import PasteImageComponent from "./components/PasteImageComponent"
-
-type Icon = {
-  name: string
-  id: number
-}
-type Shape = {
-  name: ShapeType
-  id: number
-}
 // fixed allows to cover all visible area and attach click handler
 function App() {
   const [scale, setScale] = useState(DEFAULT_SCALE)
   const [action, setAction] = useState<Action | null>(null)
   const [hikeList, setHikeList] = useState<number[]>([])
   const [lexList, setLexList] = useState<number[]>([])
-  const [iconList, setIconList] = useState<Icon[]>([])
-  const [shapeList, setShapeList] = useState<Shape[]>([])
-  const [selectedId, setSelectedId] = useState<number | null>(null)
   const [screenshotFrame, setScreenshotFrame] = useState<boolean>(false)
   const [containerType, setContainerType] = useState<ContainerType>(
     DEFAULT_CONTAINER_TYPE
   )
-  const [shapeType, setShapeType] = useState<ShapeType>(DEFAULT_SHAPE_TYPE)
+  const setSelectedId = useStore((state) => state.setSelectedId)
+  const selectedId = useStore((state) => state.selectedId)
+  const icons = useStore((state) => state.icons)
+  const createIcon = useStore((state) => state.createIcon)
+  const deleteIcon = useStore((state) => state.deleteIcon)
+
+  const shapes = useStore((state) => state.shapes)
+  const createShape = useStore((state) => state.createShape)
+  const deleteShape = useStore((state) => state.deleteShape)
 
   function handleContainerCreate(
     containerType: ContainerType,
@@ -51,11 +43,9 @@ function App() {
     } else if (containerType === "LEX") {
       setLexList([...lexList, uuid])
     } else if (containerType === "ICON") {
-      setIconList([...iconList, { name: subType!, id: uuid }])
+      createIcon(uuid, subType!)
     } else if (containerType === "SHAPE") {
-      setContainerType("SHAPE")
-      setShapeType(subType! as ShapeType)
-      setShapeList([...shapeList, { name: subType! as ShapeType, id: uuid }])
+      createShape(uuid, subType! as ShapeType)
     } else if (containerType === "FRAME") {
       setScreenshotFrame(!screenshotFrame)
       setContainerType("FRAME")
@@ -63,14 +53,12 @@ function App() {
   }
 
   function handleDelete(): void {
+    deleteIcon(selectedId!)
+    deleteShape(selectedId!)
     const hikeListUpd = hikeList.filter((hike) => hike !== selectedId)
     setHikeList(hikeListUpd)
     const lexListUpd = lexList.filter((lex) => lex !== selectedId)
     setLexList(lexListUpd)
-    const iconListUpd = iconList.filter((icon) => icon.id !== selectedId)
-    setIconList(iconListUpd)
-    const shapeListUpd = shapeList.filter((shape) => shape.id !== selectedId)
-    setShapeList(shapeListUpd)
   }
 
   function reset() {
@@ -84,36 +72,15 @@ function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <div className="mr-64 p-8 h-full w-full fixed" onClick={reset}>
-        {/* <PasteImageComponent /> */}
         {screenshotFrame && (
           <FrameContainer action={action} onSelect={setContainerType} />
         )}
         <div style={style}>
-          {shapeList.map((shape) => (
-            <ShapeContainer
-              name={shape.name}
-              key={shape.id}
-              id={shape.id}
-              selectedId={selectedId}
-              action={action}
-              onSelect={(id, containerType) => {
-                setSelectedId(id)
-                setContainerType(containerType)
-              }}
-            />
+          {Object.values(shapes).map((shape) => (
+            <ShapeContainer key={shape.id} id={shape.id} />
           ))}
-          {iconList.map((icon) => (
-            <IconContainer
-              action={action}
-              key={icon.id}
-              name={icon.name}
-              id={icon.id}
-              selectedId={selectedId}
-              onSelect={(id, containerType) => {
-                setSelectedId(id)
-                setContainerType(containerType)
-              }}
-            />
+          {Object.values(icons).map((icon) => (
+            <IconContainer key={icon.id} id={icon.id} />
           ))}
           {lexList.map((id) => (
             <LexContainer
@@ -141,7 +108,7 @@ function App() {
           ))}
         </div>
       </div>
-      <div className="fixed top-0 right-0 h-full w-64 text-white shadow-lg overflow-scroll bg-slate-800">
+      <div className="fixed top-0 right-0 h-full w-64 text-white shadow-lg overflow-scroll bg-sidebar">
         <nav className="mt-0" style={{ transform: "scale(1)" }}>
           <Actions
             onContainerCreate={handleContainerCreate}
@@ -157,7 +124,6 @@ function App() {
               setAction(action)
             }}
             containerType={containerType}
-            shapeType={shapeType}
           />
         </nav>
       </div>

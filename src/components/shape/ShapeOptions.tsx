@@ -1,28 +1,8 @@
-import { useState } from "react"
-
 import {
+  ALLOWED_BORDER_RADIUS,
   ALLOWED_LINE2_DIRECTION,
-  DEFAULT_ARROW_BOW,
-  DEFAULT_ARROW_FLIP,
-  DEFAULT_ARROW_HEAD_SIZE,
-  DEFAULT_ARROW_HEIGHT,
-  DEFAULT_ARROW_MAX_STRETCH,
-  DEFAULT_ARROW_MIN_STRETCH,
-  DEFAULT_ARROW_PAD_END,
-  DEFAULT_ARROW_PAD_START,
-  DEFAULT_ARROW_STRAIGHTS,
-  DEFAULT_ARROW_STRETCH,
-  DEFAULT_ARROW_WIDTH,
-  DEFAULT_BORDER_RADIUS,
-  DEFAULT_BORDER_WIDTH,
-  DEFAULT_LINE_WIDTH,
-  DEFAULT_LINE2_WIDTH,
-  DEFAULT_RECT_HEIGHT,
-  DEFAULT_RECT_WIDTH,
-  DEFAULT_SHAPE_ROTATE,
   TAILWIND_COLORS,
 } from "@/lib/constants"
-import { Action, ShapeType } from "@/lib/types"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
 import {
@@ -40,77 +20,77 @@ import {
 } from "@/components/ui/tooltip"
 
 import ColorPicker from "../ColorPicker"
-import RoughjsOptions from "./RoughjsOptions"
+import useStore from "../Store"
 
-type ShapeOptionsProps = {
-  shapeType: ShapeType
-  onAction: (action: Action) => void
-}
-export default function ShapeOptions({
-  shapeType,
-  onAction,
-}: ShapeOptionsProps) {
-  if (shapeType === "RECT") {
-    return <RectOptions onAction={onAction} />
+// import RoughjsOptions from "./RoughjsOptions"
+
+export default function ShapeOptions() {
+  const selectedId = useStore((state) => state.selectedId)
+  const shapes = useStore((state) => state.shapes)
+  const shape = shapes[selectedId!]
+
+  if (!selectedId || !shape) return
+
+  if (shape.name === "RECT") {
+    return <RectOptions />
   } else if (
-    shapeType === "ROUGH-RECT" ||
-    shapeType === "ROUGH-LINE" ||
-    shapeType === "ROUGH-CIRCLE" ||
-    shapeType === "ROUGH-ELLIPSE"
+    shape.name === "ROUGH-RECT" ||
+    shape.name === "ROUGH-LINE" ||
+    shape.name === "ROUGH-CIRCLE" ||
+    shape.name === "ROUGH-ELLIPSE"
   ) {
-    return <RoughRectOptions onAction={onAction} />
-  } else if (shapeType === "LINE") {
-    return <LineOptions onAction={onAction} />
-  } else if (shapeType === "LINE-CIRCLE") {
-    return <LineCircleOptions onAction={onAction} />
-  } else if (shapeType === "LINE-LINE") {
-    return <LineLineOptions onAction={onAction} />
-  } else if (shapeType === "LINE-LINE-V2") {
-    return <LineLineV2Options onAction={onAction} />
-  } else if (shapeType === "ARROW") {
-    return <ArrowOptions onAction={onAction} />
-  } else if (shapeType === "ELLIPSE") {
-    return <EllipseOptions onAction={onAction} />
-  } else if (shapeType === "POLYGON") {
-    return <PolygonOptions onAction={onAction} />
+    return <RoughRectOptions />
+  } else if (shape.name === "LINE") {
+    return <LineOptions />
+  } else if (shape.name === "LINE-CIRCLE") {
+    return <LineCircleOptions />
+  } else if (shape.name === "LINE-LINE") {
+    return <LineLineOptions />
+  } else if (shape.name === "LINE-LINE-V2") {
+    return <LineLineV2Options />
+  } else if (shape.name === "ARROW") {
+    return <ArrowOptions />
+  } else if (shape.name === "ELLIPSE") {
+    return <EllipseOptions />
+  } else if (shape.name === "POLYGON") {
+    return <PolygonOptions />
   } else {
     return <></>
   }
 }
 
-type RectOptionsProps = {
-  onAction: (action: Action) => void
-}
-function RectOptions({ onAction }: RectOptionsProps) {
-  const [borderWidth, setBorderWidth] = useState(DEFAULT_BORDER_WIDTH)
-  const [borderRadius] = useState(DEFAULT_BORDER_RADIUS)
-  const [rectWidth, setRectWidth] = useState(DEFAULT_RECT_WIDTH)
-  const [rectHeight, setRectHeight] = useState(DEFAULT_RECT_HEIGHT)
+function RectOptions() {
+  const selectedId = useStore((state) => state.selectedId)
+  const shapes = useStore((state) => state.shapes)
+  const updateShapeProperty = useStore((state) => state.updateShapeProperty)
+  const shape = shapes[selectedId!]
+
+  if (!selectedId || !shape) return
   return (
     <>
       <ul>
         <li className="p-1 hover:bg-blue-700 space-x-2">
           <ColorPicker
-            label="color"
+            label="border"
             colors={TAILWIND_COLORS}
             onColorSelect={(c) =>
-              onAction({
-                name: "BORDER-COLOR",
-                seed: Math.random(),
-                value: c.replace("bg", "stroke"),
-              })
+              updateShapeProperty(
+                selectedId,
+                "borderColor",
+                c.replace("bg", "stroke")
+              )
             }
           />
 
           <ColorPicker
-            label="color"
+            label="fill"
             colors={TAILWIND_COLORS}
             onColorSelect={(c) =>
-              onAction({
-                name: "SHAPE-FILL",
-                seed: Math.random(),
-                value: c.replace("bg", "fill"),
-              })
+              updateShapeProperty(
+                selectedId,
+                "shapeFill",
+                c.replace("bg", "fill")
+              )
             }
           />
           <TooltipProvider>
@@ -119,14 +99,13 @@ function RectOptions({ onAction }: RectOptionsProps) {
                 <Input
                   type="number"
                   className="w-16 inline"
-                  value={borderWidth}
+                  value={shape.borderWidth}
                   onChange={(e) => {
-                    setBorderWidth(+e.target.value)
-                    onAction({
-                      name: "BORDER-WIDTH",
-                      value: +e.target.value,
-                      seed: Math.random(),
-                    })
+                    updateShapeProperty(
+                      selectedId,
+                      "borderWidth",
+                      Number(e.target.value)
+                    )
                   }}
                 />
               </TooltipTrigger>
@@ -135,29 +114,25 @@ function RectOptions({ onAction }: RectOptionsProps) {
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
+        </li>
 
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <Input
-                  type="number"
-                  className="w-16 inline"
-                  value={borderRadius}
-                  onChange={(e) => {
-                    // setBorderRadius(+e.target.value)
-                    onAction({
-                      name: "BORDER-RADIUS",
-                      value: +e.target.value,
-                      seed: Math.random(),
-                    })
-                  }}
-                />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Border Radius</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+        <li className="p-2 hover:bg-blue-700 flex space-x-2">
+          <Select
+            onValueChange={(v) => {
+              updateShapeProperty(selectedId, "borderRadius", v)
+            }}
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Border Radius" />
+            </SelectTrigger>
+            <SelectContent>
+              {ALLOWED_BORDER_RADIUS.map((br) => (
+                <SelectItem value={br} key={br}>
+                  {br}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </li>
 
         <li className="p-1 hover:bg-blue-700 space-x-2">
@@ -167,14 +142,13 @@ function RectOptions({ onAction }: RectOptionsProps) {
                 <Input
                   type="number"
                   className="w-16 inline"
-                  value={rectWidth}
+                  value={shape.rectWidth}
                   onChange={(e) => {
-                    setRectWidth(+e.target.value)
-                    onAction({
-                      name: "RECT-WIDTH",
-                      value: +e.target.value,
-                      seed: Math.random(),
-                    })
+                    updateShapeProperty(
+                      selectedId,
+                      "rectWidth",
+                      Number(e.target.value)
+                    )
                   }}
                 />
               </TooltipTrigger>
@@ -190,14 +164,13 @@ function RectOptions({ onAction }: RectOptionsProps) {
                 <Input
                   type="number"
                   className="w-16 inline"
-                  value={rectHeight}
+                  value={shape.rectHeight}
                   onChange={(e) => {
-                    setRectHeight(+e.target.value)
-                    onAction({
-                      name: "RECT-HEIGHT",
-                      value: +e.target.value,
-                      seed: Math.random(),
-                    })
+                    updateShapeProperty(
+                      selectedId,
+                      "rectHeight",
+                      Number(e.target.value)
+                    )
                   }}
                 />
               </TooltipTrigger>
@@ -211,13 +184,18 @@ function RectOptions({ onAction }: RectOptionsProps) {
     </>
   )
 }
-function RoughRectOptions({ onAction }: RectOptionsProps) {
-  const [rectWidth, setRectWidth] = useState(DEFAULT_RECT_WIDTH)
-  const [rectHeight, setRectHeight] = useState(DEFAULT_RECT_HEIGHT)
+
+function RoughRectOptions() {
+  const selectedId = useStore((state) => state.selectedId)
+  const shapes = useStore((state) => state.shapes)
+  const updateShapeProperty = useStore((state) => state.updateShapeProperty)
+  const shape = shapes[selectedId!]
+
+  if (!selectedId || !shape) return
   return (
     <>
       <ul>
-        <RoughjsOptions onAction={onAction} />
+        {/* <RoughjsOptions /> */}
 
         <li className="p-1 hover:bg-blue-700 space-x-2">
           <TooltipProvider>
@@ -226,14 +204,13 @@ function RoughRectOptions({ onAction }: RectOptionsProps) {
                 <Input
                   type="number"
                   className="w-16 inline"
-                  value={rectWidth}
+                  value={shape.rectWidth}
                   onChange={(e) => {
-                    setRectWidth(+e.target.value)
-                    onAction({
-                      name: "RECT-WIDTH",
-                      value: +e.target.value,
-                      seed: Math.random(),
-                    })
+                    updateShapeProperty(
+                      selectedId,
+                      "rectWidth",
+                      Number(e.target.value)
+                    )
                   }}
                 />
               </TooltipTrigger>
@@ -249,14 +226,13 @@ function RoughRectOptions({ onAction }: RectOptionsProps) {
                 <Input
                   type="number"
                   className="w-16 inline"
-                  value={rectHeight}
+                  value={shape.rectHeight}
                   onChange={(e) => {
-                    setRectHeight(+e.target.value)
-                    onAction({
-                      name: "RECT-HEIGHT",
-                      value: +e.target.value,
-                      seed: Math.random(),
-                    })
+                    updateShapeProperty(
+                      selectedId,
+                      "rectHeight",
+                      Number(e.target.value)
+                    )
                   }}
                 />
               </TooltipTrigger>
@@ -270,9 +246,14 @@ function RoughRectOptions({ onAction }: RectOptionsProps) {
     </>
   )
 }
-function LineOptions({ onAction }: { onAction: (action: Action) => void }) {
-  const [borderWidth, setBorderWidth] = useState(DEFAULT_BORDER_WIDTH)
-  const [lineWidth, setLineWidth] = useState(DEFAULT_LINE_WIDTH)
+
+function LineOptions() {
+  const selectedId = useStore((state) => state.selectedId)
+  const shapes = useStore((state) => state.shapes)
+  const updateShapeProperty = useStore((state) => state.updateShapeProperty)
+  const shape = shapes[selectedId!]
+
+  if (!selectedId || !shape) return
   return (
     <>
       <ul>
@@ -281,11 +262,11 @@ function LineOptions({ onAction }: { onAction: (action: Action) => void }) {
             label="color"
             colors={TAILWIND_COLORS}
             onColorSelect={(c) =>
-              onAction({
-                name: "BORDER-COLOR",
-                seed: Math.random(),
-                value: c.replace("bg", "stroke"),
-              })
+              updateShapeProperty(
+                selectedId,
+                "borderColor",
+                c.replace("bg", "stroke")
+              )
             }
           />
 
@@ -295,14 +276,13 @@ function LineOptions({ onAction }: { onAction: (action: Action) => void }) {
                 <Input
                   type="number"
                   className="w-16 inline"
-                  value={borderWidth}
+                  value={shape.borderWidth}
                   onChange={(e) => {
-                    setBorderWidth(+e.target.value)
-                    onAction({
-                      name: "BORDER-WIDTH",
-                      value: +e.target.value,
-                      seed: Math.random(),
-                    })
+                    updateShapeProperty(
+                      selectedId,
+                      "borderWidth",
+                      Number(e.target.value)
+                    )
                   }}
                 />
               </TooltipTrigger>
@@ -320,14 +300,13 @@ function LineOptions({ onAction }: { onAction: (action: Action) => void }) {
                 <Input
                   type="number"
                   className="w-16 inline"
-                  value={lineWidth}
+                  value={shape.lineWidth}
                   onChange={(e) => {
-                    setLineWidth(+e.target.value)
-                    onAction({
-                      name: "LINE-WIDTH",
-                      value: +e.target.value,
-                      seed: Math.random(),
-                    })
+                    updateShapeProperty(
+                      selectedId,
+                      "lineWidth",
+                      Number(e.target.value)
+                    )
                   }}
                 />
               </TooltipTrigger>
@@ -341,14 +320,14 @@ function LineOptions({ onAction }: { onAction: (action: Action) => void }) {
     </>
   )
 }
-function LineCircleOptions({
-  onAction,
-}: {
-  onAction: (action: Action) => void
-}) {
-  const [borderWidth, setBorderWidth] = useState(DEFAULT_BORDER_WIDTH)
-  const [lineWidth, setLineWidth] = useState(DEFAULT_LINE_WIDTH)
-  const [shapeRotate, setShapeRotate] = useState(DEFAULT_SHAPE_ROTATE)
+
+function LineCircleOptions() {
+  const selectedId = useStore((state) => state.selectedId)
+  const shapes = useStore((state) => state.shapes)
+  const updateShapeProperty = useStore((state) => state.updateShapeProperty)
+  const shape = shapes[selectedId!]
+
+  if (!selectedId || !shape) return
   return (
     <>
       <ul>
@@ -357,11 +336,11 @@ function LineCircleOptions({
             label="color"
             colors={TAILWIND_COLORS}
             onColorSelect={(c) =>
-              onAction({
-                name: "BORDER-COLOR",
-                seed: Math.random(),
-                value: c.replace("bg", "stroke"),
-              })
+              updateShapeProperty(
+                selectedId,
+                "borderColor",
+                c.replace("bg", "stroke")
+              )
             }
           />
         </li>
@@ -373,14 +352,13 @@ function LineCircleOptions({
                 <Input
                   type="number"
                   className="w-16 inline"
-                  value={borderWidth}
+                  value={shape.borderWidth}
                   onChange={(e) => {
-                    setBorderWidth(+e.target.value)
-                    onAction({
-                      name: "BORDER-WIDTH",
-                      value: +e.target.value,
-                      seed: Math.random(),
-                    })
+                    updateShapeProperty(
+                      selectedId,
+                      "borderWidth",
+                      Number(e.target.value)
+                    )
                   }}
                 />
               </TooltipTrigger>
@@ -395,14 +373,13 @@ function LineCircleOptions({
                 <Input
                   type="number"
                   className="w-16 inline"
-                  value={lineWidth}
+                  value={shape.lineWidth}
                   onChange={(e) => {
-                    setLineWidth(+e.target.value)
-                    onAction({
-                      name: "LINE-WIDTH",
-                      value: +e.target.value,
-                      seed: Math.random(),
-                    })
+                    updateShapeProperty(
+                      selectedId,
+                      "lineWidth",
+                      Number(e.target.value)
+                    )
                   }}
                 />
               </TooltipTrigger>
@@ -418,14 +395,13 @@ function LineCircleOptions({
                 <Input
                   type="number"
                   className="w-16 inline"
-                  value={shapeRotate}
+                  value={shape.shapeRotate}
                   onChange={(e) => {
-                    setShapeRotate(+e.target.value)
-                    onAction({
-                      name: "SHAPE-ROTATE",
-                      value: +e.target.value,
-                      seed: Math.random(),
-                    })
+                    updateShapeProperty(
+                      selectedId,
+                      "shapeRotate",
+                      Number(e.target.value)
+                    )
                   }}
                 />
               </TooltipTrigger>
@@ -439,11 +415,14 @@ function LineCircleOptions({
     </>
   )
 }
-function LineLineOptions({ onAction }: { onAction: (action: Action) => void }) {
-  const [borderWidth, setBorderWidth] = useState(DEFAULT_BORDER_WIDTH)
-  const [lineWidth, setLineWidth] = useState(DEFAULT_LINE_WIDTH)
-  const [line2Width, setLine2Width] = useState(DEFAULT_LINE2_WIDTH)
-  const [shapeRotate, setShapeRotate] = useState(DEFAULT_SHAPE_ROTATE)
+
+function LineLineOptions() {
+  const selectedId = useStore((state) => state.selectedId)
+  const shapes = useStore((state) => state.shapes)
+  const updateShapeProperty = useStore((state) => state.updateShapeProperty)
+  const shape = shapes[selectedId!]
+
+  if (!selectedId || !shape) return
   return (
     <>
       <ul>
@@ -452,11 +431,11 @@ function LineLineOptions({ onAction }: { onAction: (action: Action) => void }) {
             label="color"
             colors={TAILWIND_COLORS}
             onColorSelect={(c) =>
-              onAction({
-                name: "BORDER-COLOR",
-                seed: Math.random(),
-                value: c.replace("bg", "stroke"),
-              })
+              updateShapeProperty(
+                selectedId,
+                "borderColor",
+                c.replace("bg", "stroke")
+              )
             }
           />
         </li>
@@ -468,14 +447,13 @@ function LineLineOptions({ onAction }: { onAction: (action: Action) => void }) {
                 <Input
                   type="number"
                   className="w-16 inline"
-                  value={borderWidth}
+                  value={shape.borderWidth}
                   onChange={(e) => {
-                    setBorderWidth(+e.target.value)
-                    onAction({
-                      name: "BORDER-WIDTH",
-                      value: +e.target.value,
-                      seed: Math.random(),
-                    })
+                    updateShapeProperty(
+                      selectedId,
+                      "borderWidth",
+                      Number(e.target.value)
+                    )
                   }}
                 />
               </TooltipTrigger>
@@ -490,14 +468,13 @@ function LineLineOptions({ onAction }: { onAction: (action: Action) => void }) {
                 <Input
                   type="number"
                   className="w-16 inline"
-                  value={shapeRotate}
+                  value={shape.shapeRotate}
                   onChange={(e) => {
-                    setShapeRotate(+e.target.value)
-                    onAction({
-                      name: "SHAPE-ROTATE",
-                      value: +e.target.value,
-                      seed: Math.random(),
-                    })
+                    updateShapeProperty(
+                      selectedId,
+                      "shapeRotate",
+                      Number(e.target.value)
+                    )
                   }}
                 />
               </TooltipTrigger>
@@ -515,14 +492,13 @@ function LineLineOptions({ onAction }: { onAction: (action: Action) => void }) {
                 <Input
                   type="number"
                   className="w-16 inline"
-                  value={lineWidth}
+                  value={shape.lineWidth}
                   onChange={(e) => {
-                    setLineWidth(+e.target.value)
-                    onAction({
-                      name: "LINE-WIDTH",
-                      value: +e.target.value,
-                      seed: Math.random(),
-                    })
+                    updateShapeProperty(
+                      selectedId,
+                      "lineWidth",
+                      Number(e.target.value)
+                    )
                   }}
                 />
               </TooltipTrigger>
@@ -538,14 +514,13 @@ function LineLineOptions({ onAction }: { onAction: (action: Action) => void }) {
                 <Input
                   type="number"
                   className="w-16 inline"
-                  value={line2Width}
+                  value={shape.line2Width}
                   onChange={(e) => {
-                    setLine2Width(+e.target.value)
-                    onAction({
-                      name: "LINE2-WIDTH",
-                      value: +e.target.value,
-                      seed: Math.random(),
-                    })
+                    updateShapeProperty(
+                      selectedId,
+                      "line2Width",
+                      Number(e.target.value)
+                    )
                   }}
                 />
               </TooltipTrigger>
@@ -559,26 +534,21 @@ function LineLineOptions({ onAction }: { onAction: (action: Action) => void }) {
     </>
   )
 }
-function LineLineV2Options({
-  onAction,
-}: {
-  onAction: (action: Action) => void
-}) {
-  const [borderWidth, setBorderWidth] = useState(DEFAULT_BORDER_WIDTH)
-  const [lineWidth, setLineWidth] = useState(DEFAULT_LINE_WIDTH)
-  const [line2Width, setLine2Width] = useState(DEFAULT_LINE2_WIDTH)
-  const [shapeRotate, setShapeRotate] = useState(DEFAULT_SHAPE_ROTATE)
+
+function LineLineV2Options() {
+  const selectedId = useStore((state) => state.selectedId)
+  const shapes = useStore((state) => state.shapes)
+  const updateShapeProperty = useStore((state) => state.updateShapeProperty)
+  const shape = shapes[selectedId!]
+
+  if (!selectedId || !shape) return
   return (
     <>
       <ul>
         <li className="p-2 hover:bg-blue-700 flex space-x-2">
           <Select
             onValueChange={(v) => {
-              onAction({
-                name: "LINE2-DIRECTION",
-                value: v,
-                seed: Math.random(),
-              })
+              updateShapeProperty(selectedId, "line2Direction", v)
             }}
           >
             <SelectTrigger className="w-[180px]">
@@ -598,11 +568,11 @@ function LineLineV2Options({
             label="color"
             colors={TAILWIND_COLORS}
             onColorSelect={(c) =>
-              onAction({
-                name: "BORDER-COLOR",
-                seed: Math.random(),
-                value: c.replace("bg", "stroke"),
-              })
+              updateShapeProperty(
+                selectedId,
+                "borderColor",
+                c.replace("bg", "stroke")
+              )
             }
           />
         </li>
@@ -614,14 +584,13 @@ function LineLineV2Options({
                 <Input
                   type="number"
                   className="w-16 inline"
-                  value={borderWidth}
+                  value={shape.borderWidth}
                   onChange={(e) => {
-                    setBorderWidth(+e.target.value)
-                    onAction({
-                      name: "BORDER-WIDTH",
-                      value: +e.target.value,
-                      seed: Math.random(),
-                    })
+                    updateShapeProperty(
+                      selectedId,
+                      "borderWidth",
+                      Number(e.target.value)
+                    )
                   }}
                 />
               </TooltipTrigger>
@@ -636,14 +605,13 @@ function LineLineV2Options({
                 <Input
                   type="number"
                   className="w-16 inline"
-                  value={shapeRotate}
+                  value={shape.shapeRotate}
                   onChange={(e) => {
-                    setShapeRotate(+e.target.value)
-                    onAction({
-                      name: "SHAPE-ROTATE",
-                      value: +e.target.value,
-                      seed: Math.random(),
-                    })
+                    updateShapeProperty(
+                      selectedId,
+                      "shapeRotate",
+                      Number(e.target.value)
+                    )
                   }}
                 />
               </TooltipTrigger>
@@ -661,14 +629,13 @@ function LineLineV2Options({
                 <Input
                   type="number"
                   className="w-16 inline"
-                  value={lineWidth}
+                  value={shape.lineWidth}
                   onChange={(e) => {
-                    setLineWidth(+e.target.value)
-                    onAction({
-                      name: "LINE-WIDTH",
-                      value: +e.target.value,
-                      seed: Math.random(),
-                    })
+                    updateShapeProperty(
+                      selectedId,
+                      "lineWidth",
+                      Number(e.target.value)
+                    )
                   }}
                 />
               </TooltipTrigger>
@@ -684,14 +651,13 @@ function LineLineV2Options({
                 <Input
                   type="number"
                   className="w-16 inline"
-                  value={line2Width}
+                  value={shape.line2Width}
                   onChange={(e) => {
-                    setLine2Width(+e.target.value)
-                    onAction({
-                      name: "LINE2-WIDTH",
-                      value: +e.target.value,
-                      seed: Math.random(),
-                    })
+                    updateShapeProperty(
+                      selectedId,
+                      "line2Width",
+                      Number(e.target.value)
+                    )
                   }}
                 />
               </TooltipTrigger>
@@ -705,23 +671,14 @@ function LineLineV2Options({
     </>
   )
 }
-function ArrowOptions({ onAction }: { onAction: (action: Action) => void }) {
-  const [shapeRotate, setShapeRotate] = useState(DEFAULT_SHAPE_ROTATE)
-  const [arrowHeadSize, setArrowHeadSize] = useState(DEFAULT_ARROW_HEAD_SIZE)
-  const [arrowHeight, setArrowHeight] = useState(DEFAULT_ARROW_HEIGHT)
-  const [arrowWidth, setArrowWidth] = useState(DEFAULT_ARROW_WIDTH)
-  const [arrowBow, setArrowBow] = useState(DEFAULT_ARROW_BOW)
-  const [arrowStretch, setArrowStretch] = useState(DEFAULT_ARROW_STRETCH)
-  const [arrowMinStretch, setArrowMinStretch] = useState(
-    DEFAULT_ARROW_MIN_STRETCH
-  )
-  const [arrowMaxStretch, setArrowMaxStretch] = useState(
-    DEFAULT_ARROW_MAX_STRETCH
-  )
-  const [arrowPadStart, setArrowPadStart] = useState(DEFAULT_ARROW_PAD_START)
-  const [arrowPadEnd, setArrowPadEnd] = useState(DEFAULT_ARROW_PAD_END)
-  const [arrowFlip, setArrowFlip] = useState(DEFAULT_ARROW_FLIP)
-  const [arrowStraights, setArrowStraights] = useState(DEFAULT_ARROW_STRAIGHTS)
+
+function ArrowOptions() {
+  const selectedId = useStore((state) => state.selectedId)
+  const shapes = useStore((state) => state.shapes)
+  const updateShapeProperty = useStore((state) => state.updateShapeProperty)
+  const shape = shapes[selectedId!]
+
+  if (!selectedId || !shape) return
   return (
     <>
       <ul>
@@ -732,14 +689,13 @@ function ArrowOptions({ onAction }: { onAction: (action: Action) => void }) {
                 <Input
                   type="number"
                   className="w-16 inline"
-                  value={arrowHeight}
+                  value={shape.arrowHeight}
                   onChange={(e) => {
-                    setArrowHeight(+e.target.value)
-                    onAction({
-                      name: "ARROW-HEIGHT",
-                      value: +e.target.value,
-                      seed: Math.random(),
-                    })
+                    updateShapeProperty(
+                      selectedId,
+                      "arrowHeight",
+                      Number(e.target.value)
+                    )
                   }}
                 />
               </TooltipTrigger>
@@ -755,14 +711,13 @@ function ArrowOptions({ onAction }: { onAction: (action: Action) => void }) {
                 <Input
                   type="number"
                   className="w-16 inline"
-                  value={arrowWidth}
+                  value={shape.arrowWidth}
                   onChange={(e) => {
-                    setArrowWidth(+e.target.value)
-                    onAction({
-                      name: "ARROW-WIDTH",
-                      value: +e.target.value,
-                      seed: Math.random(),
-                    })
+                    updateShapeProperty(
+                      selectedId,
+                      "arrowWidth",
+                      Number(e.target.value)
+                    )
                   }}
                 />
               </TooltipTrigger>
@@ -778,14 +733,13 @@ function ArrowOptions({ onAction }: { onAction: (action: Action) => void }) {
                 <Input
                   type="number"
                   className="w-16 inline"
-                  value={arrowHeadSize}
+                  value={shape.arrowHeadSize}
                   onChange={(e) => {
-                    setArrowHeadSize(+e.target.value)
-                    onAction({
-                      name: "ARROW-HEAD-SIZE",
-                      value: +e.target.value,
-                      seed: Math.random(),
-                    })
+                    updateShapeProperty(
+                      selectedId,
+                      "arrowHeadSize",
+                      Number(e.target.value)
+                    )
                   }}
                 />
               </TooltipTrigger>
@@ -800,23 +754,11 @@ function ArrowOptions({ onAction }: { onAction: (action: Action) => void }) {
             label="border color"
             colors={TAILWIND_COLORS}
             onColorSelect={(c) =>
-              onAction({
-                name: "BORDER-COLOR",
-                seed: Math.random(),
-                value: c.replace("bg", "stroke"),
-              })
-            }
-          />
-
-          <ColorPicker
-            label="color"
-            colors={TAILWIND_COLORS}
-            onColorSelect={(c) =>
-              onAction({
-                name: "SHAPE-FILL",
-                seed: Math.random(),
-                value: c.replace("bg", "fill"),
-              })
+              updateShapeProperty(
+                selectedId,
+                "borderColor",
+                c.replace("bg", "stroke")
+              )
             }
           />
         </li>
@@ -830,14 +772,13 @@ function ArrowOptions({ onAction }: { onAction: (action: Action) => void }) {
                   max={1}
                   step={0.1}
                   className="w-16 inline"
-                  value={arrowBow}
+                  value={shape.arrowBow}
                   onChange={(e) => {
-                    setArrowBow(+e.target.value)
-                    onAction({
-                      name: "ARROW-BOW",
-                      value: +e.target.value,
-                      seed: Math.random(),
-                    })
+                    updateShapeProperty(
+                      selectedId,
+                      "arrowBow",
+                      Number(e.target.value)
+                    )
                   }}
                 />
               </TooltipTrigger>
@@ -855,17 +796,16 @@ function ArrowOptions({ onAction }: { onAction: (action: Action) => void }) {
                 <Input
                   type="number"
                   className="w-16 inline"
-                  value={arrowStretch}
+                  value={shape.arrowStretch}
                   min={-1}
                   max={1}
                   step={0.1}
                   onChange={(e) => {
-                    setArrowStretch(+e.target.value)
-                    onAction({
-                      name: "ARROW-STRETCH",
-                      value: +e.target.value,
-                      seed: Math.random(),
-                    })
+                    updateShapeProperty(
+                      selectedId,
+                      "arrowStretch",
+                      Number(e.target.value)
+                    )
                   }}
                 />
               </TooltipTrigger>
@@ -881,17 +821,16 @@ function ArrowOptions({ onAction }: { onAction: (action: Action) => void }) {
                 <Input
                   type="number"
                   className="w-16 inline"
-                  value={arrowMinStretch}
+                  value={shape.arrowMinStretch}
                   min={0}
                   max={420}
                   step={1}
                   onChange={(e) => {
-                    setArrowMinStretch(+e.target.value)
-                    onAction({
-                      name: "ARROW-MIN-STRETCH",
-                      value: +e.target.value,
-                      seed: Math.random(),
-                    })
+                    updateShapeProperty(
+                      selectedId,
+                      "arrowMinStretch",
+                      Number(e.target.value)
+                    )
                   }}
                 />
               </TooltipTrigger>
@@ -910,14 +849,13 @@ function ArrowOptions({ onAction }: { onAction: (action: Action) => void }) {
                   min={0}
                   max={420}
                   step={1}
-                  value={arrowMaxStretch}
+                  value={shape.arrowMaxStretch}
                   onChange={(e) => {
-                    setArrowMaxStretch(+e.target.value)
-                    onAction({
-                      name: "ARROW-MAX-STRETCH",
-                      value: +e.target.value,
-                      seed: Math.random(),
-                    })
+                    updateShapeProperty(
+                      selectedId,
+                      "arrowMaxStretch",
+                      Number(e.target.value)
+                    )
                   }}
                 />
               </TooltipTrigger>
@@ -935,14 +873,13 @@ function ArrowOptions({ onAction }: { onAction: (action: Action) => void }) {
                 <Input
                   type="number"
                   className="w-16 inline"
-                  value={arrowPadStart}
+                  value={shape.arrowPadStart}
                   onChange={(e) => {
-                    setArrowPadStart(+e.target.value)
-                    onAction({
-                      name: "ARROW-PAD-START",
-                      value: +e.target.value,
-                      seed: Math.random(),
-                    })
+                    updateShapeProperty(
+                      selectedId,
+                      "arrowPadStart",
+                      Number(e.target.value)
+                    )
                   }}
                 />
               </TooltipTrigger>
@@ -958,14 +895,13 @@ function ArrowOptions({ onAction }: { onAction: (action: Action) => void }) {
                 <Input
                   type="number"
                   className="w-16 inline"
-                  value={arrowPadEnd}
+                  value={shape.arrowPadEnd}
                   onChange={(e) => {
-                    setArrowPadEnd(+e.target.value)
-                    onAction({
-                      name: "ARROW-PAD-END",
-                      value: +e.target.value,
-                      seed: Math.random(),
-                    })
+                    updateShapeProperty(
+                      selectedId,
+                      "arrowPadEnd",
+                      Number(e.target.value)
+                    )
                   }}
                 />
               </TooltipTrigger>
@@ -981,14 +917,13 @@ function ArrowOptions({ onAction }: { onAction: (action: Action) => void }) {
                 <Input
                   type="number"
                   className="w-16 inline"
-                  value={shapeRotate}
+                  value={shape.shapeRotate}
                   onChange={(e) => {
-                    setShapeRotate(+e.target.value)
-                    onAction({
-                      name: "SHAPE-ROTATE",
-                      value: +e.target.value,
-                      seed: Math.random(),
-                    })
+                    updateShapeProperty(
+                      selectedId,
+                      "shapeRotate",
+                      Number(e.target.value)
+                    )
                   }}
                 />
               </TooltipTrigger>
@@ -1002,14 +937,9 @@ function ArrowOptions({ onAction }: { onAction: (action: Action) => void }) {
         <li className="p-1 hover:bg-blue-700 space-x-2">
           <Checkbox
             id="flip"
-            checked={arrowFlip}
+            checked={shape.arrowFlip}
             onCheckedChange={() => {
-              onAction({
-                name: "ARROW-FLIP",
-                value: !arrowFlip,
-                seed: Math.random(),
-              })
-              setArrowFlip(!arrowFlip)
+              updateShapeProperty(selectedId, "arrowFlip", !shape.arrowFlip)
             }}
           />
           <label
@@ -1022,18 +952,17 @@ function ArrowOptions({ onAction }: { onAction: (action: Action) => void }) {
         <li className="p-1 hover:bg-blue-700 space-x-2">
           <Checkbox
             id="straights"
-            checked={arrowStraights}
+            checked={shape.arrowStraights}
             onCheckedChange={() => {
-              onAction({
-                name: "ARROW-STRAIGHTS",
-                value: !arrowStraights,
-                seed: Math.random(),
-              })
-              setArrowStraights(!arrowStraights)
+              updateShapeProperty(
+                selectedId,
+                "arrowStraights",
+                !shape.arrowStraights
+              )
             }}
           />
           <label
-            htmlFor="flip"
+            htmlFor="straights"
             className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
           >
             Straights
@@ -1044,10 +973,10 @@ function ArrowOptions({ onAction }: { onAction: (action: Action) => void }) {
   )
 }
 //@ts-ignore
-function EllipseOptions({ onAction }: { onAction: (action: Action) => void }) {
+function EllipseOptions() {
   return <></>
 }
 //@ts-ignore
-function PolygonOptions({ onAction }: { onAction: (action: Action) => void }) {
+function PolygonOptions() {
   return <></>
 }

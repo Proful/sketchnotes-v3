@@ -1,11 +1,4 @@
-import { useState } from "react"
-
-import {
-  DEFAULT_ICON_ROTATE,
-  DEFAULT_ICON_SIZE,
-  TAILWIND_COLORS,
-} from "@/lib/constants"
-import { Action, ActionType } from "@/lib/types"
+import { TAILWIND_COLORS } from "@/lib/constants"
 import { Input } from "@/components/ui/input"
 import {
   Tooltip,
@@ -15,26 +8,15 @@ import {
 } from "@/components/ui/tooltip"
 
 import ColorPicker from "../ColorPicker"
+import useStore from "../Store"
 
-type IconOptionsProps = {
-  onAction: (action: Action) => void
-}
-export default function IconOptions({ onAction }: IconOptionsProps) {
-  const [iconSize, setIconSize] = useState(DEFAULT_ICON_SIZE)
-  const [iconRotate, setIconRotate] = useState(DEFAULT_ICON_ROTATE)
-  const handleAction = ({
-    actionType,
-    value,
-  }: {
-    actionType: ActionType
-    value?: string | number
-  }) => {
-    onAction({
-      name: actionType,
-      seed: Math.random(),
-      value,
-    })
-  }
+export default function IconOptions() {
+  const selectedId = useStore((state) => state.selectedId)
+  const icons = useStore((state) => state.icons)
+  const updateIconProperty = useStore((state) => state.updateIconProperty)
+  const icon = icons[selectedId!]
+
+  if (!selectedId || !icon) return
   return (
     <>
       <ul>
@@ -45,13 +27,13 @@ export default function IconOptions({ onAction }: IconOptionsProps) {
                 <Input
                   type="number"
                   className="w-16 inline"
-                  value={iconSize}
+                  value={icon.iconSize}
                   onChange={(e) => {
-                    setIconSize(+e.target.value)
-                    handleAction({
-                      actionType: "ICON-SIZE",
-                      value: +e.target.value,
-                    })
+                    updateIconProperty(
+                      selectedId,
+                      "iconSize",
+                      Number(e.target.value)
+                    )
                   }}
                 />
               </TooltipTrigger>
@@ -66,13 +48,13 @@ export default function IconOptions({ onAction }: IconOptionsProps) {
                 <Input
                   type="number"
                   className="w-16 inline"
-                  value={iconRotate}
+                  value={icon.iconRotate}
                   onChange={(e) => {
-                    setIconRotate(+e.target.value)
-                    handleAction({
-                      actionType: "ICON-ROTATE",
-                      value: +e.target.value,
-                    })
+                    updateIconProperty(
+                      selectedId,
+                      "iconRotate",
+                      Number(e.target.value)
+                    )
                   }}
                 />
               </TooltipTrigger>
@@ -87,12 +69,13 @@ export default function IconOptions({ onAction }: IconOptionsProps) {
           <ColorPicker
             label="color"
             colors={TAILWIND_COLORS}
-            onColorSelect={(c) =>
-              handleAction({
-                actionType: "COLOR",
-                value: c.replace("bg", "fill"),
-              })
-            }
+            onColorSelect={(c) => {
+              updateIconProperty(
+                selectedId,
+                "iconColor",
+                c.replace("bg", "fill")
+              )
+            }}
           />
         </li>
       </ul>

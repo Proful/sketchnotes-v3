@@ -84,6 +84,9 @@ export default {
         hike: {
           DEFAULT: "hsl(var(--hike))",
         },
+        sidebar: {
+          DEFAULT: "hsl(var(--sidebar))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
