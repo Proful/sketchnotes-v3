@@ -13,8 +13,8 @@ type SidebarProps = {
 }
 export default function Sidebar({ containerType, onAction }: SidebarProps) {
   const selectedContainerType = useStore((state) => state.selectedContainerType)
-  if (containerType === "LEX") {
-    return <LexOptions onAction={onAction} />
+  if (selectedContainerType === "LEX") {
+    return <LexOptions />
   } else if (containerType === "HIKE") {
     return <HikeOptions onAction={onAction} />
   } else if (selectedContainerType === "ICON") {

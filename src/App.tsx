@@ -18,7 +18,6 @@ function App() {
   const [scale, setScale] = useState(DEFAULT_SCALE)
   const [action, setAction] = useState<Action | null>(null)
   const [hikeList, setHikeList] = useState<number[]>([])
-  const [lexList, setLexList] = useState<number[]>([])
   const [screenshotFrame, setScreenshotFrame] = useState<boolean>(false)
   const [containerType, setContainerType] = useState<ContainerType>(
     DEFAULT_CONTAINER_TYPE
@@ -33,6 +32,10 @@ function App() {
   const createShape = useStore((state) => state.createShape)
   const deleteShape = useStore((state) => state.deleteShape)
 
+  const lexes = useStore((state) => state.lexes)
+  const createLex = useStore((state) => state.createLex)
+  const deleteLex = useStore((state) => state.deleteLex)
+
   function handleContainerCreate(
     containerType: ContainerType,
     subType?: string | undefined
@@ -41,7 +44,7 @@ function App() {
     if (containerType === "HIKE") {
       setHikeList([...hikeList, uuid])
     } else if (containerType === "LEX") {
-      setLexList([...lexList, uuid])
+      createLex(uuid)
     } else if (containerType === "ICON") {
       createIcon(uuid, subType!)
     } else if (containerType === "SHAPE") {
@@ -55,10 +58,7 @@ function App() {
   function handleDelete(): void {
     deleteIcon(selectedId!)
     deleteShape(selectedId!)
-    const hikeListUpd = hikeList.filter((hike) => hike !== selectedId)
-    setHikeList(hikeListUpd)
-    const lexListUpd = lexList.filter((lex) => lex !== selectedId)
-    setLexList(lexListUpd)
+    deleteLex(selectedId!)
   }
 
   function reset() {
@@ -82,17 +82,8 @@ function App() {
           {Object.values(icons).map((icon) => (
             <IconContainer key={icon.id} id={icon.id} />
           ))}
-          {lexList.map((id) => (
-            <LexContainer
-              action={action}
-              key={id}
-              id={id}
-              selectedId={selectedId as number}
-              onSelect={(id, containerType) => {
-                setSelectedId(id)
-                setContainerType(containerType)
-              }}
-            />
+          {Object.values(lexes).map((lex) => (
+            <LexContainer key={lex.id} id={lex.id} />
           ))}
           {hikeList.map((id) => (
             <HikeContainer

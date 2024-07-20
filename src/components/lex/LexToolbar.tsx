@@ -1,63 +1,40 @@
 import { useEffect } from "react"
 
-import { Action } from "@/lib/types"
-
-import { useLexBlockActions } from "./hooks/useLexBlockActions"
+import useStore from "../Store"
 import { useLexCode } from "./hooks/useLexCode"
 import { useLexColor } from "./hooks/useLexColor"
-import { useLexInlineActions } from "./hooks/useLexInlineActions"
 import { useLexKlass } from "./hooks/useLexKlass"
 
-export default function LexToolbar({
-  action,
-  id,
-  selectedId,
-}: {
-  action: Action | null
-  id: number
-  selectedId: number | null
-}) {
-  const { bold, italic, underline, strikethrough } = useLexInlineActions()
-  const { h1, h2, h3, q } = useLexBlockActions()
+export default function LexToolbar({ id }: { id: number }) {
   const { highlight, color, decorationColor, backgroundColor } = useLexColor()
   const { addKlass } = useLexKlass()
-  const { code, addCodeKlass } = useLexCode()
+  const { code } = useLexCode()
 
+  const selectedId = useStore((state) => state.selectedId)
+  const lexes = useStore((state) => state.lexes)
+  const selectedActionType = useStore((state) => state.selectedActionType)
+  const seed = useStore((state) => state.seed)
   useEffect(() => {
-    if (!action) return
+    if (!selectedActionType || !seed) return
     if (id !== selectedId) return
-    if (action.name === "BOLD") {
-      bold()
-    } else if (action.name === "ITALIC") {
-      italic()
-    } else if (action.name === "UNDERLINE") {
-      underline()
-    } else if (action.name === "STRIKETHROUGH") {
-      strikethrough()
-    } else if (action.name === "H1") {
-      h1()
-    } else if (action.name === "H2") {
-      h2()
-    } else if (action.name === "H3") {
-      h3()
-    } else if (action.name === "QUOTE") {
-      q()
-    } else if (action.name === "CODE") {
-      const lang = action.value as string
-      code(lang)
-    } else if (action.name === "COLOR") {
-      color(action.value! as string)
-    } else if (action.name === "BACKGROUND-COLOR") {
-      backgroundColor(action.value! as string)
-    } else if (action.name === "DECORATION-COLOR") {
-      decorationColor(action.value! as string)
-    } else if (action.name === "HIGHLIGHT") {
-      highlight(action.value! as string)
-    } else if (action.name === "TEXT-GRADIENT") {
-      addKlass(`${action.value} bg-gradient-to-r bg-clip-text text-transparent`)
-    } else if (action.name === "LEX-CODE-HIGHLIGHT") {
-      addCodeKlass("bg-slate-600")
+    const lex = lexes[selectedId!]
+
+    if (!selectedId || !lex) return
+    if (selectedActionType === "codeLanguage") {
+      code(lex.codeLanguage!)
+    } else if (selectedActionType === "color") {
+      color(lex.color!)
+    } else if (selectedActionType === "backgroundColor") {
+      backgroundColor(lex.backgroundColor!)
+    } else if (selectedActionType === "decorationColor") {
+      decorationColor(lex.decorationColor!)
+    } else if (selectedActionType === "highlightColor") {
+      highlight(lex.highlightColor!)
+    } else if (selectedActionType === "textGradient") {
+      addKlass(
+        `${lex.textGradient!} bg-gradient-to-r bg-clip-text text-transparent`
+      )
     }
-  }, [action?.seed])
+  }, [seed])
   return <></>
 }

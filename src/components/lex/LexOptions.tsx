@@ -1,5 +1,3 @@
-import { useState } from "react"
-
 import {
   ALLOWED_BORDER_DIRECTION,
   ALLOWED_BORDER_RADIUS,
@@ -11,12 +9,8 @@ import {
   ALLOWED_FONT_WEIGHT,
   ALLOWED_LINE_HEIGHT,
   ALLOWED_TEXT_GRADIENT,
-  DEFAULT_BORDER_WIDTH,
-  DEFAULT_LEX_PADDING,
   TAILWIND_COLORS,
 } from "@/lib/constants"
-import { Action, ActionType } from "@/lib/types"
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
   Select,
@@ -33,37 +27,23 @@ import {
 } from "@/components/ui/tooltip"
 
 import ColorPicker from "../ColorPicker"
+import useStore from "../Store"
 
-type LexOptionsProps = {
-  onAction: (action: Action) => void
-}
-export default function LexOptions({ onAction }: LexOptionsProps) {
-  const [padding, setPadding] = useState(DEFAULT_LEX_PADDING)
-  const [paddingTop, setPaddingTop] = useState(DEFAULT_LEX_PADDING)
-  const [paddingBottom, setPaddingBottom] = useState(DEFAULT_LEX_PADDING)
-  const [paddingLeft, setPaddingLeft] = useState(DEFAULT_LEX_PADDING)
-  const [paddingRight, setPaddingRight] = useState(DEFAULT_LEX_PADDING)
-  const [borderWidth, setBorderWidth] = useState(DEFAULT_BORDER_WIDTH)
-  const handleAction = ({
-    name,
-    value,
-  }: {
-    name: ActionType
-    value?: string | number
-  }) => {
-    onAction({
-      name: name,
-      seed: Math.random(),
-      value,
-    })
-  }
+export default function LexOptions() {
+  const selectedId = useStore((state) => state.selectedId)
+  const lexes = useStore((state) => state.lexes)
+  const updateLexProperty = useStore((state) => state.updateLexProperty)
+  const lex = lexes[selectedId!]
+
+  if (!selectedId || !lex) return
+
   return (
     <>
       <ul>
         <li className="p-2 hover:bg-blue-700">
           <Select
             onValueChange={(v) => {
-              handleAction({ name: "CODE", value: v })
+              updateLexProperty(selectedId, "codeLanguage", v)
             }}
           >
             <SelectTrigger className="w-[180px]">
@@ -81,10 +61,7 @@ export default function LexOptions({ onAction }: LexOptionsProps) {
         <li className="p-2 hover:bg-blue-700 flex space-x-2">
           <Select
             onValueChange={(v) => {
-              handleAction({
-                name: "FONT-FAMILY",
-                value: v,
-              })
+              updateLexProperty(selectedId, "fontFamily", v)
             }}
           >
             <SelectTrigger className="w-[180px]">
@@ -102,10 +79,7 @@ export default function LexOptions({ onAction }: LexOptionsProps) {
         <li className="p-2 hover:bg-blue-700 flex space-x-2">
           <Select
             onValueChange={(v) => {
-              handleAction({
-                name: "FONT-SIZE",
-                value: v,
-              })
+              updateLexProperty(selectedId, "fontSize", v)
             }}
           >
             <SelectTrigger className="w-[180px]">
@@ -124,10 +98,7 @@ export default function LexOptions({ onAction }: LexOptionsProps) {
         <li className="p-2 hover:bg-blue-700 flex space-x-2">
           <Select
             onValueChange={(v) => {
-              handleAction({
-                name: "FONT-WEIGHT",
-                value: v,
-              })
+              updateLexProperty(selectedId, "fontWeight", v)
             }}
           >
             <SelectTrigger className="w-[180px]">
@@ -146,10 +117,7 @@ export default function LexOptions({ onAction }: LexOptionsProps) {
         <li className="p-2 hover:bg-blue-700 flex space-x-2">
           <Select
             onValueChange={(v) => {
-              handleAction({
-                name: "LINE-HEIGHT",
-                value: v,
-              })
+              updateLexProperty(selectedId, "lineHeight", v)
             }}
           >
             <SelectTrigger className="w-[180px]">
@@ -169,21 +137,15 @@ export default function LexOptions({ onAction }: LexOptionsProps) {
           <ColorPicker
             label="color"
             colors={TAILWIND_COLORS}
-            onColorSelect={(_c, rgba) =>
-              handleAction({
-                name: "COLOR",
-                value: rgba,
-              })
-            }
+            onColorSelect={(_c, rgba) => {
+              updateLexProperty(selectedId, "color", rgba!)
+            }}
           />
           <ColorPicker
             label="bg"
             colors={TAILWIND_COLORS}
             onColorSelect={(_c, rgba) =>
-              handleAction({
-                name: "BACKGROUND-COLOR",
-                value: rgba,
-              })
+              updateLexProperty(selectedId, "backgroundColor", rgba!)
             }
           />
 
@@ -191,10 +153,7 @@ export default function LexOptions({ onAction }: LexOptionsProps) {
             label="decoration"
             colors={TAILWIND_COLORS}
             onColorSelect={(_c, rgba) =>
-              handleAction({
-                name: "DECORATION-COLOR",
-                value: rgba,
-              })
+              updateLexProperty(selectedId, "decorationColor", rgba!)
             }
           />
         </li>
@@ -203,31 +162,20 @@ export default function LexOptions({ onAction }: LexOptionsProps) {
           <ColorPicker
             label="box bg"
             colors={TAILWIND_COLORS}
-            onColorSelect={(c) =>
-              handleAction({
-                name: "LEX-BACKGROUND-COLOR",
-                value: c,
-              })
-            }
+            onColorSelect={(c) => updateLexProperty(selectedId, "boxColor", c!)}
           />
           <ColorPicker
             label="highlight"
             colors={TAILWIND_COLORS}
             onColorSelect={(_c, rgba) =>
-              handleAction({
-                name: "HIGHLIGHT",
-                value: rgba,
-              })
+              updateLexProperty(selectedId, "highlightColor", rgba!)
             }
           />
         </li>
         <li className="p-2 hover:bg-blue-700 flex space-x-2">
           <Select
             onValueChange={(v) => {
-              handleAction({
-                name: "BORDER-DIRECTION",
-                value: v,
-              })
+              updateLexProperty(selectedId, "borderDirection", v)
             }}
           >
             <SelectTrigger className="w-[180px]">
@@ -246,10 +194,7 @@ export default function LexOptions({ onAction }: LexOptionsProps) {
         <li className="p-2 hover:bg-blue-700 flex space-x-2">
           <Select
             onValueChange={(v) => {
-              handleAction({
-                name: "BORDER-STYLE",
-                value: v,
-              })
+              updateLexProperty(selectedId, "borderStyle", v)
             }}
           >
             <SelectTrigger className="w-[180px]">
@@ -270,13 +215,13 @@ export default function LexOptions({ onAction }: LexOptionsProps) {
                 <Input
                   type="number"
                   className="w-16 inline"
-                  value={borderWidth}
+                  value={lex.borderWidth}
                   onChange={(e) => {
-                    setBorderWidth(+e.target.value)
-                    handleAction({
-                      name: "BORDER-WIDTH",
-                      value: +e.target.value,
-                    })
+                    updateLexProperty(
+                      selectedId,
+                      "borderWidth",
+                      +e.target.value
+                    )
                   }}
                 />
               </TooltipTrigger>
@@ -292,10 +237,7 @@ export default function LexOptions({ onAction }: LexOptionsProps) {
             label="Border"
             colors={TAILWIND_COLORS}
             onColorSelect={(c) =>
-              handleAction({
-                name: "BORDER-COLOR",
-                value: c.replace("bg", "border"),
-              })
+              updateLexProperty(selectedId, "borderColor", c)
             }
           />
         </li>
@@ -303,10 +245,7 @@ export default function LexOptions({ onAction }: LexOptionsProps) {
         <li className="p-2 hover:bg-blue-700 flex space-x-2">
           <Select
             onValueChange={(v) => {
-              handleAction({
-                name: "BORDER-RADIUS",
-                value: v,
-              })
+              updateLexProperty(selectedId, "borderRadius", v)
             }}
           >
             <SelectTrigger className="w-[180px]">
@@ -322,19 +261,10 @@ export default function LexOptions({ onAction }: LexOptionsProps) {
           </Select>
         </li>
 
-        <li className="p-2 hover:bg-blue-700 space-x-2">
-          <Button onClick={() => handleAction({ name: "BOLD" })}>B</Button>
-          <Button onClick={() => handleAction({ name: "ITALIC" })}>I</Button>
-          <Button onClick={() => handleAction({ name: "UNDERLINE" })}>U</Button>
-          <Button onClick={() => handleAction({ name: "STRIKETHROUGH" })}>
-            S
-          </Button>
-        </li>
-
         <li className="p-2 hover:bg-blue-700 flex space-x-2">
           <Select
             onValueChange={(v) => {
-              handleAction({ name: "TEXT-GRADIENT", value: v })
+              updateLexProperty(selectedId, "textGradient", v)
             }}
           >
             <SelectTrigger className="w-[180px]">
@@ -356,13 +286,9 @@ export default function LexOptions({ onAction }: LexOptionsProps) {
                 <Input
                   type="number"
                   className="w-16 inline"
-                  value={paddingTop}
+                  value={lex.paddingTop}
                   onChange={(e) => {
-                    setPaddingTop(+e.target.value)
-                    handleAction({
-                      name: "LEX-PADDING-TOP",
-                      value: +e.target.value,
-                    })
+                    updateLexProperty(selectedId, "paddingTop", +e.target.value)
                   }}
                 />
               </TooltipTrigger>
@@ -377,13 +303,13 @@ export default function LexOptions({ onAction }: LexOptionsProps) {
                 <Input
                   type="number"
                   className="w-16 inline"
-                  value={paddingBottom}
+                  value={lex.paddingBottom}
                   onChange={(e) => {
-                    setPaddingBottom(+e.target.value)
-                    handleAction({
-                      name: "LEX-PADDING-BOTTOM",
-                      value: +e.target.value,
-                    })
+                    updateLexProperty(
+                      selectedId,
+                      "paddingBottom",
+                      +e.target.value
+                    )
                   }}
                 />
               </TooltipTrigger>
@@ -400,13 +326,13 @@ export default function LexOptions({ onAction }: LexOptionsProps) {
                 <Input
                   type="number"
                   className="w-16 inline"
-                  value={paddingLeft}
+                  value={lex.paddingLeft}
                   onChange={(e) => {
-                    setPaddingLeft(+e.target.value)
-                    handleAction({
-                      name: "LEX-PADDING-LEFT",
-                      value: +e.target.value,
-                    })
+                    updateLexProperty(
+                      selectedId,
+                      "paddingLeft",
+                      +e.target.value
+                    )
                   }}
                 />
               </TooltipTrigger>
@@ -421,13 +347,13 @@ export default function LexOptions({ onAction }: LexOptionsProps) {
                 <Input
                   type="number"
                   className="w-16 inline"
-                  value={paddingRight}
+                  value={lex.paddingRight}
                   onChange={(e) => {
-                    setPaddingRight(+e.target.value)
-                    handleAction({
-                      name: "LEX-PADDING-RIGHT",
-                      value: +e.target.value,
-                    })
+                    updateLexProperty(
+                      selectedId,
+                      "paddingRight",
+                      +e.target.value
+                    )
                   }}
                 />
               </TooltipTrigger>
@@ -443,13 +369,9 @@ export default function LexOptions({ onAction }: LexOptionsProps) {
                 <Input
                   type="number"
                   className="w-16 inline"
-                  value={padding}
+                  value={lex.padding}
                   onChange={(e) => {
-                    setPadding(+e.target.value)
-                    handleAction({
-                      name: "LEX-PADDING",
-                      value: +e.target.value,
-                    })
+                    updateLexProperty(selectedId, "padding", +e.target.value)
                   }}
                 />
               </TooltipTrigger>
@@ -462,7 +384,7 @@ export default function LexOptions({ onAction }: LexOptionsProps) {
         <li className="p-2 hover:bg-blue-700">
           <Select
             onValueChange={(v) => {
-              handleAction({ name: "BOX-SHADOW", value: v })
+              updateLexProperty(selectedId, "boxShadow", v)
             }}
           >
             <SelectTrigger className="w-[180px]">

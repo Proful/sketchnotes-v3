@@ -7,7 +7,6 @@ import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin"
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin"
 import { HeadingNode, QuoteNode } from "@lexical/rich-text"
 
-import { Action } from "@/lib/types"
 import {
   CodeHighlightNode,
   CodeNode,
@@ -26,15 +25,7 @@ function onError(error: Error) {
   console.error(error)
 }
 
-export default function LexTextarea({
-  action,
-  id,
-  selectedId,
-}: {
-  action: Action | null
-  id: number
-  selectedId: number | null
-}) {
+export default function LexTextarea({ id }: { id: number }) {
   const initialConfig = {
     namespace: "LexEditorTheme",
     theme: LexEditorTheme,
@@ -62,7 +53,7 @@ export default function LexTextarea({
       <DevToolsPlugin />
 
       {/* <PastePlugin /> */}
-      <LexToolbar action={action} id={id} selectedId={selectedId} />
+      <LexToolbar id={id} />
     </LexicalComposer>
   )
 }

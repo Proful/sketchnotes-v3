@@ -15,8 +15,16 @@ import {
   DEFAULT_ARROW_STRETCH,
   DEFAULT_ARROW_WIDTH,
   DEFAULT_BORDER_COLOR,
+  DEFAULT_BORDER_DIRECTION,
   DEFAULT_BORDER_RADIUS,
+  DEFAULT_BORDER_STYLE,
   DEFAULT_BORDER_WIDTH,
+  DEFAULT_BOX_SHADOW,
+  DEFAULT_FONT_FAMILY,
+  DEFAULT_FONT_SIZE,
+  DEFAULT_FONT_WEIGHT,
+  DEFAULT_LEX_PADDING,
+  DEFAULT_LINE_HEIGHT,
   DEFAULT_LINE_WIDTH,
   DEFAULT_LINE2_DIRECTION,
   DEFAULT_LINE2_WIDTH,
@@ -25,8 +33,35 @@ import {
   DEFAULT_ROUGH_OPTIONS,
   DEFAULT_SHAPE_FILL,
   DEFAULT_SHAPE_ROTATE,
+  DEFAULT_TAILWIND_COLOR,
 } from "@/lib/constants"
 import { ContainerType, ShapeType } from "@/lib/types"
+
+export interface Lex {
+  id: number
+  fontSize?: string
+  fontWeight?: string
+  fontFamily?: string
+  lineHeight?: string
+  borderWidth?: number
+  borderRadius?: string
+  borderStyle?: string
+  borderDirection?: "ALL" | "TOP" | "BOTTOM" | "LEFT" | "RIGHT"
+  borderColor?: string
+  color?: string
+  backgroundColor?: string
+  decorationColor?: string
+  boxColor?: string
+  highlightColor?: string
+  padding?: number
+  paddingTop?: number
+  paddingBottom?: number
+  paddingLeft?: number
+  paddingRight?: number
+  boxShadow?: string
+  codeLanguage?: string
+  textGradient?: string
+}
 
 interface Icon {
   id: number
@@ -66,10 +101,14 @@ export interface Shape {
 interface Store {
   icons: { [id: number]: Icon }
   shapes: { [id: number]: Shape }
+  lexes: { [id: number]: Lex }
   selectedId: number | null
   selectedContainerType: ContainerType | null
+  selectedActionType: keyof Lex | null
+  seed: number | null
   setSelectedId: (id: number | null) => void
   setSelectedContainerType: (containerType: ContainerType) => void
+  setSelectedActionType: (actionType: keyof Lex) => void
   updateIconProperty: (
     id: number,
     property: keyof Icon,
@@ -84,17 +123,29 @@ interface Store {
   ) => void
   createShape: (id: number, name: ShapeType) => void
   deleteShape: (id: number) => void
+  updateLexProperty: (
+    id: number,
+    property: keyof Lex,
+    value: string | number | boolean
+  ) => void
+  createLex: (id: number) => void
+  deleteLex: (id: number) => void
 }
 
 const useStore = create<Store>(
   zustymiddlewarets((set) => ({
     icons: {},
     shapes: {},
+    lexes: {},
     selectedId: null,
     selectedContainerType: null,
+    selectedActionType: null,
+    seed: null,
     setSelectedId: (id) => set({ selectedId: id }),
     setSelectedContainerType: (containerType) =>
       set({ selectedContainerType: containerType }),
+    setSelectedActionType: (actionType) =>
+      set({ selectedActionType: actionType }),
     updateIconProperty: (id, property, value) =>
       set((state) => ({
         icons: {
@@ -160,8 +211,64 @@ const useStore = create<Store>(
           selectedId: state.selectedId === id ? null : state.selectedId,
         }
       }),
+    updateLexProperty: (id, property, value) => {
+      set((state) => ({
+        selectedActionType: property,
+        seed: Math.random(),
+        lexes: {
+          ...state.lexes,
+          [id]: {
+            ...state.lexes[id],
+            [property]: value,
+          },
+        },
+      }))
+    },
+    createLex: (id) => {
+      const defaultProps = defaultLexProps()
+      //@ts-ignore
+      set((state) => ({
+        lexes: {
+          ...state.lexes,
+          [id]: {
+            id,
+            ...defaultProps,
+          },
+        },
+      }))
+    },
+    deleteLex: (id) =>
+      set((state) => {
+        const newLexs = { ...state.lexes }
+        delete newLexs[id]
+        return {
+          lexes: newLexs,
+          selectedId: state.selectedId === id ? null : state.selectedId,
+        }
+      }),
   }))
 )
+
+function defaultLexProps() {
+  return {
+    fontSize: DEFAULT_FONT_SIZE,
+    fontWeight: DEFAULT_FONT_WEIGHT,
+    fontFamily: DEFAULT_FONT_FAMILY,
+    lineHeight: DEFAULT_LINE_HEIGHT,
+    borderWidth: DEFAULT_BORDER_WIDTH,
+    borderRadius: DEFAULT_BORDER_RADIUS,
+    borderStyle: DEFAULT_BORDER_STYLE,
+    borderColor: DEFAULT_BORDER_COLOR,
+    borderDirection: DEFAULT_BORDER_DIRECTION,
+    paddingTop: DEFAULT_LEX_PADDING,
+    paddingBottom: DEFAULT_LEX_PADDING,
+    paddingLeft: DEFAULT_LEX_PADDING,
+    paddingRight: DEFAULT_LEX_PADDING,
+    padding: DEFAULT_LEX_PADDING,
+    boxShadow: DEFAULT_BOX_SHADOW,
+    lexBackgroundColor: DEFAULT_TAILWIND_COLOR,
+  }
+}
 
 function defaultShapeProps(name: ShapeType) {
   if (name === "RECT") {
