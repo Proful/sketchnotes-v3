@@ -6,6 +6,7 @@ import {
   CodeIcon,
   FrameIcon,
   GridIcon,
+  ImageIcon,
   MinusIcon,
   RectangleVerticalIcon,
   RedoIcon,
@@ -30,7 +31,6 @@ const { ...iconsByName } = Octicons
 type ActionsProps = {
   onContainerCreate: (containerType: ContainerType, subType?: string) => void
   onDelete: () => void
-  onScale: (scale: number) => void
 }
 export default function Actions({ onContainerCreate, onDelete }: ActionsProps) {
   const { toggleGrid } = useGridOverlay()
@@ -38,15 +38,23 @@ export default function Actions({ onContainerCreate, onDelete }: ActionsProps) {
     <>
       <ul>
         <li className="p-2 flex space-x-2">
-          <Button onClick={() => onContainerCreate("HIKE")}>
-            <CodeIcon />
+          <Button
+            className="mb-2 text-3xl flex items-center justify-center border shadow border-dashed border-gray-400 group-hover:border-yellow-500 group-hover:text-yellow-500 dark:border-gray-600 dark:shadow-black/50 text-gray-400 dark:text-gray-400"
+            onClick={() => onContainerCreate("HIKE")}
+            variant={"action"}
+          >
+            <CodeIcon className="group-hover:scale-[1.2] duration-100" />
           </Button>
-          <Button onClick={() => onContainerCreate("LEX")}>
+          <Button
+            className="mb-2 text-3xl flex items-center justify-center border shadow border-dashed border-gray-400 group-hover:border-yellow-500 group-hover:text-yellow-500 dark:border-gray-600 dark:shadow-black/50 text-gray-400 dark:text-gray-400"
+            onClick={() => onContainerCreate("LEX")}
+            variant={"action"}
+          >
             <TypeIcon />
           </Button>
           <Popover>
             <PopoverTrigger>
-              <span className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+              <span className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 dark:hover:border-yellow-500 dark:group-hover:border-yellow-500 dark:hover:text-yellow-500 dark:group-hover:scale-[1.2] duration-100 mb-2 border shadow border-dashed border-gray-400 group-hover:border-yellow-500 group-hover:text-yellow-500 dark:border-gray-600 dark:shadow-black/50 text-gray-400 dark:text-gray-400">
                 <RedoIcon />
               </span>
             </PopoverTrigger>
@@ -70,7 +78,7 @@ export default function Actions({ onContainerCreate, onDelete }: ActionsProps) {
           </Popover>
           <Popover>
             <PopoverTrigger>
-              <span className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+              <span className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 dark:hover:border-yellow-500 dark:group-hover:border-yellow-500 dark:hover:text-yellow-500 dark:group-hover:scale-[1.2] duration-100  mb-2 border shadow border-dashed border-gray-400 group-hover:border-yellow-500 group-hover:text-yellow-500 dark:border-gray-600 dark:shadow-black/50 text-gray-400 dark:text-gray-400">
                 <SquareIcon />
               </span>
             </PopoverTrigger>
@@ -175,13 +183,32 @@ export default function Actions({ onContainerCreate, onDelete }: ActionsProps) {
           </Popover>
         </li>
         <li className="p-2 flex space-x-2">
-          <Button onClick={() => onContainerCreate("FRAME")}>
+          <Button
+            className="mb-2 text-3xl flex items-center justify-center border shadow border-dashed border-gray-400 group-hover:border-yellow-500 group-hover:text-yellow-500 dark:border-gray-600 dark:shadow-black/50 text-gray-400 dark:text-gray-400"
+            onClick={() => onContainerCreate("IMAGE")}
+            variant={"action"}
+          >
+            <ImageIcon />
+          </Button>
+          <Button
+            className="mb-2 text-3xl flex items-center justify-center border shadow border-dashed border-gray-400 group-hover:border-yellow-500 group-hover:text-yellow-500 dark:border-gray-600 dark:shadow-black/50 text-gray-400 dark:text-gray-400"
+            onClick={() => onContainerCreate("FRAME")}
+            variant={"action"}
+          >
             <FrameIcon />
           </Button>
-          <Button onClick={onDelete}>
+          <Button
+            className="mb-2 text-3xl flex items-center justify-center border shadow border-dashed border-gray-400 group-hover:border-yellow-500 group-hover:text-yellow-500 dark:border-gray-600 dark:shadow-black/50 text-gray-400 dark:text-gray-400"
+            onClick={onDelete}
+            variant={"action"}
+          >
             <Trash />
           </Button>
-          <Button onClick={toggleGrid}>
+          <Button
+            className="mb-2 text-3xl flex items-center justify-center border shadow border-dashed border-gray-400 group-hover:border-yellow-500 group-hover:text-yellow-500 dark:border-gray-600 dark:shadow-black/50 text-gray-400 dark:text-gray-400"
+            onClick={toggleGrid}
+            variant={"action"}
+          >
             <GridIcon />
           </Button>
         </li>

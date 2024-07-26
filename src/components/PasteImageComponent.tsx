@@ -1,8 +1,11 @@
-import React, { useEffect, useRef, useState } from "react"
+import { useEffect, useRef } from "react"
 import Draggable from "react-draggable"
 
-const PasteImageComponent: React.FC = () => {
-  const [imageSrc, setImageSrc] = useState<string | null>(null)
+const PasteImageComponent = ({
+  onPaste,
+}: {
+  onPaste: (img: string) => void
+}) => {
   const pasteRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
@@ -16,7 +19,7 @@ const PasteImageComponent: React.FC = () => {
               const reader = new FileReader()
               reader.onload = (e) => {
                 if (e.target?.result) {
-                  setImageSrc(e.target.result as string)
+                  onPaste(e.target.result as string)
                 }
               }
               reader.readAsDataURL(blob)
@@ -40,21 +43,16 @@ const PasteImageComponent: React.FC = () => {
 
   return (
     <Draggable nodeRef={pasteRef}>
-      <div
-        ref={pasteRef}
-        contentEditable={true}
-        className="p-4  w-fit"
-        style={{ minHeight: "150px" }}
-      >
-        {imageSrc ? (
-          <img
-            src={imageSrc}
-            alt="Pasted content"
-            className="max-w-[200px] h-auto"
-          />
-        ) : (
-          "Paste an image here"
-        )}
+      <div ref={pasteRef} className="absolute top-10">
+        <div className="relative bg-gradient-to-br z-20 text-gray-400 dark:text-gray-400/80  dark:from-gray-900 dark:to-gray-900/80 backdrop-xl backdrop-blur-md rounded-2xl place-content-center flex flex-col item-center justify-center shadow-[0_0_16px_rgba(0,0,0,0.15)] w-[500px] h-[500px]">
+          <div
+            className="p-4 mx-auto max-w-[500px] w-full h-full text-center place-content-center outline-none"
+            contentEditable={true}
+            suppressContentEditableWarning={true}
+          >
+            Drag-n-drop your image here
+          </div>
+        </div>
       </div>
     </Draggable>
   )

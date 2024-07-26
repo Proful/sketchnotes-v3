@@ -25,12 +25,12 @@ import {
 import Draggable from "react-draggable"
 
 import { DEFAULT_CODE_LANGUAGE } from "@/lib/constants"
-import { Action, ContainerType } from "@/lib/types"
 import LexEditorTheme from "@/components/lex/LexEditorTheme"
 import { AnnotationPlugin } from "@/components/lex/plugins/AnnotationPlugin"
 
 import ErrorBoundary from "../ErrorBoundary"
 import { AnnotationNode } from "../lex/nodes/lexical-annotation"
+import useStore from "../Store"
 
 // import { CopyButton } from "./CopyButton"
 // import HikeContainerTheme from "./HikeContainerTheme"
@@ -42,17 +42,7 @@ function onError(error: Error) {
   console.error(error)
 }
 
-export default function HikeContainer({
-  action,
-  id,
-  selectedId,
-  onSelect,
-}: {
-  action: Action | null
-  id: number
-  selectedId: number | null
-  onSelect: (id: number, containerType: ContainerType) => void
-}) {
+export default function HikeContainer({ id }: { id: number }) {
   const nodeRef = React.useRef(null)
   const [editorState, setEditorState] = useState<EditorState | null>(null)
   const [codeContent, setCodeContent] = useState<string | null>(null)
@@ -63,13 +53,26 @@ export default function HikeContainer({
     start: number
     end: number
   } | null>(null)
+
+  const selectedId = useStore((state) => state.selectedId)
+  const hikes = useStore((state) => state.hikes)
+  const selectedActionType = useStore((state) => state.selectedActionType)
+  const seed = useStore((state) => state.seed)
+  const setSelectedId = useStore((state) => state.setSelectedId)
+  const setSelectedContainerType = useStore(
+    (state) => state.setSelectedContainerType
+  )
   useEffect(() => {
-    if (!action) return
+    if (!selectedActionType || !seed || !selectedId) return
+    if (id !== selectedId) return
+    const hike = hikes[selectedId!]
+
+    if (!hike) return
     if (id !== selectedId) {
       return
     }
-    if (action?.name === "HIKE-PREVIEW") {
-      setLang(action.value as string)
+    if (selectedActionType === "preview") {
+      setLang(hike.codeLanguage!)
       editorState!.read(() => {
         const root = $getRoot()
 
@@ -87,10 +90,11 @@ export default function HikeContainer({
         setTogglePreview(!togglePreview)
       })
     }
-  }, [action?.seed])
+  }, [seed])
 
   useEffect(() => {
-    onSelect(id, "HIKE")
+    setSelectedContainerType("HIKE")
+    setSelectedId(id)
   }, [])
 
   const initialConfig = {
@@ -125,7 +129,8 @@ export default function HikeContainer({
       <div
         ref={nodeRef}
         onClick={(e) => {
-          onSelect(id, "HIKE")
+          setSelectedContainerType("HIKE")
+          setSelectedId(id)
           e.stopPropagation()
         }}
         onDoubleClick={() => setTogglePreview(!togglePreview)}
@@ -151,26 +156,51 @@ export default function HikeContainer({
             <OnChangePlugin onChange={handleChange} />
           </LexicalComposer>
         </div>
-        <div className="w-fit absolute top-0 " style={{ display: hikeDisplay }}>
-          <div className="w-full h-full p-4 rounded-lg absolute z-10 left-10 hidden">
-            <div className="flex space-x-2 rounded-lg">
-              <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-              <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-              <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-            </div>
-          </div>
-          {codeContent && (
-            <Code
-              codeblock={{
-                value: codeContent!,
-                lang: lang.toLowerCase(),
-                meta: "",
-              }}
-            />
-          )}
+        <div style={{ display: hikeDisplay }}>
+          <CodeContainer codeContent={codeContent!} lang={lang} id={id} />
         </div>
       </div>
     </Draggable>
+  )
+}
+
+export function CodeContainer({
+  codeContent,
+  lang,
+  id,
+}: {
+  codeContent: string
+  lang: string
+  id: number
+}) {
+  const hikes = useStore((state) => state.hikes)
+  const hike = hikes[id]
+
+  const style = {
+    padding: hike?.padding + "px",
+  }
+  return (
+    <div
+      style={style}
+      className={`w-fit absolute top-0 -z-10 ${hike?.backgroundColor} ${hike?.borderRadius}`}
+    >
+      <div className="w-full h-full p-4 rounded-lg absolute z-10 left-10 hidden">
+        <div className="flex space-x-2 rounded-lg">
+          <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+          <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+          <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+        </div>
+      </div>
+      {codeContent && (
+        <Code
+          codeblock={{
+            value: codeContent!,
+            lang: lang.toLowerCase(),
+            meta: "",
+          }}
+        />
+      )}
+    </div>
   )
 }
 
@@ -203,6 +233,7 @@ export function Code({ codeblock }: { codeblock: RawCode }) {
         handlers={[
           borderHandler,
           neonHandler,
+          glowHandler,
           bgHandler,
           underline,
           mark,
@@ -273,6 +304,24 @@ const neonHandler: AnnotationHandler = {
   },
 }
 
+//!glow[1:4]
+const glowHandler: AnnotationHandler = {
+  name: "glow",
+  //@ts-ignore
+  Inline: ({ annotation, children }) => {
+    return (
+      <span className="">
+        <span className="absolute border bg-gradient-to-r blur-xl from-blue-500 via-teal-500 to-pink-500 bg-clip-text box-content font-extrabold text-transparent text-center select-none">
+          {children}
+        </span>
+        <span className="relative top-0 bg-gradient-to-r from-blue-500 via-teal-500 to-pink-500 bg-clip-text font-extrabold text-transparent text-center select-auto">
+          {children}
+        </span>
+      </span>
+    )
+  },
+}
+
 // !mark(1:2)
 const mark: AnnotationHandler = {
   name: "mark",
@@ -286,7 +335,7 @@ const mark: AnnotationHandler = {
     return (
       <InnerLine
         merge={props}
-        className={`px-8 border-l-4 border-transparent data-[mark]:border-blue-500 data-[mark]:bg-secondary`}
+        className={`border-l-4 border-transparent data-[mark]:border-blue-500 data-[mark]:bg-secondary`}
         style={{ borderColor: dataMark ? query : "" }}
       />
     )

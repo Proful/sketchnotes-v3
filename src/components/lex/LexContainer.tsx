@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import Draggable from "react-draggable"
+import { Rnd } from "react-rnd"
 
 import useStore from "../Store"
 import LexTextarea from "./LexTextarea"
@@ -7,7 +7,6 @@ import LexTextarea from "./LexTextarea"
 function LexContainer({ id }: { id: number }) {
   const lexes = useStore((state) => state.lexes)
   const setSelectedId = useStore((state) => state.setSelectedId)
-  // const selectedId = useStore((state) => state.selectedId)
   const setSelectedContainerType = useStore(
     (state) => state.setSelectedContainerType
   )
@@ -54,7 +53,14 @@ function LexContainer({ id }: { id: number }) {
   }
 
   return (
-    <Draggable nodeRef={nodeRef}>
+    <Rnd
+      default={{
+        x: 0,
+        y: 0,
+        width: 320,
+        height: 200,
+      }}
+    >
       <div
         style={style}
         ref={nodeRef}
@@ -67,7 +73,7 @@ function LexContainer({ id }: { id: number }) {
       >
         <LexTextarea id={id} />
       </div>
-    </Draggable>
+    </Rnd>
   )
 }
 

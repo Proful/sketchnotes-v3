@@ -1,22 +1,20 @@
-// eslint-disable-next-line import/no-namespace
-import React, { useEffect, useState } from "react"
-import * as Octicons from "@/vendor/octicons_react"
+import { useEffect, useRef, useState } from "react"
 
 import Move from "../Move"
 import useStore from "../Store"
 
-// eslint-disable-next-line no-unused-vars
-const { ...iconsByName } = Octicons
-
-export function IconContainer({ id }: { id: number }) {
-  const icons = useStore((state) => state.icons)
+export function ImageContainer({ id }: { id: number }) {
+  const images = useStore((state) => state.images)
   const setSelectedId = useStore((state) => state.setSelectedId)
   const selectedId = useStore((state) => state.selectedId)
   const setSelectedContainerType = useStore(
     (state) => state.setSelectedContainerType
   )
-
-  const nodeRef = React.useRef(null)
+  const image = images[id]
+  if (!image) {
+    return
+  }
+  const nodeRef = useRef(null)
   const [target, setTarget] = useState<HTMLElement | null>(null)
 
   useEffect(() => {
@@ -28,14 +26,6 @@ export function IconContainer({ id }: { id: number }) {
       setTarget(null)
     }
   }, [selectedId])
-
-  const icon = icons[id]
-  if (!icon) {
-    return
-  }
-  //@ts-ignore
-  const Icon = iconsByName[icon.name]
-
   const isSelected = selectedId === id
   const style = {
     outlineWidth: isSelected ? "5px" : "none",
@@ -45,9 +35,10 @@ export function IconContainer({ id }: { id: number }) {
 
   const handleSelect = (e: any) => {
     setSelectedId(id)
-    setSelectedContainerType("ICON")
+    setSelectedContainerType("IMAGE")
     e.stopPropagation()
   }
+
   return (
     <>
       <Move target={target!} />
@@ -57,11 +48,10 @@ export function IconContainer({ id }: { id: number }) {
         onClick={handleSelect}
         style={style}
       >
-        <Icon
-          size={icon.iconSize}
-          className={icon.iconColor}
-          verticalAlign="middle"
-          transform={`rotate(${icon.iconRotate}deg)`}
+        <img
+          src={image.data}
+          alt="Pasted content"
+          className="max-w-[200px] h-auto"
         />
       </div>
     </>

@@ -1,7 +1,7 @@
 import { useState } from "react"
 
-import { DEFAULT_CONTAINER_TYPE, DEFAULT_SCALE } from "@/lib/constants"
-import { Action, ContainerType, ShapeType } from "@/lib/types"
+import { DEFAULT_SCALE } from "@/lib/constants"
+import { ContainerType, ShapeType } from "@/lib/types"
 import Actions from "@/components/Actions"
 import { FrameContainer } from "@/components/frame/FrameContainer"
 import { IconContainer } from "@/components/icon/IconContainer"
@@ -11,19 +11,20 @@ import Sidebar from "@/components/Sidebar"
 import { ThemeProvider } from "@/components/theme-provider"
 
 import HikeContainer from "./components/hike/HikeContainer"
+import { ImageContainer } from "./components/image/ImageContainer"
+import PasteImageComponent from "./components/PasteImageComponent"
 import useStore from "./components/Store"
 
 // fixed allows to cover all visible area and attach click handler
 function App() {
-  const [scale, setScale] = useState(DEFAULT_SCALE)
-  const [action, setAction] = useState<Action | null>(null)
-  const [hikeList, setHikeList] = useState<number[]>([])
   const [screenshotFrame, setScreenshotFrame] = useState<boolean>(false)
-  const [containerType, setContainerType] = useState<ContainerType>(
-    DEFAULT_CONTAINER_TYPE
+  const [showPasteImagePanel, setShowPasteImagePanel] = useState<boolean>(false)
+  const setSelectedContainerType = useStore(
+    (state) => state.setSelectedContainerType
   )
   const setSelectedId = useStore((state) => state.setSelectedId)
   const selectedId = useStore((state) => state.selectedId)
+
   const icons = useStore((state) => state.icons)
   const createIcon = useStore((state) => state.createIcon)
   const deleteIcon = useStore((state) => state.deleteIcon)
@@ -36,13 +37,24 @@ function App() {
   const createLex = useStore((state) => state.createLex)
   const deleteLex = useStore((state) => state.deleteLex)
 
+  const hikes = useStore((state) => state.hikes)
+  const createHike = useStore((state) => state.createHike)
+  const deleteHike = useStore((state) => state.deleteHike)
+
+  const images = useStore((state) => state.images)
+  const createImage = useStore((state) => state.createImage)
+  const deleteImage = useStore((state) => state.deleteImage)
+
+  const frame = useStore((state) => state.frame)
+  const createFrame = useStore((state) => state.createFrame)
+
   function handleContainerCreate(
     containerType: ContainerType,
     subType?: string | undefined
   ): void {
     const uuid = Math.random()
     if (containerType === "HIKE") {
-      setHikeList([...hikeList, uuid])
+      createHike(uuid)
     } else if (containerType === "LEX") {
       createLex(uuid)
     } else if (containerType === "ICON") {
@@ -50,8 +62,20 @@ function App() {
     } else if (containerType === "SHAPE") {
       createShape(uuid, subType! as ShapeType)
     } else if (containerType === "FRAME") {
+      if (screenshotFrame) {
+        setSelectedContainerType("NONE")
+      } else {
+        setSelectedContainerType("FRAME")
+        createFrame()
+      }
       setScreenshotFrame(!screenshotFrame)
-      setContainerType("FRAME")
+    } else if (containerType === "IMAGE") {
+      if (showPasteImagePanel) {
+        setSelectedContainerType("NONE")
+      } else {
+        setSelectedContainerType("IMAGE")
+      }
+      setShowPasteImagePanel(!showPasteImagePanel)
     }
   }
 
@@ -59,22 +83,30 @@ function App() {
     deleteIcon(selectedId!)
     deleteShape(selectedId!)
     deleteLex(selectedId!)
+    deleteHike(selectedId!)
+    deleteImage(selectedId!)
   }
 
   function reset() {
     setSelectedId(null)
-    setContainerType("NONE")
+    setSelectedContainerType("NONE")
   }
 
   const style = {
-    transform: `scale(${scale})`,
+    transform: `scale(${frame?.scale || DEFAULT_SCALE})`,
   }
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <div className="mr-64 p-8 h-full w-full fixed" onClick={reset}>
-        {screenshotFrame && (
-          <FrameContainer action={action} onSelect={setContainerType} />
+        {showPasteImagePanel && (
+          <PasteImageComponent
+            onPaste={(d) => {
+              setShowPasteImagePanel(false)
+              createImage(Math.random(), d)
+            }}
+          />
         )}
+        {screenshotFrame && <FrameContainer />}
         <div style={style}>
           {Object.values(shapes).map((shape) => (
             <ShapeContainer key={shape.id} id={shape.id} />
@@ -85,37 +117,22 @@ function App() {
           {Object.values(lexes).map((lex) => (
             <LexContainer key={lex.id} id={lex.id} />
           ))}
-          {hikeList.map((id) => (
-            <HikeContainer
-              action={action}
-              key={id}
-              id={id}
-              selectedId={selectedId as number}
-              onSelect={(id, containerType) => {
-                setSelectedId(id)
-                setContainerType(containerType)
-              }}
-            />
+          {Object.values(hikes).map((hike) => (
+            <HikeContainer key={hike.id} id={hike.id} />
+          ))}
+          {Object.values(images).map((image) => (
+            <ImageContainer key={image.id} id={image.id} />
           ))}
         </div>
       </div>
-      <div className="fixed top-0 right-0 h-full w-64 text-white shadow-lg overflow-scroll bg-sidebar">
+      <div className="fixed top-0 right-0 h-full w-72 text-white shadow-lg overflow-scroll bg-sidebar">
         <nav className="mt-0" style={{ transform: "scale(1)" }}>
           <Actions
             onContainerCreate={handleContainerCreate}
             onDelete={handleDelete}
-            onScale={setScale}
           />
 
-          <Sidebar
-            onAction={(action) => {
-              if (action?.name === "SCALE") {
-                setScale(action.value as number)
-              }
-              setAction(action)
-            }}
-            containerType={containerType}
-          />
+          <Sidebar />
         </nav>
       </div>
     </ThemeProvider>

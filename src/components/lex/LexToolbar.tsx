@@ -14,12 +14,13 @@ export default function LexToolbar({ id }: { id: number }) {
   const lexes = useStore((state) => state.lexes)
   const selectedActionType = useStore((state) => state.selectedActionType)
   const seed = useStore((state) => state.seed)
+
   useEffect(() => {
-    if (!selectedActionType || !seed) return
+    if (!selectedActionType || !seed || !selectedId) return
     if (id !== selectedId) return
     const lex = lexes[selectedId!]
 
-    if (!selectedId || !lex) return
+    if (!lex) return
     if (selectedActionType === "codeLanguage") {
       code(lex.codeLanguage!)
     } else if (selectedActionType === "color") {

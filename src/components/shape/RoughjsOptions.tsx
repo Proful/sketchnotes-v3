@@ -4,7 +4,6 @@ import {
   ALLOWED_ROUGH_FILL_STYLE,
   DEFAULT_ROUGH_OPTIONS,
 } from "@/lib/constants"
-import { Action } from "@/lib/types"
 import { Input } from "@/components/ui/input"
 import {
   Select,
@@ -20,11 +19,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 
-export default function RoughjsOptions({
-  onAction,
-}: {
-  onAction: (action: Action) => void
-}) {
+export default function RoughjsOptions() {
   const [ro, setRo] = useState(DEFAULT_ROUGH_OPTIONS)
   return (
     <>
@@ -87,11 +82,11 @@ export default function RoughjsOptions({
                 className="w-12 inline"
                 onChange={(e) => {
                   setRo({ ...ro, stroke: e.target.value })
-                  onAction({
-                    name: "ROUGH-STROKE",
-                    seed: Math.random(),
-                    value: e.target.value,
-                  })
+                  // onAction({
+                  //   name: "ROUGH-STROKE",
+                  //   seed: Math.random(),
+                  //   value: e.target.value,
+                  // })
                 }}
               />
             </TooltipTrigger>
@@ -112,11 +107,11 @@ export default function RoughjsOptions({
                 step={0.2}
                 onChange={(e) => {
                   setRo({ ...ro, strokeWidth: +e.target.value })
-                  onAction({
-                    name: "ROUGH-STROKE-WIDTH",
-                    value: +e.target.value,
-                    seed: Math.random(),
-                  })
+                  // onAction({
+                  //   name: "ROUGH-STROKE-WIDTH",
+                  //   value: +e.target.value,
+                  //   seed: Math.random(),
+                  // })
                 }}
               />
             </TooltipTrigger>
@@ -138,11 +133,11 @@ export default function RoughjsOptions({
                 step={1}
                 onChange={(e) => {
                   setRo({ ...ro, roughness: +e.target.value })
-                  onAction({
-                    name: "ROUGH-ROUGHNESS",
-                    value: +e.target.value,
-                    seed: Math.random(),
-                  })
+                  // onAction({
+                  //   name: "ROUGH-ROUGHNESS",
+                  //   value: +e.target.value,
+                  //   seed: Math.random(),
+                  // })
                 }}
               />
             </TooltipTrigger>
@@ -223,12 +218,12 @@ export default function RoughjsOptions({
       </li>
       <li className="p-1 hover:bg-blue-700 space-x-2">
         <Select
-          onValueChange={(v) => {
-            onAction({
-              name: "ROUGH-FILL-STYLE",
-              value: v,
-              seed: Math.random(),
-            })
+          onValueChange={(_v) => {
+            // onAction({
+            //   name: "ROUGH-FILL-STYLE",
+            //   value: v,
+            //   seed: Math.random(),
+            // })
           }}
         >
           <SelectTrigger className="w-[180px]">
@@ -252,11 +247,11 @@ export default function RoughjsOptions({
                 className="w-12 inline"
                 onChange={(e) => {
                   setRo({ ...ro, fill: e.target.value })
-                  onAction({
-                    name: "ROUGH-FILL",
-                    seed: Math.random(),
-                    value: e.target.value,
-                  })
+                  // onAction({
+                  //   name: "ROUGH-FILL",
+                  //   seed: Math.random(),
+                  //   value: e.target.value,
+                  // })
                 }}
               />
             </TooltipTrigger>
@@ -274,11 +269,11 @@ export default function RoughjsOptions({
                 value={ro.fillWeight}
                 onChange={(e) => {
                   setRo({ ...ro, fillWeight: +e.target.value })
-                  onAction({
-                    name: "ROUGH-FILL-WEIGHT",
-                    value: +e.target.value,
-                    seed: Math.random(),
-                  })
+                  // onAction({
+                  //   name: "ROUGH-FILL-WEIGHT",
+                  //   value: +e.target.value,
+                  //   seed: Math.random(),
+                  // })
                 }}
               />
             </TooltipTrigger>

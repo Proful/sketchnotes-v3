@@ -20,9 +20,12 @@ import {
   DEFAULT_BORDER_STYLE,
   DEFAULT_BORDER_WIDTH,
   DEFAULT_BOX_SHADOW,
+  DEFAULT_CODE_LANGUAGE,
   DEFAULT_FONT_FAMILY,
   DEFAULT_FONT_SIZE,
   DEFAULT_FONT_WEIGHT,
+  DEFAULT_FRAME_GRADIENT,
+  DEFAULT_FRAME_RESOLUTION,
   DEFAULT_LEX_PADDING,
   DEFAULT_LINE_HEIGHT,
   DEFAULT_LINE_WIDTH,
@@ -31,11 +34,33 @@ import {
   DEFAULT_RECT_HEIGHT,
   DEFAULT_RECT_WIDTH,
   DEFAULT_ROUGH_OPTIONS,
+  DEFAULT_SCALE,
   DEFAULT_SHAPE_FILL,
   DEFAULT_SHAPE_ROTATE,
   DEFAULT_TAILWIND_COLOR,
 } from "@/lib/constants"
-import { ContainerType, ShapeType } from "@/lib/types"
+import { ContainerType, NameValuePair, ShapeType } from "@/lib/types"
+
+export interface Image {
+  id: number
+  data: string
+}
+
+export interface Frame {
+  frameGradient?: NameValuePair
+  frameResolution?: { w: number; h: number }
+  enable3dots?: boolean
+  scale?: number
+}
+
+export interface Hike {
+  id: number
+  codeLanguage?: string
+  preview?: boolean
+  backgroundColor?: string
+  padding?: number
+  borderRadius?: string
+}
 
 export interface Lex {
   id: number
@@ -102,9 +127,18 @@ interface Store {
   icons: { [id: number]: Icon }
   shapes: { [id: number]: Shape }
   lexes: { [id: number]: Lex }
+  hikes: { [id: number]: Hike }
+  images: { [id: number]: Image }
+  frame: Frame
   selectedId: number | null
   selectedContainerType: ContainerType | null
-  selectedActionType: keyof Lex | null
+  selectedActionType:
+    | keyof Lex
+    | keyof Hike
+    | keyof Image
+    | keyof Icon
+    | keyof Shape
+    | null
   seed: number | null
   setSelectedId: (id: number | null) => void
   setSelectedContainerType: (containerType: ContainerType) => void
@@ -130,6 +164,25 @@ interface Store {
   ) => void
   createLex: (id: number) => void
   deleteLex: (id: number) => void
+  updateHikeProperty: (
+    id: number,
+    property: keyof Hike,
+    value: string | number | boolean
+  ) => void
+  createHike: (id: number) => void
+  deleteHike: (id: number) => void
+  updateFrameProperty: (
+    property: keyof Frame,
+    value: string | number | boolean | NameValuePair | { w: number; h: number }
+  ) => void
+  createFrame: () => void
+  updateImageProperty: (
+    id: number,
+    property: keyof Image,
+    value: string | number | boolean
+  ) => void
+  createImage: (id: number, data: string) => void
+  deleteImage: (id: number) => void
 }
 
 const useStore = create<Store>(
@@ -137,9 +190,13 @@ const useStore = create<Store>(
     icons: {},
     shapes: {},
     lexes: {},
+    hikes: {},
+    images: {},
+    frame: {},
     selectedId: null,
     selectedContainerType: null,
     selectedActionType: null,
+    selectedTarget: null,
     seed: null,
     setSelectedId: (id) => set({ selectedId: id }),
     setSelectedContainerType: (containerType) =>
@@ -246,8 +303,105 @@ const useStore = create<Store>(
           selectedId: state.selectedId === id ? null : state.selectedId,
         }
       }),
+    updateHikeProperty: (id, property, value) => {
+      set((state) => ({
+        selectedActionType: property,
+        seed: Math.random(),
+        hikes: {
+          ...state.hikes,
+          [id]: {
+            ...state.hikes[id],
+            [property]: value,
+          },
+        },
+      }))
+    },
+    createHike: (id) => {
+      const defaultProps = defaultHikeProps()
+      //@ts-ignore
+      set((state) => ({
+        hikes: {
+          ...state.hikes,
+          [id]: {
+            id,
+            ...defaultProps,
+          },
+        },
+      }))
+    },
+    deleteHike: (id) =>
+      set((state) => {
+        const newHikes = { ...state.hikes }
+        delete newHikes[id]
+        return {
+          hikes: newHikes,
+          selectedId: state.selectedId === id ? null : state.selectedId,
+        }
+      }),
+    createFrame: () => {
+      //@ts-ignore
+      set((state) => ({
+        frame: {
+          frameGradient: DEFAULT_FRAME_GRADIENT,
+          frameResolution: DEFAULT_FRAME_RESOLUTION,
+          enable3dots: true,
+          scale: DEFAULT_SCALE,
+        },
+      }))
+    },
+    updateFrameProperty: (property, value) => {
+      //@ts-ignore
+      set((state) => ({
+        selectedActionType: property,
+        seed: Math.random(),
+        frame: {
+          ...state.frame,
+          [property]: value,
+        },
+      }))
+    },
+    updateImageProperty: (id, property, value) => {
+      set((state) => ({
+        selectedActionType: property,
+        seed: Math.random(),
+        images: {
+          ...state.images,
+          [id]: {
+            ...state.images[id],
+            [property]: value,
+          },
+        },
+      }))
+    },
+    createImage: (id, data) => {
+      //@ts-ignore
+      set((state) => ({
+        images: {
+          ...state.images,
+          [id]: {
+            id,
+            data,
+          },
+        },
+      }))
+    },
+    deleteImage: (id) =>
+      set((state) => {
+        const newImages = { ...state.images }
+        delete newImages[id]
+        return {
+          images: newImages,
+          selectedId: state.selectedId === id ? null : state.selectedId,
+        }
+      }),
   }))
 )
+
+function defaultHikeProps() {
+  return {
+    codeLanguage: DEFAULT_CODE_LANGUAGE,
+  }
+}
 
 function defaultLexProps() {
   return {

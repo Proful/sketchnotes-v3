@@ -1,7 +1,8 @@
-import { useState } from "react"
-
-import { ALLOWED_CODE_LANGUAGE, DEFAULT_CODE_LANGUAGE } from "@/lib/constants"
-import { Action } from "@/lib/types"
+import {
+  ALLOWED_BORDER_RADIUS,
+  ALLOWED_CODE_LANGUAGE,
+  TAILWIND_COLORS,
+} from "@/lib/constants"
 import {
   Popover,
   PopoverContent,
@@ -15,32 +16,36 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
+import ColorPicker from "../ColorPicker"
+import useStore from "../Store"
 import { Button } from "../ui/button"
+import { Slider } from "../ui/slider"
 import { CopyButton } from "./CopyButton"
 import { Code } from "./HikeContainer"
 
-type HikeOptionsProps = {
-  onAction: (action: Action) => void
-}
 const calloutCode = `!callout[/amet/] This is a callout`
 const markCode = `!mark(1:2)`
 const neonCode = `!neon[1:5]`
+const glowCode = `!glow[1:5]`
 const bgCode = `!bg[1:3]`
 const borderCode = `!border[1:7]`
 const underlineCode = `!underline[1:16]`
-export default function HikeOptions({ onAction }: HikeOptionsProps) {
-  const [lang, setLang] = useState(DEFAULT_CODE_LANGUAGE)
+
+export default function HikeOptions() {
+  const selectedId = useStore((state) => state.selectedId)
+  const hikes = useStore((state) => state.hikes)
+  const updateHikeProperty = useStore((state) => state.updateHikeProperty)
+  const hike = hikes[selectedId!]
+
+  if (!selectedId || !hike) return
+
   return (
     <>
       <ul>
         <li className="p-2 hover:bg-blue-700">
           <Button
             onClick={() =>
-              onAction({
-                name: "HIKE-PREVIEW",
-                seed: Math.random(),
-                value: lang,
-              })
+              updateHikeProperty(selectedId, "preview", !hike.preview)
             }
           >
             Preview
@@ -49,8 +54,7 @@ export default function HikeOptions({ onAction }: HikeOptionsProps) {
         <li className="p-2 hover:bg-blue-700">
           <Select
             onValueChange={(v) => {
-              setLang(v)
-              // onAction({ name: "CODE", value: v })
+              updateHikeProperty(selectedId, "codeLanguage", v)
             }}
           >
             <SelectTrigger className="w-[180px]">
@@ -74,11 +78,52 @@ export default function HikeOptions({ onAction }: HikeOptionsProps) {
               <CodeAnnotationPreview text={calloutCode} />
               <CodeAnnotationPreview text={markCode} />
               <CodeAnnotationPreview text={neonCode} />
+              <CodeAnnotationPreview text={glowCode} />
               <CodeAnnotationPreview text={bgCode} />
               <CodeAnnotationPreview text={borderCode} />
               <CodeAnnotationPreview text={underlineCode} />
             </PopoverContent>
           </Popover>
+        </li>
+        <li className="p-2 hover:bg-blue-700">
+          <ColorPicker
+            label="bg"
+            colors={TAILWIND_COLORS}
+            onColorSelect={(c) =>
+              updateHikeProperty(selectedId, "backgroundColor", c)
+            }
+          />
+        </li>
+
+        <li className="p-2 hover:bg-blue-700 flex space-x-2">
+          <span className="text-gray-100">Padding</span>
+          <Slider
+            defaultValue={[0]}
+            min={0}
+            max={40}
+            step={2}
+            onValueChange={(v) => {
+              updateHikeProperty(selectedId, "padding", v[0])
+            }}
+          />
+        </li>
+        <li className="p-2 hover:bg-blue-700 flex space-x-2">
+          <Select
+            onValueChange={(v) => {
+              updateHikeProperty(selectedId, "borderRadius", v)
+            }}
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Border Radius" />
+            </SelectTrigger>
+            <SelectContent>
+              {ALLOWED_BORDER_RADIUS.map((br) => (
+                <SelectItem value={br} key={br}>
+                  {br}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </li>
       </ul>
     </>

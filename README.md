@@ -2,19 +2,23 @@
 
 ## wishlist
 
-- Adding annotation, make it easier
-  - hashtag approach
 - multi selection
 - prismjs theme
 - code > font
 - rough rect, give some padding
 - img
+  - paste img container
+  - multiple img
 - save
 - design
 - option > preserve selected value
 - after zoom text is going away from screen
 - in zoom mode not able to create new element
 - code-hike download grammars from net
+- mark horizontal padding + container padding
+- more gradients
+- increase default icon size
+  - analyze it's placement
 
 ## drawing to sketch
 

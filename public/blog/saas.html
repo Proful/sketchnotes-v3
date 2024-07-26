@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- For the robots -->
+    <meta charset="UTF-8" />
+    <meta name="description" content="SaaS" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://css.winterveil.net" />
+
+    <title>SaaS</title>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>SaaS</h1>
+      </header>
+
+      <section id="begining">
+        <h2>Photopea</h2>
+        <ul>
+          <li>10m user per month</li>
+          <li>$100k per month</li>
+          <li>$50 hosting cost</li>
+        </ul>
+      </section>
+
+      <footer>
+        <hr />
+        <p>Made by <a href="https://x.com/profulsadangi">Proful</a></p>
+      </footer>
+    </main>
+
+    <style>
+      *,body,main,h1,h2,h3,h4,h5,p,a {
+        background: hsl(201deg 20% 18%) !important;
+      }
+
+      header {
+        margin-bottom: 2em;
+      }
+
+      .float-right {
+        float: right;
+      }
+
+      .typography-columns {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px; /* Adjust the space between columns as needed */
+      }
+
+      .typography-columns > div {
+        flex: 1; /* Allows each child div to grow equally */
+        min-width: 250px; /* Prevents the columns from getting too narrow before stacking */
+      }
+
+      @media (max-width: 600px) {
+        .typography-columns {
+        flex-direction: column;
+      }
+    </style>
+
+    <!-- For the humans -->
+    <link rel="stylesheet" href="https://unpkg.com/normalize.css" />
+    <link rel="stylesheet" href="https://unpkg.com/magick.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/styles/atom-one-dark.min.css"
+    />
+    <script src="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/highlight.min.js"></script>
+
+    <!-- and it's easy to individually load additional languages -->
+    <script src="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/languages/javascript.min.js"></script>
+
+    <script>
+      hljs.highlightAll()
+    </script>
+  </body>
+</html>

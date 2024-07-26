@@ -1,4 +1,3 @@
-import { Action, ContainerType } from "@/lib/types"
 import IconOptions from "@/components/icon/IconOptions"
 import LexOptions from "@/components/lex/LexOptions"
 
@@ -7,22 +6,18 @@ import HikeOptions from "./hike/HikeOptions"
 import ShapeOptions from "./shape/ShapeOptions"
 import useStore from "./Store"
 
-type SidebarProps = {
-  containerType: ContainerType
-  onAction: (action: Action) => void
-}
-export default function Sidebar({ containerType, onAction }: SidebarProps) {
+export default function Sidebar() {
   const selectedContainerType = useStore((state) => state.selectedContainerType)
   if (selectedContainerType === "LEX") {
     return <LexOptions />
-  } else if (containerType === "HIKE") {
-    return <HikeOptions onAction={onAction} />
+  } else if (selectedContainerType === "HIKE") {
+    return <HikeOptions />
   } else if (selectedContainerType === "ICON") {
     return <IconOptions />
   } else if (selectedContainerType === "SHAPE") {
     return <ShapeOptions />
-  } else if (containerType === "FRAME") {
-    return <FrameOptions onAction={onAction} />
+  } else if (selectedContainerType === "FRAME") {
+    return <FrameOptions />
   } else {
     return <></>
   }

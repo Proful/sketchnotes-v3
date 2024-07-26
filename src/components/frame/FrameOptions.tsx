@@ -1,13 +1,7 @@
-import { useState } from "react"
-import { CameraIcon } from "lucide-react"
-
 import {
   ALLOWED_FRAME_GRADIENT,
   ALLOWED_FRAME_RESOLUTION,
-  DEFAULT_SCALE,
 } from "@/lib/constants"
-import { Action } from "@/lib/types"
-import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
   Select,
@@ -17,14 +11,16 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
+import useStore from "../Store"
 import { Input } from "../ui/input"
 
-type FrameOptionsProps = {
-  onAction: (action: Action) => void
-}
-export default function FrameOptions({ onAction }: FrameOptionsProps) {
-  const [scale, setScale] = useState(DEFAULT_SCALE)
-  const [enable3dots, setEnable3dots] = useState(true)
+export default function FrameOptions() {
+  const updateFrameProperty = useStore((state) => state.updateFrameProperty)
+  const frame = useStore((state) => state.frame)
+
+  if (!frame) {
+    return
+  }
   return (
     <>
       <ul>
@@ -32,11 +28,7 @@ export default function FrameOptions({ onAction }: FrameOptionsProps) {
           <Select
             onValueChange={(v) => {
               const [name, value] = v.split("~")
-              onAction({
-                name: "FRAME-GRADIENT",
-                value: { name, value },
-                seed: Math.random(),
-              })
+              updateFrameProperty("frameGradient", { name, value })
             }}
           >
             <SelectTrigger className="w-[180px]">
@@ -50,29 +42,13 @@ export default function FrameOptions({ onAction }: FrameOptionsProps) {
               ))}
             </SelectContent>
           </Select>
-
-          <Button
-            onClick={() => {
-              onAction({
-                name: "SCREENSHOT",
-                seed: Math.random(),
-              })
-            }}
-          >
-            <CameraIcon />
-          </Button>
         </li>
         <li className="p-2 hover:bg-blue-700 flex space-x-2 items-center">
           <Checkbox
             id="3dots"
-            checked={enable3dots}
+            checked={frame.enable3dots}
             onCheckedChange={() => {
-              onAction({
-                name: "ENABLE-3DOTS",
-                value: !enable3dots,
-                seed: Math.random(),
-              })
-              setEnable3dots(!enable3dots)
+              updateFrameProperty("enable3dots", !frame.enable3dots)
             }}
           />
           <label
@@ -85,11 +61,8 @@ export default function FrameOptions({ onAction }: FrameOptionsProps) {
         <li className="p-2 hover:bg-blue-700 flex space-x-2">
           <Select
             onValueChange={(v) => {
-              onAction({
-                name: "FRAME-RESOLUTION",
-                value: v,
-                seed: Math.random(),
-              })
+              const [w, h] = v.split("x").map(Number)
+              updateFrameProperty("frameResolution", { w, h })
             }}
           >
             <SelectTrigger className="w-[180px]">
@@ -108,17 +81,12 @@ export default function FrameOptions({ onAction }: FrameOptionsProps) {
           <Input
             type="number"
             className="w-16 inline"
-            value={scale}
+            value={frame.scale}
             min={-1}
             max={4}
             step={0.1}
             onChange={(e) => {
-              setScale(+e.target.value)
-              onAction({
-                name: "SCALE",
-                value: +e.target.value,
-                seed: Math.random(),
-              })
+              updateFrameProperty("scale", +e.target.value)
             }}
           />
         </li>
