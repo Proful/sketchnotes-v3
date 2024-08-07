@@ -16,6 +16,7 @@ export const useApplyStyleText = () => {
           selection.getTextContent().length > 0
         ) {
           isSelected = true
+          //@ts-ignore
           $patchStyleText(selection as RangeSelection, styles)
         }
         if (cb) cb(isSelected)

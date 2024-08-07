@@ -45,8 +45,10 @@ const getSelectedNode = (selection: RangeSelection): TextNode | ElementNode => {
   }
   const isBackward = selection.isBackward()
   if (isBackward) {
+    //@ts-ignore
     return $isAtNodeEnd(focus) ? anchorNode : focusNode
   } else {
+    //@ts-ignore
     return $isAtNodeEnd(anchor) ? focusNode : anchorNode
   }
 }
@@ -70,10 +72,10 @@ const removeCaretColor = (editor: LexicalEditor) => {
   root!.style.removeProperty("caret-color")
 }
 
-const createNodeKeyCountMap = (
-  linebreakNodeKeys: string[]
-): Record<string, number> => {
-  const nodeKeyCountMap: Record<string, number> = {}
+//@ts-ignore
+const createNodeKeyCountMap = (linebreakNodeKeys: string[]): Record => {
+  //@ts-ignore
+  const nodeKeyCountMap: Record = {}
 
   for (const nodeKey of linebreakNodeKeys!) {
     if (nodeKeyCountMap[nodeKey]) {

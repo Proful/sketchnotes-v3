@@ -41,6 +41,7 @@ export default function LexTextarea({ id }: { id: number }) {
   }
 
   return (
+    // @ts-ignore
     <LexicalComposer initialConfig={initialConfig}>
       <RichTextPlugin
         contentEditable={<ContentEditable spellCheck={false} />}

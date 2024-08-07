@@ -60,6 +60,7 @@ const mapToPrismLanguage = (
 
 function hasChildDOMNodeTag(node: Node, tagName: string) {
   for (const child of node.childNodes) {
+    //@ts-ignore
     if (isHTMLElement(child) && child.tagName === tagName) {
       return true
     }

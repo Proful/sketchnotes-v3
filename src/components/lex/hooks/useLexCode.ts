@@ -23,6 +23,7 @@ export const useLexCode = () => {
 
         if ($isRangeSelection(selection)) {
           if (selection.isCollapsed()) {
+            //@ts-ignore
             $setBlocksType(selection, () => $createCodeNode(lang.toLowerCase()))
           } else {
             const textContent = selection.getTextContent()

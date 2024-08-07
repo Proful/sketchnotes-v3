@@ -33,8 +33,10 @@ export const useLexBlockActions = () => {
 
       if ($isRangeSelection(selection)) {
         if (isHeading(format)) {
+          //@ts-ignore
           $setBlocksType(selection as RangeSelection, () => {
             if (
+              //@ts-ignore
               $isHeadingNode(getSelectedBlockNode(selection as RangeSelection))
             ) {
               return $createParagraphNode()
@@ -42,12 +44,15 @@ export const useLexBlockActions = () => {
             return $createHeadingNode(format as HeadingTagType)
           })
         } else if (format === "p") {
+          //@ts-ignore
           $setBlocksType(selection as RangeSelection, () =>
             $createParagraphNode()
           )
         } else if (format === "quote") {
+          //@ts-ignore
           $setBlocksType(selection as RangeSelection, () => {
             if (
+              //@ts-ignore
               $isQuoteNode(getSelectedBlockNode(selection as RangeSelection))
             ) {
               return $createParagraphNode()
@@ -55,8 +60,10 @@ export const useLexBlockActions = () => {
             return $createQuoteNode()
           })
         } else if (format === "code") {
+          //@ts-ignore
           $setBlocksType(selection as RangeSelection, () => {
             if (
+              //@ts-ignore
               $isCodeNode(getSelectedBlockNode(selection as RangeSelection))
             ) {
               return $createParagraphNode()
