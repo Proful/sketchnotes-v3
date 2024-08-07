@@ -64,7 +64,7 @@ function LexContainer({ id }: { id: number }) {
       <div
         style={style}
         ref={nodeRef}
-        className={`w-fit z-20 p-2 absolute top-0 text-${lex.fontSize} font-${lex.fontWeight} leading-${lex.lineHeight} ${lex.borderRadius} ${lex.boxShadow} ${lex.backgroundColor} ${lex.borderColor}`}
+        className={`w-fit z-40 p-2 absolute top-0 text-${lex.fontSize} font-${lex.fontWeight} leading-${lex.lineHeight} ${lex.borderRadius} ${lex.boxShadow} ${lex.backgroundColor} ${lex.borderColor}`}
         onClick={(e) => {
           setSelectedContainerType("LEX")
           setSelectedId(id)

@@ -39,16 +39,14 @@ export default function Actions({ onContainerCreate, onDelete }: ActionsProps) {
       <ul>
         <li className="p-2 flex space-x-2">
           <Button
-            className="mb-2 text-3xl flex items-center justify-center border shadow border-dashed border-gray-400 group-hover:border-yellow-500 group-hover:text-yellow-500 dark:border-gray-600 dark:shadow-black/50 text-gray-400 dark:text-gray-400"
+            className="mb-2 text-3xl flex items-center justify-center border shadow border-dashed border-gray-400 dark:border-gray-600 dark:shadow-black/50 text-gray-400 dark:text-gray-400 dark:hover:border-yellow-500 dark:group-hover:border-yellow-500 dark:hover:text-yellow-500"
             onClick={() => onContainerCreate("HIKE")}
-            variant={"action"}
           >
             <CodeIcon className="group-hover:scale-[1.2] duration-100" />
           </Button>
           <Button
-            className="mb-2 text-3xl flex items-center justify-center border shadow border-dashed border-gray-400 group-hover:border-yellow-500 group-hover:text-yellow-500 dark:border-gray-600 dark:shadow-black/50 text-gray-400 dark:text-gray-400"
+            className="mb-2 text-3xl flex items-center justify-center border shadow border-dashed border-gray-400 group-hover:border-yellow-500 group-hover:text-yellow-500 dark:border-gray-600 dark:shadow-black/50 text-gray-400 dark:text-gray-400 dark:hover:border-yellow-500 dark:group-hover:border-yellow-500 dark:hover:text-yellow-500"
             onClick={() => onContainerCreate("LEX")}
-            variant={"action"}
           >
             <TypeIcon />
           </Button>
@@ -184,30 +182,26 @@ export default function Actions({ onContainerCreate, onDelete }: ActionsProps) {
         </li>
         <li className="p-2 flex space-x-2">
           <Button
-            className="mb-2 text-3xl flex items-center justify-center border shadow border-dashed border-gray-400 group-hover:border-yellow-500 group-hover:text-yellow-500 dark:border-gray-600 dark:shadow-black/50 text-gray-400 dark:text-gray-400"
+            className="mb-2 text-3xl flex items-center justify-center border shadow border-dashed border-gray-400 group-hover:border-yellow-500 group-hover:text-yellow-500 dark:border-gray-600 dark:shadow-black/50 text-gray-400 dark:text-gray-400 dark:hover:border-yellow-500 dark:group-hover:border-yellow-500 dark:hover:text-yellow-500"
             onClick={() => onContainerCreate("IMAGE")}
-            variant={"action"}
           >
             <ImageIcon />
           </Button>
           <Button
-            className="mb-2 text-3xl flex items-center justify-center border shadow border-dashed border-gray-400 group-hover:border-yellow-500 group-hover:text-yellow-500 dark:border-gray-600 dark:shadow-black/50 text-gray-400 dark:text-gray-400"
+            className="mb-2 text-3xl flex items-center justify-center border shadow border-dashed border-gray-400 group-hover:border-yellow-500 group-hover:text-yellow-500 dark:border-gray-600 dark:shadow-black/50 text-gray-400 dark:text-gray-400 dark:hover:border-yellow-500 dark:group-hover:border-yellow-500 dark:hover:text-yellow-500"
             onClick={() => onContainerCreate("FRAME")}
-            variant={"action"}
           >
             <FrameIcon />
           </Button>
           <Button
-            className="mb-2 text-3xl flex items-center justify-center border shadow border-dashed border-gray-400 group-hover:border-yellow-500 group-hover:text-yellow-500 dark:border-gray-600 dark:shadow-black/50 text-gray-400 dark:text-gray-400"
+            className="mb-2 text-3xl flex items-center justify-center border shadow border-dashed border-gray-400 group-hover:border-yellow-500 group-hover:text-yellow-500 dark:border-gray-600 dark:shadow-black/50 text-gray-400 dark:text-gray-400 dark:hover:border-yellow-500 dark:group-hover:border-yellow-500 dark:hover:text-yellow-500"
             onClick={onDelete}
-            variant={"action"}
           >
             <Trash />
           </Button>
           <Button
-            className="mb-2 text-3xl flex items-center justify-center border shadow border-dashed border-gray-400 group-hover:border-yellow-500 group-hover:text-yellow-500 dark:border-gray-600 dark:shadow-black/50 text-gray-400 dark:text-gray-400"
+            className="mb-2 text-3xl flex items-center justify-center border shadow border-dashed border-gray-400 group-hover:border-yellow-500 group-hover:text-yellow-500 dark:border-gray-600 dark:shadow-black/50 text-gray-400 dark:text-gray-400 dark:hover:border-yellow-500 dark:group-hover:border-yellow-500 dark:hover:text-yellow-500"
             onClick={toggleGrid}
-            variant={"action"}
           >
             <GridIcon />
           </Button>

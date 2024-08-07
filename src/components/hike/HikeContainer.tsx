@@ -24,7 +24,11 @@ import {
 } from "lexical"
 import Draggable from "react-draggable"
 
-import { DEFAULT_CODE_LANGUAGE } from "@/lib/constants"
+import {
+  DEFAULT_CODE_FONT,
+  DEFAULT_CODE_LANGUAGE,
+  DEFAULT_CODE_THEME,
+} from "@/lib/constants"
 import LexEditorTheme from "@/components/lex/LexEditorTheme"
 import { AnnotationPlugin } from "@/components/lex/plugins/AnnotationPlugin"
 
@@ -97,6 +101,18 @@ export default function HikeContainer({ id }: { id: number }) {
     setSelectedId(id)
   }, [])
 
+  const [_target, setTarget] = useState<HTMLElement | null>(null)
+
+  useEffect(() => {
+    if (id === selectedId) {
+      if (nodeRef?.current) {
+        setTarget(nodeRef?.current)
+      }
+    } else {
+      setTarget(null)
+    }
+  }, [selectedId])
+
   const initialConfig = {
     namespace: "LexEditorTheme",
     theme: LexEditorTheme,
@@ -124,6 +140,13 @@ export default function HikeContainer({ id }: { id: number }) {
     })
   }
 
+  const isSelected = selectedId === id
+  const style = {
+    outlineWidth: isSelected ? "5px" : "none",
+    outlineColor: isSelected ? "-webkit-focus-ring-color" : "none",
+    outlineStyle: isSelected ? "auto" : "none",
+  }
+
   return (
     <Draggable nodeRef={nodeRef}>
       <div
@@ -134,11 +157,10 @@ export default function HikeContainer({ id }: { id: number }) {
           e.stopPropagation()
         }}
         onDoubleClick={() => setTogglePreview(!togglePreview)}
+        className="w-[400px] h-fit -z-10 relative hover:border-blue-300"
+        style={style}
       >
-        <div
-          className="w-fit p-2 absolute top-0 "
-          style={{ display: lexDisplay }}
-        >
+        <div className="p-2 absolute top-0 " style={{ display: lexDisplay }}>
           {selectionPosition && (
             <div>
               {selectionPosition.start}:{selectionPosition.end}
@@ -182,7 +204,7 @@ export function CodeContainer({
   return (
     <div
       style={style}
-      className={`w-fit absolute top-0 -z-10 ${hike?.backgroundColor} ${hike?.borderRadius}`}
+      className={`w-fit absolute top-0 ${hike?.backgroundColor || ""} ${hike?.borderRadius || ""} hover:outline hover:outline-blue-500`}
     >
       <div className="w-full h-full p-4 rounded-lg absolute z-10 left-10 hidden">
         <div className="flex space-x-2 rounded-lg">
@@ -193,6 +215,8 @@ export function CodeContainer({
       </div>
       {codeContent && (
         <Code
+          fontFamily={hike?.font}
+          theme={hike?.theme || DEFAULT_CODE_THEME}
           codeblock={{
             value: codeContent!,
             lang: lang.toLowerCase(),
@@ -204,14 +228,25 @@ export function CodeContainer({
   )
 }
 
-export function Code({ codeblock }: { codeblock: RawCode }) {
+export function Code({
+  codeblock,
+  theme,
+  fontFamily,
+}: {
+  codeblock: RawCode
+  theme?: string
+  fontFamily?: string
+}) {
   const [highlighted, setHighlighted] = useState<HighlightedCode | null>(null)
 
   useEffect(() => {
     const highlightCode = async () => {
       let highlightedCode = null
       try {
-        highlightedCode = await highlight(codeblock, "github-dark")
+        highlightedCode = await highlight(
+          codeblock,
+          (theme as any) || "github-dark"
+        )
       } catch (error) {
         console.log(error)
       }
@@ -229,6 +264,7 @@ export function Code({ codeblock }: { codeblock: RawCode }) {
     <ErrorBoundary fallback={<h1>Oops! There was an error.</h1>}>
       {/* <HikeContainerTheme> */}
       <Pre
+        style={{ fontFamily: fontFamily || DEFAULT_CODE_FONT }}
         code={highlighted!}
         handlers={[
           borderHandler,

@@ -2,23 +2,62 @@
 
 ## wishlist
 
+## MVP
+
+- frame
+  - create inside box: none, transparent, color
+  - size
+    - auto, yt thumbnail, tweet, ig post, ig story, dribbble,
+    - app store 6.5 in, app store 5.8 in
+    - ph, pinterest,linkedin,chrome extension
+    - adapt screenshot, open graph, square 1:1, wide 16:9
+  - background
+    - gradient
+      - 32 pre-defined gradients
+      - custom gradient colors
+      - gradient direction
+    - solid color
+    - image
+    - unsplash
+  - pattern
+    - circle (few set of options)
+  - roundness
+  - noise
+- container
+  - card border styles
+    - none
+    - border (solid, dotted), border radius
+    - 3 dot and other styles
+    - shadow - slider
+    - border style picker
+- option
+  - preserve selected value
+- zoom
+  - after zoom text is going away from screen
+  - in zoom mode not able to create new element
+- icon
+  - increase default icon size
+    - analyze it's placement
+- img
+  - add your image
+  - try demo image (unsplash)
+  - size slider of image
+- shape
+  - rough rect, give some padding
+  - rotating handle is not appearing for line
+- design
+  - logo
+- code-hike
+  - mark horizontal padding + container padding
+  - font implemented but should fetch from google font or cdn
+  - download grammars from net
+
+## After MVP
+
+- save
 - multi selection
 - prismjs theme
-- code > font
-- rough rect, give some padding
-- img
-  - paste img container
-  - multiple img
-- save
-- design
-- option > preserve selected value
-- after zoom text is going away from screen
-- in zoom mode not able to create new element
-- code-hike download grammars from net
-- mark horizontal padding + container padding
-- more gradients
-- increase default icon size
-  - analyze it's placement
+- templates
 
 ## drawing to sketch
 

@@ -20,7 +20,9 @@ import {
   DEFAULT_BORDER_STYLE,
   DEFAULT_BORDER_WIDTH,
   DEFAULT_BOX_SHADOW,
+  DEFAULT_CODE_FONT,
   DEFAULT_CODE_LANGUAGE,
+  DEFAULT_CODE_THEME,
   DEFAULT_FONT_FAMILY,
   DEFAULT_FONT_SIZE,
   DEFAULT_FONT_WEIGHT,
@@ -60,6 +62,8 @@ export interface Hike {
   backgroundColor?: string
   padding?: number
   borderRadius?: string
+  theme?: string
+  font?: string
 }
 
 export interface Lex {
@@ -400,6 +404,8 @@ const useStore = create<Store>(
 function defaultHikeProps() {
   return {
     codeLanguage: DEFAULT_CODE_LANGUAGE,
+    theme: DEFAULT_CODE_THEME,
+    font: DEFAULT_CODE_FONT,
   }
 }
 

@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+  <head> </head>
+  <body>
+    <script>
+      ;(async () => {
+        function screenShotSelection() {
+          const div = document.createElement("div")
+          const styles = {
+            background: "transparent",
+            display: "block",
+            position: "absolute",
+            outline: "thin solid gold",
+            width: "100px",
+            height: "100px",
+            left: "calc(50vw)",
+            top: "calc(50vh)",
+            overflow: "auto",
+            resize: "both",
+            cursor: "move",
+            zIndex: 100,
+          }
+          div.id = "screenShotSelector"
+          div.ondragstart = (e) => {
+            console.log(e)
+          }
+          div.ondragend = (e) => {
+            const { clientX, clientY } = e
+            e.target.style.left = clientX + "px"
+            e.target.style.top = clientY + "px"
+          }
+          Object.assign(div.style, styles)
+          div.draggable = true
+          document.body.appendChild(div)
+        }
+        const video = document.createElement("video")
+        video.controls = true
+        video.style.objectFit = "cover"
+        video.style.lineHeight = 0
+        video.style.fontSize = 0
+        video.style.margin = 0
+        video.style.border = 0
+        video.style.padding = 0
+        video.loop = true
+
+        video.src =
+          "https://upload.wikimedia.org/wikipedia/commons/d/d9/120-cell.ogv"
+
+        document.body.insertAdjacentElement("afterbegin", video)
+
+        video.addEventListener(
+          "play",
+          async (e) => {
+            screenShotSelection()
+            const bounding = document
+              .getElementById("screenShotSelector")
+              .getBoundingClientRect()
+            const stream = await navigator.mediaDevices.getDisplayMedia({
+              video: { cursor: "never" }, // has no effect at Chromium
+            })
+
+            const [videoTrack] = stream.getVideoTracks()
+            const imageCapture = new ImageCapture(videoTrack)
+            const osc = new OffscreenCanvas(100, 100) // dynamic
+            const osctx = osc.getContext("2d")
+            screenShotSelector.addEventListener(
+              "dblclick",
+              async (e) => {
+                console.log(
+                  window.getComputedStyle(e.target).left,
+                  window.getComputedStyle(e.target).top
+                )
+                osctx.drawImage(
+                  await imageCapture.grabFrame(),
+                  parseInt(window.getComputedStyle(e.target).left),
+                  parseInt(window.getComputedStyle(e.target).top),
+                  100,
+                  100,
+                  0,
+                  0,
+                  100,
+                  100
+                ) // dynamic
+                console.log(
+                  bounding,
+                  URL.createObjectURL(await osc.convertToBlob())
+                )
+                videoTrack.stop()
+                video.pause()
+              },
+              {
+                once: true,
+              }
+            )
+          },
+          {
+            once: true,
+          }
+        )
+      })()
+    </script>
+  </body>
+</html>

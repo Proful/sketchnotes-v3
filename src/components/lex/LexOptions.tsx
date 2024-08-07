@@ -9,6 +9,7 @@ import {
   ALLOWED_FONT_WEIGHT,
   ALLOWED_LINE_HEIGHT,
   ALLOWED_TEXT_GRADIENT,
+  DEFAULT_CODE_LANGUAGE,
   TAILWIND_COLORS,
 } from "@/lib/constants"
 import { Input } from "@/components/ui/input"
@@ -40,25 +41,7 @@ export default function LexOptions() {
   return (
     <>
       <ul>
-        <li className="p-2 hover:bg-blue-700">
-          <Select
-            onValueChange={(v) => {
-              updateLexProperty(selectedId, "codeLanguage", v)
-            }}
-          >
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Language" />
-            </SelectTrigger>
-            <SelectContent>
-              {ALLOWED_CODE_LANGUAGE.map((lang) => (
-                <SelectItem value={lang} key={lang}>
-                  {lang}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </li>
-        <li className="p-2 hover:bg-blue-700 flex space-x-2">
+        <li className="p-2 flex space-x-2">
           <Select
             onValueChange={(v) => {
               updateLexProperty(selectedId, "fontFamily", v)
@@ -76,7 +59,7 @@ export default function LexOptions() {
             </SelectContent>
           </Select>
         </li>
-        <li className="p-2 hover:bg-blue-700 flex space-x-2">
+        <li className="p-2 flex space-x-2">
           <Select
             onValueChange={(v) => {
               updateLexProperty(selectedId, "fontSize", v)
@@ -95,7 +78,7 @@ export default function LexOptions() {
           </Select>
         </li>
 
-        <li className="p-2 hover:bg-blue-700 flex space-x-2">
+        <li className="p-2 flex space-x-2">
           <Select
             onValueChange={(v) => {
               updateLexProperty(selectedId, "fontWeight", v)
@@ -114,7 +97,7 @@ export default function LexOptions() {
           </Select>
         </li>
 
-        <li className="p-2 hover:bg-blue-700 flex space-x-2">
+        <li className="p-2 flex space-x-2">
           <Select
             onValueChange={(v) => {
               updateLexProperty(selectedId, "lineHeight", v)
@@ -133,7 +116,7 @@ export default function LexOptions() {
           </Select>
         </li>
 
-        <li className="p-2 hover:bg-blue-700 space-x-2">
+        <li className="p-2 space-x-2">
           <ColorPicker
             label="color"
             colors={TAILWIND_COLORS}
@@ -158,7 +141,7 @@ export default function LexOptions() {
           />
         </li>
 
-        <li className="p-2 hover:bg-blue-700 flex space-x-2">
+        <li className="p-2 flex space-x-2">
           <ColorPicker
             label="box bg"
             colors={TAILWIND_COLORS}
@@ -172,7 +155,7 @@ export default function LexOptions() {
             }
           />
         </li>
-        <li className="p-2 hover:bg-blue-700 flex space-x-2">
+        <li className="p-2 flex space-x-2">
           <Select
             onValueChange={(v) => {
               updateLexProperty(selectedId, "borderDirection", v)
@@ -191,7 +174,7 @@ export default function LexOptions() {
           </Select>
         </li>
 
-        <li className="p-2 hover:bg-blue-700 flex space-x-2">
+        <li className="p-2 flex space-x-2">
           <Select
             onValueChange={(v) => {
               updateLexProperty(selectedId, "borderStyle", v)
@@ -232,7 +215,7 @@ export default function LexOptions() {
           </TooltipProvider>
         </li>
 
-        <li className="p-2 hover:bg-blue-700 space-x-2">
+        <li className="p-2 space-x-2">
           <ColorPicker
             label="Border"
             colors={TAILWIND_COLORS}
@@ -242,7 +225,7 @@ export default function LexOptions() {
           />
         </li>
 
-        <li className="p-2 hover:bg-blue-700 flex space-x-2">
+        <li className="p-2 flex space-x-2">
           <Select
             onValueChange={(v) => {
               updateLexProperty(selectedId, "borderRadius", v)
@@ -261,7 +244,7 @@ export default function LexOptions() {
           </Select>
         </li>
 
-        <li className="p-2 hover:bg-blue-700 flex space-x-2">
+        <li className="p-2 flex space-x-2">
           <Select
             onValueChange={(v) => {
               updateLexProperty(selectedId, "textGradient", v)
@@ -279,7 +262,7 @@ export default function LexOptions() {
             </SelectContent>
           </Select>
         </li>
-        <li className="p-2 hover:bg-blue-700 flex space-x-2">
+        <li className="p-2 flex space-x-2">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
@@ -319,7 +302,7 @@ export default function LexOptions() {
             </Tooltip>
           </TooltipProvider>
         </li>
-        <li className="p-2 hover:bg-blue-700 flex space-x-2">
+        <li className="p-2 flex space-x-2">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
@@ -381,7 +364,7 @@ export default function LexOptions() {
             </Tooltip>
           </TooltipProvider>
         </li>
-        <li className="p-2 hover:bg-blue-700">
+        <li className="p-2">
           <Select
             onValueChange={(v) => {
               updateLexProperty(selectedId, "boxShadow", v)
@@ -394,6 +377,25 @@ export default function LexOptions() {
               {ALLOWED_BOX_SHADOW.map((boxShadow) => (
                 <SelectItem value={boxShadow} key={boxShadow}>
                   {boxShadow}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </li>
+        <li className="p-2">
+          <Select
+            value={lex.codeLanguage || DEFAULT_CODE_LANGUAGE}
+            onValueChange={(v) => {
+              updateLexProperty(selectedId, "codeLanguage", v)
+            }}
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Language" />
+            </SelectTrigger>
+            <SelectContent>
+              {ALLOWED_CODE_LANGUAGE.map((lang) => (
+                <SelectItem value={lang} key={lang}>
+                  {lang}
                 </SelectItem>
               ))}
             </SelectContent>

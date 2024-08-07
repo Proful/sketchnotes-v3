@@ -1,6 +1,11 @@
 import {
   ALLOWED_BORDER_RADIUS,
+  ALLOWED_CODE_FONT_FAMILY,
   ALLOWED_CODE_LANGUAGE,
+  ALLOWED_THEME_NAMES,
+  DEFAULT_CODE_FONT,
+  DEFAULT_CODE_LANGUAGE,
+  DEFAULT_CODE_THEME,
   TAILWIND_COLORS,
 } from "@/lib/constants"
 import {
@@ -42,8 +47,9 @@ export default function HikeOptions() {
   return (
     <>
       <ul>
-        <li className="p-2 hover:bg-blue-700">
+        <li className="p-2">
           <Button
+            variant="outline"
             onClick={() =>
               updateHikeProperty(selectedId, "preview", !hike.preview)
             }
@@ -51,8 +57,9 @@ export default function HikeOptions() {
             Preview
           </Button>
         </li>
-        <li className="p-2 hover:bg-blue-700">
+        <li className="p-2">
           <Select
+            value={hike.codeLanguage || DEFAULT_CODE_LANGUAGE}
             onValueChange={(v) => {
               updateHikeProperty(selectedId, "codeLanguage", v)
             }}
@@ -69,7 +76,7 @@ export default function HikeOptions() {
             </SelectContent>
           </Select>
         </li>
-        <li className="p-2 hover:bg-blue-700">
+        <li className="p-2">
           <Popover>
             <PopoverTrigger asChild>
               <Button variant="outline">Annotations</Button>
@@ -85,7 +92,7 @@ export default function HikeOptions() {
             </PopoverContent>
           </Popover>
         </li>
-        <li className="p-2 hover:bg-blue-700">
+        <li className="p-2">
           <ColorPicker
             label="bg"
             colors={TAILWIND_COLORS}
@@ -95,7 +102,7 @@ export default function HikeOptions() {
           />
         </li>
 
-        <li className="p-2 hover:bg-blue-700 flex space-x-2">
+        <li className="p-2 flex space-x-2">
           <span className="text-gray-100">Padding</span>
           <Slider
             defaultValue={[0]}
@@ -107,7 +114,7 @@ export default function HikeOptions() {
             }}
           />
         </li>
-        <li className="p-2 hover:bg-blue-700 flex space-x-2">
+        <li className="p-2 flex space-x-2">
           <Select
             onValueChange={(v) => {
               updateHikeProperty(selectedId, "borderRadius", v)
@@ -120,6 +127,44 @@ export default function HikeOptions() {
               {ALLOWED_BORDER_RADIUS.map((br) => (
                 <SelectItem value={br} key={br}>
                   {br}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </li>
+        <li className="p-2 flex space-x-2">
+          <Select
+            value={hike?.theme || DEFAULT_CODE_THEME}
+            onValueChange={(v) => {
+              updateHikeProperty(selectedId, "theme", v)
+            }}
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Theme" />
+            </SelectTrigger>
+            <SelectContent>
+              {ALLOWED_THEME_NAMES.map((th) => (
+                <SelectItem value={th} key={th}>
+                  {th}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </li>
+        <li className="p-2 flex space-x-2">
+          <Select
+            value={hike?.font || DEFAULT_CODE_FONT}
+            onValueChange={(v) => {
+              updateHikeProperty(selectedId, "font", v)
+            }}
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Font" />
+            </SelectTrigger>
+            <SelectContent>
+              {ALLOWED_CODE_FONT_FAMILY.map((font) => (
+                <SelectItem value={font} key={font}>
+                  {font}
                 </SelectItem>
               ))}
             </SelectContent>

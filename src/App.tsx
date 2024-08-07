@@ -14,6 +14,7 @@ import HikeContainer from "./components/hike/HikeContainer"
 import { ImageContainer } from "./components/image/ImageContainer"
 import PasteImageComponent from "./components/PasteImageComponent"
 import useStore from "./components/Store"
+import { Separator } from "./components/ui/separator"
 
 // fixed allows to cover all visible area and attach click handler
 function App() {
@@ -131,6 +132,7 @@ function App() {
             onContainerCreate={handleContainerCreate}
             onDelete={handleDelete}
           />
+          <Separator className="bg-gray-700/90 mb-2" />
 
           <Sidebar />
         </nav>

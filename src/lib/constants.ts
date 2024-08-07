@@ -34,6 +34,8 @@ export const DEFAULT_LINE_WIDTH = 75
 export const DEFAULT_LINE2_WIDTH = 20
 export const DEFAULT_LINE2_DIRECTION = "TOP-LEFT"
 export const DEFAULT_CODE_LANGUAGE = "Javascript"
+export const DEFAULT_CODE_THEME = "github-dark"
+export const DEFAULT_CODE_FONT = "Victor Mono"
 export const DEFAULT_ARROW_HEAD_SIZE = 6
 export const DEFAULT_ARROW_HEIGHT = 200
 export const DEFAULT_ARROW_WIDTH = 150
@@ -267,4 +269,37 @@ export const TAILWIND_COLORS = [
   "bg-fuchsia-500",
   "bg-pink-500",
   "bg-rose-500",
+]
+export const ALLOWED_THEME_NAMES = [
+  "dark-plus",
+  "dracula-soft",
+  "dracula",
+  "github-dark",
+  "github-dark-dimmed",
+  "github-light",
+  "light-plus",
+  "material-darker",
+  "material-default",
+  "material-lighter",
+  "material-ocean",
+  "material-palenight",
+  "min-dark",
+  "min-light",
+  "monokai",
+  "nord",
+  "one-dark-pro",
+  "poimandres",
+  "slack-dark",
+  "slack-ochin",
+  "solarized-dark",
+  "solarized-light",
+]
+
+export const ALLOWED_CODE_FONT_FAMILY = [
+  "Victor Mono",
+  "Cascadia Mono",
+  "Fira Code",
+  "IBM Plex Mono",
+  "JetBrains Mono",
+  "Operator Mono",
 ]
