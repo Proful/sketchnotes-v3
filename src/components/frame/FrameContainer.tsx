@@ -15,7 +15,6 @@ export function FrameContainer() {
   }
   const { w, h } = frame.frameResolution!
 
-  console.log(frame)
   return (
     <>
       <img id="screenshot" style={{ display: "none" }} />
@@ -28,25 +27,29 @@ export function FrameContainer() {
             e.stopPropagation()
           }}
         >
-          {/* {BACKGROUND_OPTIONS[0].component} */}
           <div
-            className={`bg-gradient-to-r ${frame.frameGradient!.value} p-2 w-full h-full`}
+            className={`bg-gradient-to-r ${frame.frameGradient!.value} w-full h-full`}
+            style={{ padding: frame.padding + "%" }}
           >
-            <div className="w-full h-full p-4  rounded-lg">
-              {frame.enable3dots && (
-                <div className="flex space-x-2 rounded-lg">
-                  <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                  <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                  <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                </div>
-              )}
-            </div>
+            <div
+              className={`w-full h-full ${frame.backgroundColor} ${frame.borderRadius}`}
+            ></div>
           </div>
         </div>
       </Draggable>
     </>
   )
 }
+
+// <div className=`w-full h-full p-4  rounded-lg">
+//   {frame.enable3dots && (
+//     <div className="flex space-x-2 rounded-lg">
+//       <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+//       <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+//       <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+//     </div>
+//   )}
+// </div>{" "}
 // const takeScreenshot = () => {
 //   var node = document.getElementById("root")
 //

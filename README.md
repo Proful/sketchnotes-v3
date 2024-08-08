@@ -6,6 +6,8 @@
 
 - frame
   - create inside box: none, transparent, color
+  - inside box color
+  - 3 dots
   - size
     - auto, yt thumbnail, tweet, ig post, ig story, dribbble,
     - app store 6.5 in, app store 5.8 in

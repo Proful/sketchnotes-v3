@@ -26,7 +26,9 @@ import {
   DEFAULT_FONT_FAMILY,
   DEFAULT_FONT_SIZE,
   DEFAULT_FONT_WEIGHT,
+  DEFAULT_FRAME_BG_COLOR,
   DEFAULT_FRAME_GRADIENT,
+  DEFAULT_FRAME_PADDING,
   DEFAULT_FRAME_RESOLUTION,
   DEFAULT_LEX_PADDING,
   DEFAULT_LINE_HEIGHT,
@@ -53,6 +55,9 @@ export interface Frame {
   frameResolution?: { w: number; h: number }
   enable3dots?: boolean
   scale?: number
+  padding?: number
+  borderRadius?: string
+  backgroundColor?: string
 }
 
 export interface Hike {
@@ -350,6 +355,9 @@ const useStore = create<Store>(
           frameResolution: DEFAULT_FRAME_RESOLUTION,
           enable3dots: true,
           scale: DEFAULT_SCALE,
+          padding: DEFAULT_FRAME_PADDING,
+          borderRadius: DEFAULT_BORDER_RADIUS,
+          backgroundColor: DEFAULT_FRAME_BG_COLOR,
         },
       }))
     },

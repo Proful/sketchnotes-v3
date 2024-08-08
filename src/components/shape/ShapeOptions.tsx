@@ -69,7 +69,7 @@ function RectOptions() {
   return (
     <>
       <ul>
-        <li className="p-1 hover:bg-blue-700 space-x-2">
+        <li className="p-1 space-x-2">
           <ColorPicker
             label="border"
             colors={TAILWIND_COLORS}
@@ -116,7 +116,7 @@ function RectOptions() {
           </TooltipProvider>
         </li>
 
-        <li className="p-2 hover:bg-blue-700 flex space-x-2">
+        <li className="p-2 flex space-x-2">
           <Select
             onValueChange={(v) => {
               updateShapeProperty(selectedId, "borderRadius", v)
@@ -135,7 +135,7 @@ function RectOptions() {
           </Select>
         </li>
 
-        <li className="p-1 hover:bg-blue-700 space-x-2">
+        <li className="p-1 space-x-2">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
@@ -197,7 +197,7 @@ function RoughRectOptions() {
       <ul>
         {/* <RoughjsOptions /> */}
 
-        <li className="p-1 hover:bg-blue-700 space-x-2">
+        <li className="p-1 space-x-2">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
@@ -257,7 +257,7 @@ function LineOptions() {
   return (
     <>
       <ul>
-        <li className="p-1 hover:bg-blue-700 space-x-2">
+        <li className="p-1 space-x-2">
           <ColorPicker
             label="color"
             colors={TAILWIND_COLORS}
@@ -293,7 +293,7 @@ function LineOptions() {
           </TooltipProvider>
         </li>
 
-        <li className="p-1 hover:bg-blue-700 space-x-2">
+        <li className="p-1 space-x-2">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
@@ -331,7 +331,7 @@ function LineCircleOptions() {
   return (
     <>
       <ul>
-        <li className="p-1 hover:bg-blue-700 space-x-2">
+        <li className="p-1 space-x-2">
           <ColorPicker
             label="color"
             colors={TAILWIND_COLORS}
@@ -345,7 +345,7 @@ function LineCircleOptions() {
           />
         </li>
 
-        <li className="p-1 hover:bg-blue-700 space-x-2">
+        <li className="p-1 space-x-2">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
@@ -426,7 +426,7 @@ function LineLineOptions() {
   return (
     <>
       <ul>
-        <li className="p-1 hover:bg-blue-700 space-x-2">
+        <li className="p-1 space-x-2">
           <ColorPicker
             label="color"
             colors={TAILWIND_COLORS}
@@ -440,7 +440,7 @@ function LineLineOptions() {
           />
         </li>
 
-        <li className="p-1 hover:bg-blue-700 space-x-2">
+        <li className="p-1 space-x-2">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
@@ -485,7 +485,7 @@ function LineLineOptions() {
           </TooltipProvider>
         </li>
 
-        <li className="p-1 hover:bg-blue-700 space-x-2">
+        <li className="p-1 space-x-2">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
@@ -545,7 +545,7 @@ function LineLineV2Options() {
   return (
     <>
       <ul>
-        <li className="p-2 hover:bg-blue-700 flex space-x-2">
+        <li className="p-2 flex space-x-2">
           <Select
             onValueChange={(v) => {
               updateShapeProperty(selectedId, "line2Direction", v)
@@ -563,7 +563,7 @@ function LineLineV2Options() {
             </SelectContent>
           </Select>
         </li>
-        <li className="p-1 hover:bg-blue-700 space-x-2">
+        <li className="p-1 space-x-2">
           <ColorPicker
             label="color"
             colors={TAILWIND_COLORS}
@@ -577,7 +577,7 @@ function LineLineV2Options() {
           />
         </li>
 
-        <li className="p-1 hover:bg-blue-700 space-x-2">
+        <li className="p-1 space-x-2">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
@@ -622,7 +622,7 @@ function LineLineV2Options() {
           </TooltipProvider>
         </li>
 
-        <li className="p-1 hover:bg-blue-700 space-x-2">
+        <li className="p-1 space-x-2">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
@@ -682,7 +682,7 @@ function ArrowOptions() {
   return (
     <>
       <ul>
-        <li className="p-1 hover:bg-blue-700 space-x-2">
+        <li className="p-1 space-x-2">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
@@ -749,7 +749,7 @@ function ArrowOptions() {
             </Tooltip>
           </TooltipProvider>
         </li>
-        <li className="p-1 hover:bg-blue-700 space-x-2">
+        <li className="p-1 space-x-2">
           <ColorPicker
             label="border color"
             colors={TAILWIND_COLORS}
@@ -762,7 +762,7 @@ function ArrowOptions() {
             }
           />
         </li>
-        <li className="p-1 hover:bg-blue-700 space-x-2">
+        <li className="p-1 space-x-2">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
@@ -789,7 +789,7 @@ function ArrowOptions() {
           </TooltipProvider>
         </li>
 
-        <li className="p-1 hover:bg-blue-700 space-x-2">
+        <li className="p-1 space-x-2">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
@@ -866,7 +866,7 @@ function ArrowOptions() {
           </TooltipProvider>
         </li>
 
-        <li className="p-1 hover:bg-blue-700 space-x-2">
+        <li className="p-1 space-x-2">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
@@ -934,7 +934,7 @@ function ArrowOptions() {
           </TooltipProvider>
         </li>
 
-        <li className="p-1 hover:bg-blue-700 space-x-2">
+        <li className="p-1 space-x-2">
           <Checkbox
             id="flip"
             checked={shape.arrowFlip}
@@ -949,7 +949,7 @@ function ArrowOptions() {
             Flip
           </label>
         </li>
-        <li className="p-1 hover:bg-blue-700 space-x-2">
+        <li className="p-1 space-x-2">
           <Checkbox
             id="straights"
             checked={shape.arrowStraights}

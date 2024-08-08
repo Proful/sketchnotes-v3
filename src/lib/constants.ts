@@ -17,6 +17,8 @@ export const DEFAULT_BORDER_COLOR = "stroke-white"
 export const DEFAULT_ICON_SIZE = 60
 export const DEFAULT_ICON_COLOR = "#ffffff"
 export const DEFAULT_ICON_ROTATE = 0
+export const DEFAULT_FRAME_PADDING = 5
+export const DEFAULT_FRAME_BG_COLOR = "bg-background"
 export const DEFAULT_FRAME_GRADIENT = {
   name: "indigo-purple-pink",
   value: "from-indigo-500 via-purple-500 to-pink-500",
