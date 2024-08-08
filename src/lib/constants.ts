@@ -19,10 +19,8 @@ export const DEFAULT_ICON_COLOR = "#ffffff"
 export const DEFAULT_ICON_ROTATE = 0
 export const DEFAULT_FRAME_PADDING = 5
 export const DEFAULT_FRAME_BG_COLOR = "bg-background"
-export const DEFAULT_FRAME_GRADIENT = {
-  name: "indigo-purple-pink",
-  value: "from-indigo-500 via-purple-500 to-pink-500",
-}
+export const DEFAULT_FRAME_GRADIENT =
+  "from-indigo-500 via-purple-500 to-pink-500"
 export const DEFAULT_FRAME_RESOLUTION = { w: 800, h: 450 }
 export const DEFAULT_TEXT_GRADIENT = {
   name: "indigo-sky-emerald",
@@ -92,30 +90,44 @@ export const ALLOWED_FRAME_BACKGROUND = [
   },
 ]
 export const ALLOWED_FRAME_GRADIENT = [
-  {
-    name: "indigo-purple-pink",
-    value: "from-indigo-500 via-purple-500 to-pink-500",
-  },
-  {
-    name: "rose-red",
-    value: "from-rose-400 to-red-500",
-  },
-  {
-    name: "teal-yellow",
-    value: "from-teal-400 to-yellow-200",
-  },
-  {
-    name: "cyan-blue",
-    value: "from-cyan-500 to-blue-500",
-  },
-  {
-    name: "gray-slate",
-    value: "from-gray-900 to-slate-800",
-  },
-  {
-    name: "none",
-    value: "none",
-  },
+  "from-indigo-500 via-purple-500 to-pink-500",
+  "from-rose-400 to-red-500",
+  "from-teal-400 to-yellow-200",
+  "from-cyan-500 to-blue-500",
+  "from-gray-900 to-slate-800",
+  "from-[#f2b8ff] via-[#e9e4fe] to-[#a9aeff]",
+  "from-[#3de5b3] via-[#fee899] to-[#fff7ef]",
+  "from-[#9fbdd3] to-[#ebe6e2]",
+  "from-[#f0e2cf] via-[#f4d5af] to-[#f1c2b4]",
+  "from-[#81b29a] via-[#f2cc8f] to-[#f4f1de]",
+  "from-[#fbe0ff] via-[#92b4e9] to-[#ffc1c1]",
+  "from-[#01befc] via-[#fc7efc] to-[#fbd847]",
+  "from-[#b9fbc0] via-[#a3c4f3] to-[#f1c0e8]",
+  "from-[#ffd488] via-[#ff9b7f] to-[#fff6b1]",
+  "from-[#a3ffe7] via-[#7a6bfb] to-[#ff90c9]",
+  "from-[#5e88da] to-[#e3f0ff]",
+  "from-[#fff2a4] via-[#d3acee] to-[#82f5ff]",
+  "from-[#c6ffb1] via-[#b4eef5] to-[#ffdb95]",
+  "from-[#a280ff] via-[#ff7bb6] to-[#ff9d85]",
+  "from-[#9f82fe] to-[#ffe992]",
+  "from-[#fda1ff] via-[#fed3d3] to-[#66b3ff]",
+  "from-[#adf285] to-[#5346bf]",
+  "from-[#5493c8] to-[#4135ab]",
+  "from-[#f5e7ff] to-[#ff94be]",
+  "from-[#e98d96] to-[#e6a45e]",
+  "from-[#cf48d5] to-[#3e5bc7]",
+  "from-[#29817e] to-[#90e9cf]",
+  "from-[#799aff] to-[#e8de90]",
+  "from-[#c3c3c3] to-[#1a180b]",
+  "from-[#f2f2f2] to-[#a9a9a9]",
+  "from-[#ffb5a6] to-[#fb2626]",
+  "from-[#3165a6] to-[#0c6405]",
+  "from-[#fafafa] to-[#9614e2]",
+  "from-[#000000] to-[#c5e282]",
+  "from-[#399266] to-[#e9faab]",
+  "from-[#f8b016] to-[#161616]",
+  "from-[#925a9e] to-[#ff9696]",
+  "none",
 ]
 export const ALLOWED_TEXT_GRADIENT = [
   {

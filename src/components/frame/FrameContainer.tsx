@@ -28,12 +28,20 @@ export function FrameContainer() {
           }}
         >
           <div
-            className={`bg-gradient-to-r ${frame.frameGradient!.value} w-full h-full`}
+            className={`bg-gradient-to-r ${frame.frameGradient} w-full h-full`}
             style={{ padding: frame.padding + "%" }}
           >
             <div
-              className={`w-full h-full ${frame.backgroundColor} ${frame.borderRadius}`}
-            ></div>
+              className={`w-full h-full ${frame.backgroundColor} ${frame.borderRadius} relative`}
+            >
+              {frame.enable3dots && (
+                <div className="absolute top-3 left-3 flex space-x-2">
+                  <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                  <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                  <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </Draggable>
@@ -42,13 +50,6 @@ export function FrameContainer() {
 }
 
 // <div className=`w-full h-full p-4  rounded-lg">
-//   {frame.enable3dots && (
-//     <div className="flex space-x-2 rounded-lg">
-//       <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-//       <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-//       <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-//     </div>
-//   )}
 // </div>{" "}
 // const takeScreenshot = () => {
 //   var node = document.getElementById("root")

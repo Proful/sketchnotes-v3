@@ -1,6 +1,5 @@
 import {
   ALLOWED_BORDER_RADIUS,
-  ALLOWED_FRAME_GRADIENT,
   ALLOWED_FRAME_RESOLUTION,
   DEFAULT_FRAME_PADDING,
   TAILWIND_COLORS,
@@ -15,6 +14,7 @@ import {
 } from "@/components/ui/select"
 
 import ColorPicker from "../ColorPicker"
+import GradientPicker from "../GradientPicker"
 import useStore from "../Store"
 import { Input } from "../ui/input"
 import { Slider } from "../ui/slider"
@@ -29,24 +29,12 @@ export default function FrameOptions() {
   return (
     <>
       <ul>
-        <li className="p-2  flex space-x-2">
-          <Select
-            onValueChange={(v) => {
-              const [name, value] = v.split("~")
-              updateFrameProperty("frameGradient", { name, value })
-            }}
-          >
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Frame Gradient" />
-            </SelectTrigger>
-            <SelectContent>
-              {ALLOWED_FRAME_GRADIENT.map((fr) => (
-                <SelectItem value={fr.name + "~" + fr.value} key={fr.name}>
-                  {fr.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+        <li className="p-1 space-x-2">
+          <GradientPicker
+            onGradientSelect={(gradient) =>
+              updateFrameProperty("frameGradient", gradient)
+            }
+          />
         </li>
         <li className="p-2  flex space-x-2 items-center">
           <Checkbox

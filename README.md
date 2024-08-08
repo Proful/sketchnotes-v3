@@ -5,19 +5,12 @@
 ## MVP
 
 - frame
-  - create inside box: none, transparent, color
-  - inside box color
-  - 3 dots
-  - size
-    - auto, yt thumbnail, tweet, ig post, ig story, dribbble,
-    - app store 6.5 in, app store 5.8 in
-    - ph, pinterest,linkedin,chrome extension
-    - adapt screenshot, open graph, square 1:1, wide 16:9
   - background
     - gradient
       - 32 pre-defined gradients
       - custom gradient colors
       - gradient direction
+    - gradient picker
     - solid color
     - image
     - unsplash
@@ -25,6 +18,11 @@
     - circle (few set of options)
   - roundness
   - noise
+  - size
+    - auto, yt thumbnail, tweet, ig post, ig story, dribbble,
+    - app store 6.5 in, app store 5.8 in
+    - ph, pinterest,linkedin,chrome extension
+    - adapt screenshot, open graph, square 1:1, wide 16:9
 - container
   - card border styles
     - none
@@ -38,6 +36,11 @@
   - after zoom text is going away from screen
   - in zoom mode not able to create new element
 - icon
+  - icon flip functionality
+  - arrow with right facing very less
+  - copy icon
+  - alignment helper with grid or something. make it smooth
+  - use left, right, up, down arrow to slightly move the same
   - increase default icon size
     - analyze it's placement
 - img
@@ -47,12 +50,15 @@
 - shape
   - rough rect, give some padding
   - rotating handle is not appearing for line
+- Lex
+  - persist options selected
 - design
   - logo
 - code-hike
   - mark horizontal padding + container padding
   - font implemented but should fetch from google font or cdn
   - download grammars from net
+  - selection of text by cursor dragging not working rather it drags the component
 
 ## After MVP
 

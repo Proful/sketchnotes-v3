@@ -51,7 +51,7 @@ export interface Image {
 }
 
 export interface Frame {
-  frameGradient?: NameValuePair
+  frameGradient?: string
   frameResolution?: { w: number; h: number }
   enable3dots?: boolean
   scale?: number
