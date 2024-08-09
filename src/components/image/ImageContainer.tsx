@@ -48,12 +48,17 @@ export function ImageContainer({ id }: { id: number }) {
         onClick={handleSelect}
         style={style}
       >
-        <img
-          src={image.data}
-          alt="Pasted content"
-          className="h-auto"
-          style={{ width: image.width }}
-        />
+        <div
+          className={`bg-gradient-to-r ${image.gradient} w-full h-full`}
+          style={{ padding: image.padding + "%" }}
+        >
+          <img
+            src={image.data}
+            alt="Pasted content"
+            className={`h-auto ${image.borderRadius}`}
+            style={{ width: image.width }}
+          />
+        </div>
       </div>
     </>
   )

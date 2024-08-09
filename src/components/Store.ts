@@ -30,6 +30,8 @@ import {
   DEFAULT_FRAME_GRADIENT,
   DEFAULT_FRAME_PADDING,
   DEFAULT_FRAME_RESOLUTION,
+  DEFAULT_IMAGE_GRADIENT,
+  DEFAULT_IMAGE_PADDING,
   DEFAULT_IMAGE_WIDTH,
   DEFAULT_LEX_PADDING,
   DEFAULT_LINE_HEIGHT,
@@ -50,6 +52,9 @@ export interface Image {
   id: number
   data: string
   width: number
+  gradient?: string
+  borderRadius?: string
+  padding?: number
 }
 
 export interface Frame {
@@ -396,6 +401,9 @@ const useStore = create<Store>(
             id,
             data,
             width: DEFAULT_IMAGE_WIDTH,
+            borderRadius: DEFAULT_BORDER_RADIUS,
+            gradient: DEFAULT_IMAGE_GRADIENT,
+            padding: DEFAULT_IMAGE_PADDING,
           },
         },
       }))
