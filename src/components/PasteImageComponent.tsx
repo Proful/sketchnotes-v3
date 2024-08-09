@@ -50,7 +50,7 @@ const PasteImageComponent = ({
             contentEditable={true}
             suppressContentEditableWarning={true}
           >
-            Paste your image herre
+            Paste your image here
           </div>
         </div>
       </div>

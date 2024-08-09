@@ -112,8 +112,8 @@ function App() {
           {Object.values(shapes).map((shape) => (
             <ShapeContainer key={shape.id} id={shape.id} />
           ))}
-          {Object.values(icons).map((icon) => (
-            <IconContainer key={icon.id} id={icon.id} />
+          {Object.values(icons).map((icon, i) => (
+            <IconContainer key={i} id={icon.id} />
           ))}
           {Object.values(lexes).map((lex) => (
             <LexContainer key={lex.id} id={lex.id} />
