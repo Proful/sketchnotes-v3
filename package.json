@@ -27,7 +27,7 @@
     "@tauri-apps/api": "^1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
-    "codehike": "^1.0.0-beta.6",
+    "codehike": "^1.0.0-beta.8",
     "html-to-image": "^1.11.11",
     "lexical": "^0.16.0",
     "lucide-react": "^0.390.0",

@@ -10,7 +10,6 @@
       - 32 pre-defined gradients
       - custom gradient colors
       - gradient direction
-    - gradient picker
     - solid color
     - image
     - unsplash
@@ -44,6 +43,7 @@
   - increase default icon size
     - analyze it's placement
 - img
+  - resize img
   - add your image
   - try demo image (unsplash)
   - size slider of image

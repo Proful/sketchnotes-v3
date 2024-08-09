@@ -48,6 +48,7 @@ import { ContainerType, NameValuePair, ShapeType } from "@/lib/types"
 export interface Image {
   id: number
   data: string
+  width: number
 }
 
 export interface Frame {

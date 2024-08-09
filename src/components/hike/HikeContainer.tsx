@@ -34,6 +34,7 @@ import { AnnotationPlugin } from "@/components/lex/plugins/AnnotationPlugin"
 
 import ErrorBoundary from "../ErrorBoundary"
 import { AnnotationNode } from "../lex/nodes/lexical-annotation"
+// import Move from "../Move"
 import useStore from "../Store"
 
 // import { CopyButton } from "./CopyButton"
@@ -66,6 +67,7 @@ export default function HikeContainer({ id }: { id: number }) {
   const setSelectedContainerType = useStore(
     (state) => state.setSelectedContainerType
   )
+
   useEffect(() => {
     if (!selectedActionType || !seed || !selectedId) return
     if (id !== selectedId) return
@@ -157,10 +159,13 @@ export default function HikeContainer({ id }: { id: number }) {
           e.stopPropagation()
         }}
         onDoubleClick={() => setTogglePreview(!togglePreview)}
-        className="w-[400px] h-fit -z-10 relative hover:border-blue-300"
+        className="w-fit h-fit -z-10 relative hover:border-blue-300"
         style={style}
       >
-        <div className="p-2 absolute top-0 " style={{ display: lexDisplay }}>
+        <div
+          className="min-w-[400px] p-2 absolute top-0 "
+          style={{ display: lexDisplay }}
+        >
           {selectionPosition && (
             <div>
               {selectionPosition.start}:{selectionPosition.end}
@@ -204,7 +209,7 @@ export function CodeContainer({
   return (
     <div
       style={style}
-      className={`w-fit absolute top-0 ${hike?.backgroundColor || ""} ${hike?.borderRadius || ""} hover:outline hover:outline-blue-500`}
+      className={`absolute top-0 ${hike?.backgroundColor || ""} ${hike?.borderRadius || ""} hover:outline hover:outline-blue-500`}
     >
       <div className="w-full h-full p-4 rounded-lg absolute z-10 left-10 hidden">
         <div className="flex space-x-2 rounded-lg">

@@ -51,7 +51,7 @@ export function ImageContainer({ id }: { id: number }) {
         <img
           src={image.data}
           alt="Pasted content"
-          className="max-w-[200px] h-auto"
+          className="max-w-[600px] h-auto w-fit"
         />
       </div>
     </>
