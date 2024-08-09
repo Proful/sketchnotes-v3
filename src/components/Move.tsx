@@ -4,6 +4,7 @@ import useStore from "./Store"
 
 export default function Move({ target }: { target: HTMLElement }) {
   const updateIconProperty = useStore((state) => state.updateIconProperty)
+  const updateImageProperty = useStore((state) => state.updateImageProperty)
   const selectedId = useStore((state) => state.selectedId)
   return (
     <Moveable
@@ -25,6 +26,7 @@ export default function Move({ target }: { target: HTMLElement }) {
       throttleResize={0}
       onResize={({ target, width, height, delta }: OnResize) => {
         updateIconProperty(selectedId!, "iconSize", width)
+        updateImageProperty(selectedId!, "width", width)
         delta[0] && (target!.style.width = `${width}px`)
         delta[1] && (target!.style.height = `${height}px`)
       }}

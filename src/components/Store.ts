@@ -30,6 +30,7 @@ import {
   DEFAULT_FRAME_GRADIENT,
   DEFAULT_FRAME_PADDING,
   DEFAULT_FRAME_RESOLUTION,
+  DEFAULT_IMAGE_WIDTH,
   DEFAULT_LEX_PADDING,
   DEFAULT_LINE_HEIGHT,
   DEFAULT_LINE_WIDTH,
@@ -394,6 +395,7 @@ const useStore = create<Store>(
           [id]: {
             id,
             data,
+            width: DEFAULT_IMAGE_WIDTH,
           },
         },
       }))

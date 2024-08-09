@@ -44,13 +44,13 @@ const PasteImageComponent = ({
   return (
     <Draggable nodeRef={pasteRef}>
       <div ref={pasteRef} className="absolute top-10">
-        <div className="relative bg-gradient-to-br z-20 text-gray-400 dark:text-gray-400/80  dark:from-gray-900 dark:to-gray-900/80 backdrop-xl backdrop-blur-md rounded-2xl place-content-center flex flex-col item-center justify-center shadow-[0_0_16px_rgba(0,0,0,0.15)] w-[500px] h-[500px]">
+        <div className="relative bg-gradient-to-br z-20 dark:text-gray-400/80  dark:from-stone-800 dark:to-stone-800/85 backdrop-xl backdrop-blur-md rounded-2xl place-content-center flex flex-col item-center justify-center shadow-[0_0_16px_rgba(0,0,0,0.15)] w-[400px] h-[400px]">
           <div
             className="p-4 mx-auto max-w-[500px] w-full h-full text-center place-content-center outline-none"
             contentEditable={true}
             suppressContentEditableWarning={true}
           >
-            Drag-n-drop your image here
+            Paste your image herre
           </div>
         </div>
       </div>
