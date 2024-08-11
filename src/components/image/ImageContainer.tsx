@@ -49,7 +49,7 @@ export function ImageContainer({ id }: { id: number }) {
         style={style}
       >
         <div
-          className={`bg-gradient-to-r ${image.gradient} w-full h-full`}
+          className={`relative bg-noise bg-gradient-to-r ${image.gradient} w-full h-full`}
           style={{ padding: image.padding + "%" }}
         >
           <img

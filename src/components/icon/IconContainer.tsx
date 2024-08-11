@@ -53,7 +53,7 @@ export function IconContainer({ id }: { id: number }) {
       <Move target={target!} />
       <div
         ref={nodeRef}
-        className="w-fit absolute top-64 z-10"
+        className="w-fit absolute top-4 right-72 z-10"
         onClick={handleSelect}
         style={style}
       >
@@ -61,7 +61,7 @@ export function IconContainer({ id }: { id: number }) {
           size={icon.iconSize}
           className={icon.iconColor}
           verticalAlign="middle"
-          transform={`rotate(${icon.iconRotate}deg)`}
+          transform={`scale(${icon.flipHorizontal ? -1 : 1},${icon.flipVertical ? -1 : 1})`}
         />
       </div>
     </>

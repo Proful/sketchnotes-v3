@@ -100,7 +100,38 @@ export const ALLOWED_FRAME_GRADIENT = [
   "from-teal-400 to-yellow-200",
   "from-cyan-500 to-blue-500",
   "from-gray-900 to-slate-800",
+  "from-[#ff7e5f] via-[#feb47b] to-[#ffcc99]", // Warm sunset tones
+  "from-[#6a3093] via-[#a044ff] to-[#d9a7c7]", // Analogous purples
+  "from-[#ff9a9e] via-[#fecfef] to-[#feada6]", // Soft pinks and peaches
+  "from-[#00c6ff] via-[#0072ff] to-[#004e92]", // Cool blues
+  "from-[#f77062] via-[#fe5196] to-[#ff88dc]", // Warm pinks with a soft touch
+  "from-[#fbd3e9] via-[#bb377d] to-[#f77062]", // Warm reds and pinks
+  "from-[#43cea2] via-[#185a9d] to-[#134e5e]", // Complementary greens and blues
+  "from-[#fbc2eb] via-[#a6c1ee] to-[#b5a0eb]", // Soft pastels
+  "from-[#ffd89b] via-[#e27d60] to-[#c38d9e]", // Warm orange to muted pink
+  "from-[#4ca1af] via-[#c4e0e5] to-[#dbedf3]", // Cool blues and greys
+  "from-[#ff9966] via-[#ff5e62] to-[#ff6e7f]", // Vibrant warm tones
+  "from-[#0f2027] via-[#203a43] to-[#2c5364]", // Deep cool blues
+  "from-[#667db6] via-[#0082c8] to-[#0082c8]", // Cool blues with a pop
+  "from-[#ff758c] via-[#ff7eb3] to-[#ff99c5]", // Soft and vibrant pinks
+  "from-[#ffecd2] via-[#fcb69f] to-[#ff7e5f]", // Warm peaches and pinks
+  "from-[#cfd9df] via-[#e2ebf0] to-[#f4f4f4]", // Soft greys
+  "from-[#f7d794] via-[#f3a683] to-[#e77f67]", // Soft orange to coral
+  "from-[#84fab0] via-[#8fd3f4] to-[#7ee8fa]", // Light greens and blues
+  "from-[#ffb6b9] via-[#fae3d9] to-[#bbded6]", // Soft pinks and greens
+  "from-[#f4e2d8] via-[#ba5370] to-[#f4a261]", // Warm tones
+  "from-[#a8edea] via-[#fed6e3] to-[#ffb6b9]", // Pastel greens and pinks
+  "from-[#dd5e89] via-[#f7bb97] to-[#ef9184]", // Warm pinks and peaches
+  "from-[#a1c4fd] via-[#c2e9fb] to-[#cfd9df]", // Light blues and greys
+  "from-[#fddb92] via-[#d1fdff] to-[#91eae4]", // Soft peaches to light blue
+  "from-[#d299c2] via-[#fef9d7] to-[#c1c8e4]", // Soft pastel purple and yellow
+  "from-[#fbc2eb] via-[#a6c1ee] to-[#fda085]", // Soft pastels with a warm touch
+  "from-[#ff9a9e] via-[#fecfef] to-[#fecda8]", // Warm peaches and pinks
+  "from-[#cfd9df] via-[#e2ebf0] to-[#cfd9df]", // Light greys and blues
+  "from-[#ff758c] via-[#ff7eb3] to-[#ffa69e]", // Vibrant warm pinks
+  "from-[#84fab0] via-[#8fd3f4] to-[#4ca1af]", // Light greens to cool blues
 ]
+// "from-[#f2b8ff] via-[#e9e4fe] to-[#a9aeff]",
 // "from-[#f2b8ff] via-[#e9e4fe] to-[#a9aeff]",
 // "from-[#3de5b3] via-[#fee899] to-[#fff7ef]",
 // "from-[#9fbdd3] to-[#ebe6e2]",

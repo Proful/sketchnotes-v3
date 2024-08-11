@@ -23,12 +23,14 @@ export default function ImageOptions() {
       <ul>
         <li className="p-1 space-x-2">
           <GradientPicker
-            onGradientSelect={(gradient) =>
+            onGradientSelect={(gradient) => {
+              console.log(gradient)
               updateImageProperty(selectedId, "gradient", gradient)
-            }
+            }}
           />
         </li>
         <li className="p-2  flex space-x-2">
+          <span>Padding</span>
           <Slider
             defaultValue={[DEFAULT_FRAME_PADDING]}
             value={[image.padding!]}

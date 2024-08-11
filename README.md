@@ -4,6 +4,14 @@
 
 ## MVP
 
+- add noise
+- gradient picker
+  - custom from, via, to
+  - add more gradient
+- img
+  - add your image
+  - try demo image (unsplash)
+  - size slider of image
 - frame
   - background
     - gradient
@@ -42,10 +50,6 @@
   - use left, right, up, down arrow to slightly move the same
   - increase default icon size
     - analyze it's placement
-- img
-  - add your image
-  - try demo image (unsplash)
-  - size slider of image
 - shape
   - rough rect, give some padding
   - rotating handle is not appearing for line
@@ -54,6 +58,7 @@
 - design
   - logo
 - code-hike
+  - add outer padding and gradient
   - mark horizontal padding + container padding
   - font implemented but should fetch from google font or cdn
   - download grammars from net

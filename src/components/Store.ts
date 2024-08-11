@@ -30,6 +30,7 @@ import {
   DEFAULT_FRAME_GRADIENT,
   DEFAULT_FRAME_PADDING,
   DEFAULT_FRAME_RESOLUTION,
+  DEFAULT_ICON_SIZE,
   DEFAULT_IMAGE_GRADIENT,
   DEFAULT_IMAGE_PADDING,
   DEFAULT_IMAGE_WIDTH,
@@ -110,6 +111,8 @@ interface Icon {
   iconSize: number
   iconColor: string
   iconRotate: number
+  flipHorizontal: boolean
+  flipVertical: boolean
 }
 
 export interface Shape {
@@ -162,7 +165,7 @@ interface Store {
   updateIconProperty: (
     id: number,
     property: keyof Icon,
-    value: string | number
+    value: string | number | boolean
   ) => void
   createIcon: (id: number, name: string) => void
   deleteIcon: (id: number) => void
@@ -236,9 +239,11 @@ const useStore = create<Store>(
           [id]: {
             id,
             name,
-            iconSize: 24,
+            iconSize: DEFAULT_ICON_SIZE,
             iconColor: "#000000",
             iconRotate: 0,
+            flipHorizontal: false,
+            flipVertical: false,
           },
         },
       })),
