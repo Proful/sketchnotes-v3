@@ -29,6 +29,7 @@ function App() {
   const icons = useStore((state) => state.icons)
   const createIcon = useStore((state) => state.createIcon)
   const deleteIcon = useStore((state) => state.deleteIcon)
+  const copyIcon = useStore((state) => state.copyIcon)
 
   const shapes = useStore((state) => state.shapes)
   const createShape = useStore((state) => state.createShape)
@@ -131,6 +132,9 @@ function App() {
           <Actions
             onContainerCreate={handleContainerCreate}
             onDelete={handleDelete}
+            onCopy={() => {
+              copyIcon()
+            }}
           />
           <Separator className="bg-gray-700/90 mb-2" />
 

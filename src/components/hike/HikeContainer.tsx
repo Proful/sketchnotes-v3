@@ -122,6 +122,8 @@ export default function HikeContainer({ id }: { id: number }) {
     onError,
   }
 
+  const hike = hikes[id!]
+
   const lexDisplay = togglePreview ? "none" : "block"
   const hikeDisplay = togglePreview ? "block" : "none"
   const handleChange = (editorState: EditorState) => {
@@ -184,7 +186,12 @@ export default function HikeContainer({ id }: { id: number }) {
           </LexicalComposer>
         </div>
         <div style={{ display: hikeDisplay }}>
-          <CodeContainer codeContent={codeContent!} lang={lang} id={id} />
+          <div
+            className={`inline-block bg-gradient-to-r ${hike.gradient}`}
+            style={{ padding: hike.outerPadding + "px" }}
+          >
+            <CodeContainer codeContent={codeContent!} lang={lang} id={id} />
+          </div>
         </div>
       </div>
     </Draggable>
@@ -209,15 +216,15 @@ export function CodeContainer({
   return (
     <div
       style={style}
-      className={`absolute top-0 ${hike?.backgroundColor || ""} ${hike?.borderRadius || ""} hover:outline hover:outline-blue-500`}
+      className={`inline-block ${hike?.backgroundColor || ""} ${hike?.borderRadius || ""} hover:outline hover:outline-blue-500`}
     >
-      <div className="w-full h-full p-4 rounded-lg absolute z-10 left-10 hidden">
-        <div className="flex space-x-2 rounded-lg">
-          <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-          <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-          <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-        </div>
-      </div>
+      {/* <div className="w-full h-full p-4 rounded-lg absolute z-10 left-10 hidden"> */}
+      {/*   <div className="flex space-x-2 rounded-lg"> */}
+      {/*     <div className="w-3 h-3 bg-red-500 rounded-full"></div> */}
+      {/*     <div className="w-3 h-3 bg-yellow-500 rounded-full"></div> */}
+      {/*     <div className="w-3 h-3 bg-green-500 rounded-full"></div> */}
+      {/*   </div> */}
+      {/* </div> */}
       {codeContent && (
         <Code
           fontFamily={hike?.font}

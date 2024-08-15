@@ -1,5 +1,6 @@
 import { useRef } from "react"
-import Draggable from "react-draggable"
+// import Draggable from "react-draggable"
+import { Rnd } from "react-rnd"
 
 import useStore from "../Store"
 
@@ -18,9 +19,16 @@ export function FrameContainer() {
   return (
     <>
       <img id="screenshot" style={{ display: "none" }} />
-      <Draggable nodeRef={nodeRef}>
+      <Rnd
+        default={{
+          x: 20,
+          y: 20,
+          width: w,
+          height: h,
+        }}
+      >
         <div
-          className={`w-[${w}px] h-[${h}px] absolute border-4 z-90`}
+          className={`absolute border-4 z-90 w-full h-full pointer-events-auto`}
           ref={nodeRef}
           onClick={(e) => {
             setSelectedContainerType("FRAME")
@@ -44,7 +52,7 @@ export function FrameContainer() {
             </div>
           </div>
         </div>
-      </Draggable>
+      </Rnd>
     </>
   )
 }

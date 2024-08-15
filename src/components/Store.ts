@@ -30,6 +30,10 @@ import {
   DEFAULT_FRAME_GRADIENT,
   DEFAULT_FRAME_PADDING,
   DEFAULT_FRAME_RESOLUTION,
+  DEFAULT_HIKE_BACKGROUND_COLOR,
+  DEFAULT_HIKE_GRADIENT,
+  DEFAULT_HIKE_INNER_PADDING,
+  DEFAULT_HIKE_OUTER_PADDING,
   DEFAULT_ICON_SIZE,
   DEFAULT_IMAGE_GRADIENT,
   DEFAULT_IMAGE_PADDING,
@@ -77,6 +81,8 @@ export interface Hike {
   borderRadius?: string
   theme?: string
   font?: string
+  outerPadding?: number
+  gradient?: string
 }
 
 export interface Lex {
@@ -103,6 +109,8 @@ export interface Lex {
   boxShadow?: string
   codeLanguage?: string
   textGradient?: string
+  outerPadding?: number
+  gradient?: string
 }
 
 interface Icon {
@@ -168,6 +176,7 @@ interface Store {
     value: string | number | boolean
   ) => void
   createIcon: (id: number, name: string) => void
+  copyIcon: () => void
   deleteIcon: (id: number) => void
   updateShapeProperty: (
     id: number,
@@ -247,6 +256,34 @@ const useStore = create<Store>(
           },
         },
       })),
+    copyIcon: () =>
+      set((state) => {
+        if (!state.selectedId) {
+          return {
+            icons: state.icons,
+          }
+        }
+
+        const newIcons = { ...state.icons }
+        const icon = newIcons[state.selectedId]
+
+        if (!icon) {
+          return {
+            icons: state.icons,
+          }
+        }
+
+        const id = Math.random()
+        return {
+          icons: {
+            ...state.icons,
+            [id]: {
+              ...icon,
+              id,
+            },
+          },
+        }
+      }),
     deleteIcon: (id) =>
       set((state) => {
         const newIcons = { ...state.icons }
@@ -430,6 +467,10 @@ function defaultHikeProps() {
     codeLanguage: DEFAULT_CODE_LANGUAGE,
     theme: DEFAULT_CODE_THEME,
     font: DEFAULT_CODE_FONT,
+    padding: DEFAULT_HIKE_INNER_PADDING,
+    outerPadding: DEFAULT_HIKE_OUTER_PADDING,
+    gradient: DEFAULT_HIKE_GRADIENT,
+    backgroundColor: DEFAULT_HIKE_BACKGROUND_COLOR,
   }
 }
 
@@ -451,6 +492,8 @@ function defaultLexProps() {
     padding: DEFAULT_LEX_PADDING,
     boxShadow: DEFAULT_BOX_SHADOW,
     lexBackgroundColor: DEFAULT_TAILWIND_COLOR,
+    outerPadding: DEFAULT_HIKE_OUTER_PADDING,
+    gradient: DEFAULT_HIKE_GRADIENT,
   }
 }
 

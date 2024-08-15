@@ -1,16 +1,17 @@
 import * as Octicons from "@/vendor/octicons_react/"
 import {
   ArrowUp,
-  CircleEllipsisIcon,
-  CircleIcon,
+  // CircleEllipsisIcon,
+  // CircleIcon,
   CodeIcon,
+  CopyIcon,
   FrameIcon,
   GridIcon,
   ImageIcon,
   MinusIcon,
-  RectangleVerticalIcon,
+  // RectangleVerticalIcon,
   RedoIcon,
-  SlashIcon,
+  // SlashIcon,
   SquareIcon,
   Trash,
   TypeIcon,
@@ -31,8 +32,13 @@ const { ...iconsByName } = Octicons
 type ActionsProps = {
   onContainerCreate: (containerType: ContainerType, subType?: string) => void
   onDelete: () => void
+  onCopy: () => void
 }
-export default function Actions({ onContainerCreate, onDelete }: ActionsProps) {
+export default function Actions({
+  onContainerCreate,
+  onDelete,
+  onCopy,
+}: ActionsProps) {
   const { toggleGrid } = useGridOverlay()
   return (
     <>
@@ -149,33 +155,33 @@ export default function Actions({ onContainerCreate, onDelete }: ActionsProps) {
                   <ArrowUp />
                 </li>
 
-                <li
-                  className="w-1/5 p-2 border border-gray-900 text-center"
-                  onClick={() => onContainerCreate("SHAPE", "ROUGH-RECT")}
-                >
-                  <RectangleVerticalIcon />
-                </li>
-
-                <li
-                  className="w-1/5 p-2 border border-gray-900 text-center"
-                  onClick={() => onContainerCreate("SHAPE", "ROUGH-CIRCLE")}
-                >
-                  <CircleIcon />
-                </li>
-
-                <li
-                  className="w-1/5 p-2 border border-gray-900 text-center"
-                  onClick={() => onContainerCreate("SHAPE", "ROUGH-ELLIPSE")}
-                >
-                  <CircleEllipsisIcon />
-                </li>
-
-                <li
-                  className="w-1/5 p-2 border border-gray-900 text-center"
-                  onClick={() => onContainerCreate("SHAPE", "ROUGH-LINE")}
-                >
-                  <SlashIcon />
-                </li>
+                {/* <li */}
+                {/*   className="w-1/5 p-2 border border-gray-900 text-center" */}
+                {/*   onClick={() => onContainerCreate("SHAPE", "ROUGH-RECT")} */}
+                {/* > */}
+                {/*   <RectangleVerticalIcon /> */}
+                {/* </li> */}
+                {/**/}
+                {/* <li */}
+                {/*   className="w-1/5 p-2 border border-gray-900 text-center" */}
+                {/*   onClick={() => onContainerCreate("SHAPE", "ROUGH-CIRCLE")} */}
+                {/* > */}
+                {/*   <CircleIcon /> */}
+                {/* </li> */}
+                {/**/}
+                {/* <li */}
+                {/*   className="w-1/5 p-2 border border-gray-900 text-center" */}
+                {/*   onClick={() => onContainerCreate("SHAPE", "ROUGH-ELLIPSE")} */}
+                {/* > */}
+                {/*   <CircleEllipsisIcon /> */}
+                {/* </li> */}
+                {/**/}
+                {/* <li */}
+                {/*   className="w-1/5 p-2 border border-gray-900 text-center" */}
+                {/*   onClick={() => onContainerCreate("SHAPE", "ROUGH-LINE")} */}
+                {/* > */}
+                {/*   <SlashIcon /> */}
+                {/* </li> */}
               </ul>
             </PopoverContent>
           </Popover>
@@ -199,6 +205,14 @@ export default function Actions({ onContainerCreate, onDelete }: ActionsProps) {
           >
             <Trash />
           </Button>
+          <Button
+            className="mb-2 text-3xl flex items-center justify-center border shadow border-dashed border-gray-400 group-hover:border-yellow-500 group-hover:text-yellow-500 dark:border-gray-600 dark:shadow-black/50 text-gray-400 dark:text-gray-400 dark:hover:border-yellow-500 dark:group-hover:border-yellow-500 dark:hover:text-yellow-500"
+            onClick={onCopy}
+          >
+            <CopyIcon />
+          </Button>
+        </li>
+        <li className="p-2 flex space-x-2">
           <Button
             className="mb-2 text-3xl flex items-center justify-center border shadow border-dashed border-gray-400 group-hover:border-yellow-500 group-hover:text-yellow-500 dark:border-gray-600 dark:shadow-black/50 text-gray-400 dark:text-gray-400 dark:hover:border-yellow-500 dark:group-hover:border-yellow-500 dark:hover:text-yellow-500"
             onClick={toggleGrid}

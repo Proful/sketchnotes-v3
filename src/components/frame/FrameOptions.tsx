@@ -1,6 +1,5 @@
 import {
   ALLOWED_BORDER_RADIUS,
-  ALLOWED_FRAME_RESOLUTION,
   DEFAULT_FRAME_PADDING,
   TAILWIND_COLORS,
 } from "@/lib/constants"
@@ -51,25 +50,25 @@ export default function FrameOptions() {
             3 dots
           </label>
         </li>
-        <li className="p-2  flex space-x-2">
-          <Select
-            onValueChange={(v) => {
-              const [w, h] = v.split("x").map(Number)
-              updateFrameProperty("frameResolution", { w, h })
-            }}
-          >
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Frame Resolution" />
-            </SelectTrigger>
-            <SelectContent>
-              {ALLOWED_FRAME_RESOLUTION.map((fr) => (
-                <SelectItem value={fr} key={fr}>
-                  {fr}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </li>
+        {/* <li className="p-2  flex space-x-2"> */}
+        {/*   <Select */}
+        {/*     onValueChange={(v) => { */}
+        {/*       const [w, h] = v.split("x").map(Number) */}
+        {/*       updateFrameProperty("frameResolution", { w, h }) */}
+        {/*     }} */}
+        {/*   > */}
+        {/*     <SelectTrigger className="w-[180px]"> */}
+        {/*       <SelectValue placeholder="Frame Resolution" /> */}
+        {/*     </SelectTrigger> */}
+        {/*     <SelectContent> */}
+        {/*       {ALLOWED_FRAME_RESOLUTION.map((fr) => ( */}
+        {/*         <SelectItem value={fr} key={fr}> */}
+        {/*           {fr} */}
+        {/*         </SelectItem> */}
+        {/*       ))} */}
+        {/*     </SelectContent> */}
+        {/*   </Select> */}
+        {/* </li> */}
         <li className="p-2  flex space-x-2">
           <Input
             type="number"

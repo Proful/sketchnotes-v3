@@ -6,6 +6,7 @@ import {
   DEFAULT_CODE_FONT,
   DEFAULT_CODE_LANGUAGE,
   DEFAULT_CODE_THEME,
+  DEFAULT_HIKE_OUTER_PADDING,
   TAILWIND_COLORS,
 } from "@/lib/constants"
 import {
@@ -22,6 +23,7 @@ import {
 } from "@/components/ui/select"
 
 import ColorPicker from "../ColorPicker"
+import GradientPicker from "../GradientPicker"
 import useStore from "../Store"
 import { Button } from "../ui/button"
 import { Slider } from "../ui/slider"
@@ -107,7 +109,7 @@ export default function HikeOptions() {
           <Slider
             defaultValue={[0]}
             min={0}
-            max={40}
+            max={60}
             step={2}
             onValueChange={(v) => {
               updateHikeProperty(selectedId, "padding", v[0])
@@ -169,6 +171,25 @@ export default function HikeOptions() {
               ))}
             </SelectContent>
           </Select>
+        </li>
+        <li className="p-1 space-x-2">
+          <GradientPicker
+            onGradientSelect={(gradient) => {
+              updateHikeProperty(selectedId, "gradient", gradient)
+            }}
+          />
+        </li>
+        <li className="p-2  flex space-x-2">
+          <Slider
+            defaultValue={[DEFAULT_HIKE_OUTER_PADDING]}
+            value={[hike.outerPadding! || DEFAULT_HIKE_OUTER_PADDING]}
+            min={0}
+            max={60}
+            step={2}
+            onValueChange={(v) => {
+              updateHikeProperty(selectedId, "outerPadding", v[0])
+            }}
+          />
         </li>
       </ul>
     </>

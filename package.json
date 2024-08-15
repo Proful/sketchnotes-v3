@@ -10,9 +10,8 @@
     "tauri": "tauri"
   },
   "dependencies": {
-    "@lexical-devtools/react": "^0.1.11",
     "@lexical/code": "^0.17.0",
-    "@lexical/react": "^0.16.0",
+    "@lexical/react": "^0.17.0",
     "@lexical/rich-text": "^0.17.0",
     "@lexical/selection": "^0.17.0",
     "@lexical/utils": "^0.17.0",
@@ -27,9 +26,9 @@
     "@tauri-apps/api": "^1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
-    "codehike": "^1.0.0-beta.8",
+    "codehike": "^1.0.0-beta.9",
     "html-to-image": "^1.11.11",
-    "lexical": "^0.16.0",
+    "lexical": "^0.17.0",
     "lucide-react": "^0.390.0",
     "perfect-arrows": "^0.3.7",
     "prismjs": "^1.29.0",

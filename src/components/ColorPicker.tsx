@@ -12,7 +12,7 @@ import { Separator } from "./ui/separator"
 import { Slider } from "./ui/slider"
 
 type ColorPickerProps = {
-  label?: string
+  label?: string | React.ReactNode
   colors: string[]
   onColorSelect: (color: string, rgba?: string) => void
 }
@@ -22,9 +22,10 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
   colors,
   onColorSelect,
 }) => {
-  const [selectedColor, setSelectedColor] = useState<string>("")
-  const [showShades, setShowShades] = useState<boolean>(false)
+  const [selectedColor, setSelectedColor] = useState<string>("bg-red-500")
+  const [showShades, setShowShades] = useState<boolean>(true)
   const [opacity, setOpacity] = useState<number>(100)
+  const [open, setOpen] = useState(false)
 
   const shades = ["100", "200", "300", "400", "500", "600", "700", "800", "900"]
 
@@ -32,7 +33,8 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
     setSelectedColor(color)
     if (color) {
       setShowShades(true)
-      // onColorSelect(`${color}/${opacity}`)
+      const rgb = getTailwindRgbValue(color + "/" + opacity)
+      onColorSelect(`${color}/${opacity}`, rgb)
     } else {
       setShowShades(false)
       onColorSelect(color)
@@ -48,9 +50,9 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
 
   return (
     <>
-      <Popover>
+      <Popover open={open} onOpenChange={setOpen} modal>
         <PopoverTrigger asChild>
-          <Button variant="outline">{label || "Color"}</Button>
+          <Button>{label || "Color"}</Button>
         </PopoverTrigger>
         <PopoverContent className="w-80">
           <div className="flex flex-wrap">
@@ -73,31 +75,33 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
               onClick={() => handleColorClick("")}
             />
           </div>
-          {showShades && (
-            <>
-              <Separator className="mt-2" />
-              <div className="flex flex-wrap mt-4">
-                {shades.map((shade) => {
-                  const color = `${selectedColor.split("-")[0]}-${selectedColor.split("-")[1]}-${shade}`
-                  return (
-                    <div
-                      key={shade}
-                      className={`w-6 h-6 m-1 cursor-pointer rounded-full ${color} ${
-                        selectedColor === color
-                          ? "ring-2 ring-offset-2 ring-indigo-500"
-                          : ""
-                      }`}
-                      onClick={(e) => {
-                        handleShadeClick(shade)
+          <div
+            style={{
+              display: showShades ? "block" : "none",
+            }}
+          >
+            <Separator className="mt-2" />
+            <div className="flex flex-wrap mt-4">
+              {shades.map((shade) => {
+                const color = `${selectedColor.split("-")[0]}-${selectedColor.split("-")[1]}-${shade}`
+                return (
+                  <div
+                    key={shade}
+                    className={`w-6 h-6 m-1 cursor-pointer rounded-full ${color} ${
+                      selectedColor === color
+                        ? "ring-2 ring-offset-2 ring-indigo-500"
+                        : ""
+                    }`}
+                    onClick={(e) => {
+                      handleShadeClick(shade)
 
-                        e.stopPropagation()
-                      }}
-                    />
-                  )
-                })}
-              </div>
-            </>
-          )}
+                      e.stopPropagation()
+                    }}
+                  />
+                )
+              })}
+            </div>
+          </div>
           <div>
             <Separator className="mt-2" />
             <Slider

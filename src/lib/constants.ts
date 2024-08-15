@@ -17,6 +17,11 @@ export const DEFAULT_BORDER_COLOR = "stroke-white"
 export const DEFAULT_ICON_SIZE = 60
 export const DEFAULT_ICON_COLOR = "#ffffff"
 export const DEFAULT_ICON_ROTATE = 0
+export const DEFAULT_HIKE_INNER_PADDING = 0
+export const DEFAULT_HIKE_OUTER_PADDING = 0
+export const DEFAULT_HIKE_BACKGROUND_COLOR = "bg-background"
+export const DEFAULT_HIKE_GRADIENT =
+  "from-indigo-500 via-purple-500 to-pink-500"
 export const DEFAULT_IMAGE_WIDTH = 400
 export const DEFAULT_IMAGE_PADDING = 0
 export const DEFAULT_IMAGE_GRADIENT =

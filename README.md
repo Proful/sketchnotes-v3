@@ -4,15 +4,39 @@
 
 ## MVP
 
+- Lex
+  - outline missing on hover
+  - if inline text selected, show relevant options
+  - if whole text selected, show relevant options
+  - copy lex
+  - after pasting, new line is coming at end
+  - double click to select
+  - click and drag to select
+  - color applied. but selection getting removed.
+    to apply color, it shouldn't wait till the shade to be clicked
+    after color applied, selection doesnot look good
+  - glow border
+  - reset style
+  - outer padding
+  - outer gradient
+- code-hike
+  - add outer padding and gradient
+  - mark horizontal padding + container padding
+  - font implemented but should fetch from google font or cdn
+  - download grammars from net
+  - selection of text by cursor dragging not working rather it drags the component
+  - copy code hike
 - add noise
 - gradient picker
   - custom from, via, to
   - add more gradient
 - img
+  - copy image
   - add your image
   - try demo image (unsplash)
   - size slider of image
 - frame
+  - not able to drag or resize frame if content added inside
   - background
     - gradient
       - 32 pre-defined gradients
@@ -43,26 +67,23 @@
   - after zoom text is going away from screen
   - in zoom mode not able to create new element
 - icon
-  - icon flip functionality
   - arrow with right facing very less
-  - copy icon
   - alignment helper with grid or something. make it smooth
   - use left, right, up, down arrow to slightly move the same
-  - increase default icon size
-    - analyze it's placement
 - shape
   - rough rect, give some padding
   - rotating handle is not appearing for line
-- Lex
-  - persist options selected
+  - copy shape
+  - line with two dot
+    - resize, rotate handle needs to be implemented
+  - arrow
+    - SIGNIFICANT work needs to be done
 - design
   - logo
-- code-hike
-  - add outer padding and gradient
-  - mark horizontal padding + container padding
-  - font implemented but should fetch from google font or cdn
-  - download grammars from net
-  - selection of text by cursor dragging not working rather it drags the component
+  - hover to options
+  - shadow panel
+  - tooltip
+  - gradient picker for text gradient
 
 ## After MVP
 

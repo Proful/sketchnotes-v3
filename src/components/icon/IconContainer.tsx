@@ -53,7 +53,7 @@ export function IconContainer({ id }: { id: number }) {
       <Move target={target!} />
       <div
         ref={nodeRef}
-        className="w-fit absolute top-4 right-72 z-10"
+        className="w-fit absolute top-4 right-72 z-40"
         onClick={handleSelect}
         style={style}
       >
