@@ -12,7 +12,7 @@ import {
 // import { Separator } from "./ui/separator"
 
 type GradientPickerProps = {
-  label?: string
+  label?: string | React.ReactNode
   onGradientSelect?: (gradient: string) => void
 }
 
@@ -29,7 +29,7 @@ const GradientPicker = ({ label, onGradientSelect }: GradientPickerProps) => {
     <>
       <Popover>
         <PopoverTrigger asChild>
-          <Button variant="outline">{label || "Gradient"}</Button>
+          <Button>{label || "Gradient"}</Button>
         </PopoverTrigger>
         <PopoverContent className="w-80">
           <div>

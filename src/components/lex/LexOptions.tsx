@@ -11,12 +11,10 @@ import {
   ALLOWED_BORDER_DIRECTION,
   ALLOWED_BORDER_RADIUS,
   ALLOWED_BORDER_STYLE,
-  ALLOWED_BOX_SHADOW,
   ALLOWED_FONT_FAMILY,
   ALLOWED_FONT_SIZE,
   ALLOWED_FONT_WEIGHT,
   ALLOWED_LINE_HEIGHT,
-  ALLOWED_TEXT_GRADIENT,
   TAILWIND_COLORS,
 } from "@/lib/constants"
 import { Input } from "@/components/ui/input"
@@ -40,8 +38,9 @@ import {
 } from "@/components/ui/tooltip"
 
 import ColorPicker from "../ColorPicker"
+import GradientPicker from "../GradientPicker"
 // import GradientPicker from "../GradientPicker"
-import ShadowPicker from "../ShadowPicker"
+// import ShadowPicker from "../ShadowPicker"
 import useStore from "../Store"
 import { Button } from "../ui/button"
 import { Separator } from "../ui/separator"
@@ -390,36 +389,21 @@ export default function LexOptions() {
             onColorSelect={(c) => updateLexProperty(selectedId, "boxColor", c!)}
           />
         </li>
-        <li className="p-2">
-          <Select
-            value={lex.boxShadow}
-            onValueChange={(v) => {
-              updateLexProperty(selectedId, "boxShadow", v)
-            }}
-          >
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Box Shadow" />
-            </SelectTrigger>
-            <SelectContent>
-              {ALLOWED_BOX_SHADOW.map((boxShadow) => (
-                <SelectItem value={boxShadow} key={boxShadow}>
-                  {boxShadow}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </li>
         <Separator />
         <li className="p-2 space-x-2">
           <ColorPicker
-            label={<TypeIcon className="text-yellow-300/70" />}
+            label={<TypeIcon />}
             colors={TAILWIND_COLORS}
             onColorSelect={(_c, rgba) => {
               updateLexProperty(selectedId, "color", rgba!)
             }}
           />
           <ColorPicker
-            label={<TypeIcon className="bg-yellow-300/40" />}
+            label={
+              <TypeIcon
+                style={{ backgroundColor: "rgba(142, 164, 215,0.5)" }}
+              />
+            }
             colors={TAILWIND_COLORS}
             onColorSelect={(_c, rgba) =>
               updateLexProperty(selectedId, "backgroundColor", rgba!)
@@ -448,25 +432,16 @@ export default function LexOptions() {
         </li>
 
         <li className="p-2 flex space-x-2">
-          <Select
-            onValueChange={(v) => {
+          <GradientPicker
+            label={
+              <span className="px-[1px] font-extrabold tracking-widest from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% bg-gradient-to-r bg-clip-text text-transparent">
+                Aa
+              </span>
+            }
+            onGradientSelect={(v) => {
               updateLexProperty(selectedId, "textGradient", v)
             }}
-          >
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Text Gradient" />
-            </SelectTrigger>
-            <SelectContent>
-              {ALLOWED_TEXT_GRADIENT.map((txtGr) => (
-                <SelectItem value={txtGr.value} key={txtGr.name}>
-                  {txtGr.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </li>
-        <li className="p-2 flex space-x-2">
-          <ShadowPicker />
+          />
         </li>
       </ul>
     </>

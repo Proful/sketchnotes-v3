@@ -18,6 +18,8 @@ import LexToolbar from "./LexToolbar"
 // import { AnnotationNode } from "./nodes/lexical-annotation"
 import { KlassNode } from "./nodes/lexical-klass"
 
+// import PastePlugin from "./plugins/PastePlugin"
+
 // Catch any errors that occur during Lexical updates and log them
 // or throw them as needed. If you don't throw them, Lexical will
 // try to recover gracefully without losing user data.

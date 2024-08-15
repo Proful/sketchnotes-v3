@@ -4,17 +4,14 @@
 
 ## MVP
 
+- frame + lex content: combination is not smooth
 - Lex
+  - design shadow picker
+  - use gradient picker for text
   - outline missing on hover
-  - if inline text selected, show relevant options
-  - if whole text selected, show relevant options
   - copy lex
   - after pasting, new line is coming at end
-  - double click to select
-  - click and drag to select
-  - color applied. but selection getting removed.
-    to apply color, it shouldn't wait till the shade to be clicked
-    after color applied, selection doesnot look good
+    - tried using paste plugin not working
   - glow border
   - reset style
   - outer padding
