@@ -180,6 +180,7 @@ export default function HikeOptions() {
           />
         </li>
         <li className="p-2  flex space-x-2">
+          <span>Outer Padding</span>
           <Slider
             defaultValue={[DEFAULT_HIKE_OUTER_PADDING]}
             value={[hike.outerPadding! || DEFAULT_HIKE_OUTER_PADDING]}

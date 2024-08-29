@@ -67,7 +67,8 @@ export default function LexOptions() {
             </PopoverTrigger>
             <PopoverContent className="w-80">
               <ul>
-                <li className="p-2 flex space-x-2">
+                <li className="p-2 flex space-x-2 items-center">
+                  <span className="w-1/3 text-muted-foreground">Font</span>
                   <Select
                     value={lex.fontFamily}
                     onValueChange={(v) => {
@@ -87,7 +88,8 @@ export default function LexOptions() {
                   </Select>
                 </li>
 
-                <li className="p-2 flex space-x-2">
+                <li className="p-2 flex space-x-2 items-center">
+                  <span className="w-1/3 text-muted-foreground">Size</span>
                   <Select
                     value={lex.fontSize}
                     onValueChange={(v) => {
@@ -107,7 +109,8 @@ export default function LexOptions() {
                   </Select>
                 </li>
 
-                <li className="p-2 flex space-x-2">
+                <li className="p-2 flex space-x-2 items-center">
+                  <span className="w-1/3 text-muted-foreground">Weight</span>
                   <Select
                     value={lex.fontWeight}
                     onValueChange={(v) => {
@@ -127,7 +130,10 @@ export default function LexOptions() {
                   </Select>
                 </li>
 
-                <li className="p-2 flex space-x-2">
+                <li className="p-2 flex space-x-2 items-center">
+                  <span className="w-1/3 text-muted-foreground">
+                    Line Height
+                  </span>
                   <Select
                     value={lex.lineHeight}
                     onValueChange={(v) => {
@@ -157,7 +163,8 @@ export default function LexOptions() {
             </PopoverTrigger>
             <PopoverContent className="w-80">
               <ul>
-                <li className="p-2 flex space-x-2">
+                <li className="p-2 flex space-x-2 items-center">
+                  <span className="w-1/3 text-muted-foreground">Direction</span>
                   <Select
                     value={lex.borderDirection}
                     onValueChange={(v) => {
@@ -177,7 +184,8 @@ export default function LexOptions() {
                   </Select>
                 </li>
 
-                <li className="p-2 flex space-x-2">
+                <li className="p-2 flex space-x-2 items-center">
+                  <span className="w-1/3 text-muted-foreground">Style</span>
                   <Select
                     value={lex.borderStyle}
                     onValueChange={(v) => {
@@ -195,7 +203,9 @@ export default function LexOptions() {
                       ))}
                     </SelectContent>
                   </Select>
-
+                </li>
+                <li className="p-2 flex space-x-2 items-center">
+                  <span className="w-1/3 text-muted-foreground">Width</span>
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger>
@@ -218,21 +228,25 @@ export default function LexOptions() {
                     </Tooltip>
                   </TooltipProvider>
                 </li>
-                <li className="p-2 space-x-2">
-                  <ColorPicker
-                    label="Border"
-                    colors={TAILWIND_COLORS}
-                    onColorSelect={(c) =>
-                      updateLexProperty(
-                        selectedId,
-                        "borderColor",
-                        c.replace("bg", "border")
-                      )
-                    }
-                  />
+                <li className="p-2 space-x-2 items-center">
+                  <span className="w-1/3 text-muted-foreground">Color</span>
+                  <span className="w-2/3">
+                    <ColorPicker
+                      label="Border"
+                      colors={TAILWIND_COLORS}
+                      onColorSelect={(c) =>
+                        updateLexProperty(
+                          selectedId,
+                          "borderColor",
+                          c.replace("bg", "border")
+                        )
+                      }
+                    />
+                  </span>
                 </li>
 
-                <li className="p-2 flex space-x-2">
+                <li className="p-2 flex space-x-2 items-center">
+                  <span className="w-1/3 text-muted-foreground">Radius</span>
                   <Select
                     value={lex.borderRadius}
                     onValueChange={(v) => {

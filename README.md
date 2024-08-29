@@ -1,23 +1,20 @@
 # REDUCE COMPLEXITY
 
-## wishlist
-
-## MVP
-
 - frame + lex content: combination is not smooth
+- highlight active action, if its option appearing
 - Lex
-  - design shadow picker
-  - use gradient picker for text
-  - outline missing on hover
-  - copy lex
-  - after pasting, new line is coming at end
+  - drag area is very large. it should be only content box
+  - text on top of another text, hiding the content
+  - X after pasting, new line is coming at end
     - tried using paste plugin not working
-  - glow border
-  - reset style
-  - outer padding
-  - outer gradient
+  - X glow border
+  - X reset style
+  - X outer padding
+  - X outer gradient
+  - X design shadow picker
+  - X copy lex
 - code-hike
-  - add outer padding and gradient
+  - click and drag to select
   - mark horizontal padding + container padding
   - font implemented but should fetch from google font or cdn
   - download grammars from net

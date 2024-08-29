@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Rnd } from "react-rnd"
+import Draggable from "react-draggable"
 
 import useStore from "../Store"
 import LexTextarea from "./LexTextarea"
@@ -61,28 +61,21 @@ function LexContainer({ id }: { id: number }) {
   }
 
   return (
-    <Rnd
-      default={{
-        x: 0,
-        y: 0,
-        width: 320,
-        height: 200,
-      }}
-      disableDragging={disableDrag}
-    >
+    <Draggable nodeRef={nodeRef} disabled={disableDrag}>
       <div
         style={style}
         ref={nodeRef}
-        className={`bg-background w-fit z-40 p-2 absolute top-0 text-${lex.fontSize} font-${lex.fontWeight} leading-${lex.lineHeight} ${lex.borderRadius} ${lex.boxShadow} ${lex.boxColor} ${lex.borderColor} selection:bg-gray-400/20`}
+        className={`bg-background w-fit z-40 p-2 absolute top-0 text-${lex.fontSize} font-${lex.fontWeight} leading-${lex.lineHeight} ${lex.borderRadius} ${lex.boxShadow} ${lex.boxColor} ${lex.borderColor} selection:bg-gray-400/20 hover:outline-blue-500 hover:outline hover:outline-1`}
         onClick={(e) => {
           setSelectedContainerType("LEX")
           setSelectedId(id)
           e.stopPropagation()
         }}
+        onResize={console.log}
       >
         <LexTextarea id={id} onFocusChange={setDisableDrag} />
       </div>
-    </Rnd>
+    </Draggable>
   )
 }
 
