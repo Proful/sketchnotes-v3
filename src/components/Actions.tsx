@@ -18,6 +18,7 @@ import {
 } from "lucide-react"
 
 import { ContainerType } from "@/lib/types"
+import { cn } from "@/lib/utils"
 import { useGridOverlay } from "@/hooks/GridOverlayContext"
 import { Button } from "@/components/ui/button"
 import {
@@ -25,6 +26,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+
+import useStore from "./Store"
 
 // eslint-disable-next-line no-unused-vars
 const { ...iconsByName } = Octicons
@@ -39,26 +42,44 @@ export default function Actions({
   onDelete,
   onCopy,
 }: ActionsProps) {
+  const selectedContainerType = useStore((state) => state.selectedContainerType)
   const { toggleGrid } = useGridOverlay()
+
+  const actionButtonClass =
+    "mb-2 text-3xl flex items-center justify-center border shadow border-dashed border-gray-400 dark:border-gray-600 dark:shadow-black/50 text-gray-400 dark:text-gray-400 dark:hover:border-yellow-500 dark:group-hover:border-yellow-500 dark:hover:text-yellow-500 dark:[&.active]:border-yellow-500  dark:[&.active]:text-yellow-500"
+  const actionSpanClass =
+    "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 dark:hover:border-yellow-500 dark:group-hover:border-yellow-500 dark:hover:text-yellow-500 dark:group-hover:scale-[1.2] duration-100 mb-2 border shadow border-dashed border-gray-400 group-hover:border-yellow-500 group-hover:text-yellow-500 dark:border-gray-600 dark:shadow-black/50 text-gray-400 dark:text-gray-400 dark:[&.active]:border-yellow-500  dark:[&.active]:text-yellow-500"
+
   return (
     <>
       <ul>
         <li className="p-2 flex space-x-2">
           <Button
-            className="mb-2 text-3xl flex items-center justify-center border shadow border-dashed border-gray-400 dark:border-gray-600 dark:shadow-black/50 text-gray-400 dark:text-gray-400 dark:hover:border-yellow-500 dark:group-hover:border-yellow-500 dark:hover:text-yellow-500"
+            className={cn(
+              actionButtonClass,
+              selectedContainerType === "HIKE" ? "active" : ""
+            )}
             onClick={() => onContainerCreate("HIKE")}
           >
             <CodeIcon className="group-hover:scale-[1.2] duration-100" />
           </Button>
           <Button
-            className="mb-2 text-3xl flex items-center justify-center border shadow border-dashed border-gray-400 group-hover:border-yellow-500 group-hover:text-yellow-500 dark:border-gray-600 dark:shadow-black/50 text-gray-400 dark:text-gray-400 dark:hover:border-yellow-500 dark:group-hover:border-yellow-500 dark:hover:text-yellow-500"
+            className={cn(
+              actionButtonClass,
+              selectedContainerType === "LEX" ? "active" : ""
+            )}
             onClick={() => onContainerCreate("LEX")}
           >
             <TypeIcon />
           </Button>
           <Popover>
             <PopoverTrigger>
-              <span className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 dark:hover:border-yellow-500 dark:group-hover:border-yellow-500 dark:hover:text-yellow-500 dark:group-hover:scale-[1.2] duration-100 mb-2 border shadow border-dashed border-gray-400 group-hover:border-yellow-500 group-hover:text-yellow-500 dark:border-gray-600 dark:shadow-black/50 text-gray-400 dark:text-gray-400">
+              <span
+                className={cn(
+                  actionSpanClass,
+                  selectedContainerType === "ICON" ? "active" : ""
+                )}
+              >
                 <RedoIcon />
               </span>
             </PopoverTrigger>
@@ -82,7 +103,12 @@ export default function Actions({
           </Popover>
           <Popover>
             <PopoverTrigger>
-              <span className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 dark:hover:border-yellow-500 dark:group-hover:border-yellow-500 dark:hover:text-yellow-500 dark:group-hover:scale-[1.2] duration-100  mb-2 border shadow border-dashed border-gray-400 group-hover:border-yellow-500 group-hover:text-yellow-500 dark:border-gray-600 dark:shadow-black/50 text-gray-400 dark:text-gray-400">
+              <span
+                className={cn(
+                  actionSpanClass,
+                  selectedContainerType === "SHAPE" ? "active" : ""
+                )}
+              >
                 <SquareIcon />
               </span>
             </PopoverTrigger>
@@ -154,69 +180,38 @@ export default function Actions({
                 >
                   <ArrowUp />
                 </li>
-
-                {/* <li */}
-                {/*   className="w-1/5 p-2 border border-gray-900 text-center" */}
-                {/*   onClick={() => onContainerCreate("SHAPE", "ROUGH-RECT")} */}
-                {/* > */}
-                {/*   <RectangleVerticalIcon /> */}
-                {/* </li> */}
-                {/**/}
-                {/* <li */}
-                {/*   className="w-1/5 p-2 border border-gray-900 text-center" */}
-                {/*   onClick={() => onContainerCreate("SHAPE", "ROUGH-CIRCLE")} */}
-                {/* > */}
-                {/*   <CircleIcon /> */}
-                {/* </li> */}
-                {/**/}
-                {/* <li */}
-                {/*   className="w-1/5 p-2 border border-gray-900 text-center" */}
-                {/*   onClick={() => onContainerCreate("SHAPE", "ROUGH-ELLIPSE")} */}
-                {/* > */}
-                {/*   <CircleEllipsisIcon /> */}
-                {/* </li> */}
-                {/**/}
-                {/* <li */}
-                {/*   className="w-1/5 p-2 border border-gray-900 text-center" */}
-                {/*   onClick={() => onContainerCreate("SHAPE", "ROUGH-LINE")} */}
-                {/* > */}
-                {/*   <SlashIcon /> */}
-                {/* </li> */}
               </ul>
             </PopoverContent>
           </Popover>
         </li>
         <li className="p-2 flex space-x-2">
           <Button
-            className="mb-2 text-3xl flex items-center justify-center border shadow border-dashed border-gray-400 group-hover:border-yellow-500 group-hover:text-yellow-500 dark:border-gray-600 dark:shadow-black/50 text-gray-400 dark:text-gray-400 dark:hover:border-yellow-500 dark:group-hover:border-yellow-500 dark:hover:text-yellow-500"
+            className={cn(
+              actionButtonClass,
+              selectedContainerType === "IMAGE" ? "active" : ""
+            )}
             onClick={() => onContainerCreate("IMAGE")}
           >
             <ImageIcon />
           </Button>
           <Button
-            className="mb-2 text-3xl flex items-center justify-center border shadow border-dashed border-gray-400 group-hover:border-yellow-500 group-hover:text-yellow-500 dark:border-gray-600 dark:shadow-black/50 text-gray-400 dark:text-gray-400 dark:hover:border-yellow-500 dark:group-hover:border-yellow-500 dark:hover:text-yellow-500"
+            className={cn(
+              actionButtonClass,
+              selectedContainerType === "FRAME" ? "active" : ""
+            )}
             onClick={() => onContainerCreate("FRAME")}
           >
             <FrameIcon />
           </Button>
-          <Button
-            className="mb-2 text-3xl flex items-center justify-center border shadow border-dashed border-gray-400 group-hover:border-yellow-500 group-hover:text-yellow-500 dark:border-gray-600 dark:shadow-black/50 text-gray-400 dark:text-gray-400 dark:hover:border-yellow-500 dark:group-hover:border-yellow-500 dark:hover:text-yellow-500"
-            onClick={onDelete}
-          >
+          <Button className={cn(actionButtonClass)} onClick={onDelete}>
             <Trash />
           </Button>
-          <Button
-            className="mb-2 text-3xl flex items-center justify-center border shadow border-dashed border-gray-400 group-hover:border-yellow-500 group-hover:text-yellow-500 dark:border-gray-600 dark:shadow-black/50 text-gray-400 dark:text-gray-400 dark:hover:border-yellow-500 dark:group-hover:border-yellow-500 dark:hover:text-yellow-500"
-            onClick={onCopy}
-          >
+          <Button className={cn(actionButtonClass)} onClick={onCopy}>
             <CopyIcon />
           </Button>
         </li>
         <li className="p-2 flex space-x-2">
-          <Button
-            className="mb-2 text-3xl flex items-center justify-center border shadow border-dashed border-gray-400 group-hover:border-yellow-500 group-hover:text-yellow-500 dark:border-gray-600 dark:shadow-black/50 text-gray-400 dark:text-gray-400 dark:hover:border-yellow-500 dark:group-hover:border-yellow-500 dark:hover:text-yellow-500"
-            onClick={toggleGrid}
-          >
+          <Button className={cn(actionButtonClass)} onClick={toggleGrid}>
             <GridIcon />
           </Button>
         </li>

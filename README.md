@@ -1,10 +1,17 @@
 # REDUCE COMPLEXITY
 
 - frame + lex content: combination is not smooth
-- highlight active action, if its option appearing
+  - looks ok to me. I can able to resize the frame on top of text content
+- code-hike
+  - mark horizontal padding + container padding
+  - font implemented but should fetch from google font or cdn
+  - download grammars from net
+  - selection of text by cursor dragging not working rather it drags the component
+  - copy code hike
 - Lex
-  - drag area is very large. it should be only content box
-  - text on top of another text, hiding the content
+  - undo style not working
+    - undo text editing working
+    - undo style such as bg color not working
   - X after pasting, new line is coming at end
     - tried using paste plugin not working
   - X glow border
@@ -13,13 +20,6 @@
   - X outer gradient
   - X design shadow picker
   - X copy lex
-- code-hike
-  - click and drag to select
-  - mark horizontal padding + container padding
-  - font implemented but should fetch from google font or cdn
-  - download grammars from net
-  - selection of text by cursor dragging not working rather it drags the component
-  - copy code hike
 - add noise
 - gradient picker
   - custom from, via, to

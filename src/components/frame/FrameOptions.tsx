@@ -69,7 +69,8 @@ export default function FrameOptions() {
         {/*     </SelectContent> */}
         {/*   </Select> */}
         {/* </li> */}
-        <li className="p-2  flex space-x-2">
+        <li className="p-2  flex place-items-center space-x-2">
+          <span>Zoom</span>
           <Input
             type="number"
             className="w-16 inline"
@@ -83,7 +84,8 @@ export default function FrameOptions() {
           />
         </li>
 
-        <li className="p-2  flex space-x-2">
+        <li className="p-2 place-items-center flex space-x-2">
+          <span>Padding</span>
           <Slider
             defaultValue={[DEFAULT_FRAME_PADDING]}
             value={[frame.padding!]}

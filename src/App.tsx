@@ -60,8 +60,10 @@ function App() {
     } else if (containerType === "LEX") {
       createLex(uuid)
     } else if (containerType === "ICON") {
+      setSelectedContainerType("ICON")
       createIcon(uuid, subType!)
     } else if (containerType === "SHAPE") {
+      setSelectedContainerType("SHAPE")
       createShape(uuid, subType! as ShapeType)
     } else if (containerType === "FRAME") {
       if (screenshotFrame) {

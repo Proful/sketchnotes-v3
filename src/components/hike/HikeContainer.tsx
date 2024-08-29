@@ -48,6 +48,7 @@ function onError(error: Error) {
 }
 
 export default function HikeContainer({ id }: { id: number }) {
+  const [disableDrag, setDisableDrag] = useState(false)
   const nodeRef = React.useRef(null)
   const [editorState, setEditorState] = useState<EditorState | null>(null)
   const [codeContent, setCodeContent] = useState<string | null>(null)
@@ -152,7 +153,7 @@ export default function HikeContainer({ id }: { id: number }) {
   }
 
   return (
-    <Draggable nodeRef={nodeRef}>
+    <Draggable nodeRef={nodeRef} disabled={disableDrag}>
       <div
         ref={nodeRef}
         onClick={(e) => {
@@ -175,7 +176,14 @@ export default function HikeContainer({ id }: { id: number }) {
           )}
           <LexicalComposer initialConfig={initialConfig}>
             <RichTextPlugin
-              contentEditable={<ContentEditable />}
+              contentEditable={
+                <ContentEditable
+                  onFocus={() => setDisableDrag(true)}
+                  onBlur={() => setDisableDrag(false)}
+                  spellCheck={false}
+                  className="caret-pink-400 p-2"
+                />
+              }
               placeholder={<div>Enter some text...</div>}
               ErrorBoundary={LexicalErrorBoundary}
             />
